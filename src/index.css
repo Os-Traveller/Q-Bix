@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #171622;
+}
+
+@layer components {
+  .btn {
+    @apply px-5 py-2 text-center w-full;
+  }
+  .input {
+    @apply px-3 py-2 bg-[#514B96] w-full rounded outline-none text-white;
+  }
+}
