@@ -1,11 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { GrGoogle } from "react-icons/gr";
+import { BsFacebook, BsGithub } from "react-icons/bs";
+import { RiMailSendLine, RiLockPasswordLine } from "react-icons/ri";
 import auth from "../../firebase.init";
 
 const Login = () => {
   const path = useNavigate();
-  const [signInWithEmailAndPassword, user] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
@@ -14,34 +17,66 @@ const Login = () => {
       path("/");
     });
   };
+
   return (
-    <section className="flex justify-center items-center h-screen bg-[#302d69]">
-      <div className="max-w-[600px] mx-auto p-10 rounded-md border-gray-600 border-[1px]">
-        <form onSubmit={handleLogin}>
-          <h1 className="text-3xl text-white text-center font-mono mb-20">
-            Please Login Into Q-Bix
+    <section className="flex justify-center items-center h-screen linerBg">
+      <div
+        className="w-[800px] mx-auto rounded-xl overflow-hidden border-gray-600 border-[1px] shadow-md 
+      shadow-[#171520] flex"
+      >
+        <div className="lingerBgSingupLoginDiv text-white text-center px-10 w-[45%] flex flex-col justify-center">
+          <h1 className="text-4xl mb-8">Welcome Here!</h1>
+          <p className="text-gray-300 mb-5">
+            If you are new here, plase signup by clicking the button down below
+          </p>
+          <button
+            className=".btn border rounded-md py-2 px-5 w-[50%] mx-auto"
+            onClick={() => path("/signup")}
+          >
+            Signup
+          </button>
+        </div>
+        <form className="px-10 py-10 bg-[#26212E] w-[55%]" onSubmit={handleLogin}>
+          <h1 className="text-3xl uppercase text-white text-center font-mono mb-10">
+            Login into your account
           </h1>
-          <div className="flex gap-5 flex-col">
+          <div className="flex items-center justify-center gap-3 text-2xl text-white mb-5">
+            <button className="buble">
+              <GrGoogle />
+            </button>
+            <button className="buble">
+              <BsFacebook />
+            </button>
+            <button className="buble">
+              <BsGithub />
+            </button>
+          </div>
+          <p className="text-center text-gray-400 mb-8">or use your email to login</p>
+          {/* all inputs */}
+          <div className="flex gap-3 flex-col">
             {/* email */}
-            <input type="email" name="email" className="input" placeholder="Email" />
-            {/* password */}
-            <input type="password" name="password" className="input" placeholder="Password" />
-            {/* submit */}
-            <div className="flex gap-5">
-              <button className="btn text-white bg-[#454081] rounded">Change Method</button>
-              <button className="btn text-white bg-[#F47458] rounded">Login</button>
+            <div className="inputDiv">
+              <RiMailSendLine />
+              <input type="email" name="email" className="input" placeholder="Email" required />
+            </div>
+
+            <div className="inputDiv">
+              <RiLockPasswordLine />
+              <input
+                type="password"
+                name="password"
+                className="input"
+                placeholder="Password"
+                required
+              />
             </div>
           </div>
-
-          <p className="mt-8 text-gray-400 text-center">
-            Don't have any account?{" "}
-            <span
-              className="text-[#F47458] underline cursor-pointer"
-              onClick={() => path("/signup")}
-            >
-              Signup
-            </span>
-          </p>
+          <div className="flex gap-5 mt-10">
+            {/* submit */}
+            <button className="w-[50%] mx-auto btn text-white bg-[#3C2F67] rounded-md simpleTransition hover:w-[60%]">
+              Login
+            </button>
+          </div>
         </form>
       </div>
     </section>

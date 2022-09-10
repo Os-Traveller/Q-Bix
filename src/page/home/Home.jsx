@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import SideNav from "../../components/SideNav";
+import TopBar from "../../components/TopBar";
 import auth from "../../firebase.init";
-import { signOut } from "firebase/auth";
 
 const Home = () => {
   const [user] = useAuthState(auth);
+  useEffect(() => {}, [user]);
   return (
-    <section className="text-center mt-10">
-      <h1 className="text-2xl text-white mb-3">Welcome!!</h1>
-      <p className="text-3xl text-white mb-5">{user.displayName}</p>
-      <button className="btn text-white w-fit bg-[#F47458] rounded" onClick={() => signOut(auth)}>
-        Logout
-      </button>
+    <section className="p-5">
+      <TopBar />
+      <div className="page mt-5">
+        <SideNav />
+      </div>
     </section>
   );
 };

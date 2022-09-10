@@ -7,7 +7,11 @@ import auth from "../firebase.init";
 
 const AuthProvider = ({ children }) => {
   const location = useLocation();
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
+
+  if (loading) {
+    return null;
+  }
 
   if (!user) {
     toast.warning("Login First", toastConfig);

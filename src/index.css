@@ -2,15 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100,400;1,700&display=swap");
+
+html,
 body {
-  background-color: #171622;
+  font-family: "Poppins", sans-serif;
+  background-color: #171522;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+}
+
+.linerBg {
+  background: linear-gradient(to bottom right, #222222, #392c58);
+}
+.lingerBgSingupLoginDiv {
+  background: linear-gradient(to bottom right, #102e74, #121d5d, #0f0c39, #1a0e4c);
 }
 
 @layer components {
   .btn {
     @apply px-5 py-2 text-center w-full;
   }
+  .inputDiv {
+    @apply bg-[#1C1B22] flex items-center gap-3 py-2 px-3 text-white rounded-md optional:bg-[#1C1B22];
+  }
   .input {
-    @apply px-3 py-2 bg-[#514B96] w-full rounded outline-none text-white;
+    @apply bg-transparent w-full outline-none text-white;
+  }
+  .simpleTransition {
+    @apply transition-all duration-300;
+  }
+  .buble {
+    @apply hover:scale-125 transition-all duration-300;
   }
 }
