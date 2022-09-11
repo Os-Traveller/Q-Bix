@@ -16,6 +16,7 @@ const Login = () => {
     signInWithEmailAndPassword(email, password).then(() => {
       path("/");
     });
+    path("/");
   };
 
   return (

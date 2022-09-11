@@ -13,7 +13,16 @@ let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 1100, height: 850 });
+  mainWindow = new BrowserWindow({
+    width: 1100,
+    height: 850,
+    resizable: false,
+    titleBarStyle: "hiddenInset",
+    titleBarOverlay: {
+      color: "#2f3241",
+      symbolColor: "#74b1be",
+    },
+  });
 
   // and load the index.html of the app.
   // const startUrl = url.format({

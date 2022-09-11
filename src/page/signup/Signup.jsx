@@ -16,14 +16,14 @@ const Signup = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    const email = e.target.elements.email.value;
-    const name = e.target.elements.firstName.value + " " + e.target.elements.lastName.value;
-    const password = e.target.elements.password.value;
-    console.log(name, email);
-    createUserWithEmailAndPassword(email, password).then(() => {
-      updateProfile({ displayName: name }).then(console.log(user.displayName));
-      path("/");
-    });
+    // const email = e.target.elements.email.value;
+    // const name = e.target.elements.firstName.value + " " + e.target.elements.lastName.value;
+    // const password = e.target.elements.password.value;
+    // console.log(name, email);
+    // createUserWithEmailAndPassword(email, password).then(() => {
+    //   updateProfile({ displayName: name }).then(console.log(user.displayName));
+    path("/");
+    // });
   };
 
   return (
