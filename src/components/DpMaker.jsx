@@ -7,7 +7,7 @@ const DpMaker = ({ name, height, color, onClick, fontSize, img }) => {
       style={{
         height: height ? height : "37px",
         width: height ? height : "37px",
-        backgroundColor: color ? color : "#1C64F2",
+        backgroundColor: color ? color : "#3C2E67",
       }}
       onClick={onClick}
     >

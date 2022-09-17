@@ -10,11 +10,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 import DpMaker from "./DpMaker";
 import { signOut } from "firebase/auth";
+import { useEffect } from "react";
 
 const SideNav = () => {
   const [user] = useAuthState(auth);
+  useEffect(() => {
+    document.title = `${user?.displayName}'s Profile`;
+  }, [user]);
   return (
-    <section className="bg-[#212130] p-5 rounded-2xl sideNav backdrop-filter-blur opacity-80">
+    <section className="card sideNav backdrop-filter-blur">
       {/* app name */}
       <h1 className="text-center text-white font-mono font-bold text-3xl mb-10">Q-Bix</h1>
       {/* --------------------- links start here --------------------- */}
