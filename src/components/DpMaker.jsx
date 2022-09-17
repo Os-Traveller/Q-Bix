@@ -3,7 +3,7 @@ import React from "react";
 const DpMaker = ({ name, height, color, onClick, fontSize, img }) => {
   return (
     <div
-      className="rounded-full flex justify-center items-center cursor-pointer"
+      className="rounded-full flex justify-center items-center cursor-pointer overflow-hidden"
       style={{
         height: height ? height : "37px",
         width: height ? height : "37px",

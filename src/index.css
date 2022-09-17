@@ -42,7 +42,12 @@ input:-webkit-autofill {
 .lingerBgSingupLoginDiv {
   background: linear-gradient(to bottom right, #102e74, #121d5d, #0f0c39, #1a0e4c);
 }
-
+.toUp{
+  position: absolute;
+  transform: translateY(-50%);
+  left: 5%;
+  z-index: 10;
+}
 @layer components {
   .btn {
     @apply px-5 py-2 text-center w-full;
