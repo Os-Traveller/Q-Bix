@@ -6,7 +6,7 @@ const ActiveLink = ({ to, children }) => {
     <NavLink
       style={{ width: "100%" }}
       className={({ isActive }) =>
-        (isActive ? "bg-[#3C2E67] font-semibold" : "text-gray-400") +
+        (isActive ? "bg-[#1A1F37] font-semibold" : "text-gray-400") +
         " text-white block py-3 px-5 w-full rounded-xl "
       }
       to={to}

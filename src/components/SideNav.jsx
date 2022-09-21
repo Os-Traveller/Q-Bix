@@ -1,10 +1,10 @@
 import React from "react";
 import ActiveLink from "./ActiveLink";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { FiBook } from "react-icons/fi";
-import { BiCalendarEvent } from "react-icons/bi";
-import { TbFileAnalytics } from "react-icons/tb";
-import { RiMoneyDollarBoxLine } from "react-icons/ri";
+import { FaHome } from "react-icons/fa";
+import { MdCollectionsBookmark } from "react-icons/md";
+import { BsFillCalendar2DayFill } from "react-icons/bs";
+import { IoNewspaperSharp } from "react-icons/io5";
+import { RiMoneyPoundBoxFill } from "react-icons/ri";
 import { CgLogOut } from "react-icons/cg";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
@@ -36,35 +36,45 @@ const SideNav = () => {
         {/* dashboard */}
         <ActiveLink to={"/"}>
           <div className="flex gap-3 items-center">
-            <MdOutlineSpaceDashboard className="text-xl" />
+            <div className="rounded-2xl bg-[#582CFF] p-2">
+              <FaHome className="text-xl" />
+            </div>
             Dashboard
           </div>
         </ActiveLink>
         {/* cources */}
         <ActiveLink to={"/cources"}>
           <div className="flex gap-3 items-center">
-            <FiBook className="text-xl" />
+            <div className="rounded-2xl bg-[#582CFF] p-2">
+              <MdCollectionsBookmark className="text-xl" />
+            </div>
             Cources
           </div>
         </ActiveLink>
         {/* Routine */}
         <ActiveLink to={"/routine"}>
           <div className="flex gap-3 items-center">
-            <BiCalendarEvent className="text-xl" />
+            <div className="rounded-2xl bg-[#582CFF] p-2">
+              <BsFillCalendar2DayFill className="text-xl" />
+            </div>
             Routine
           </div>
         </ActiveLink>
         {/* Result */}
         <ActiveLink to={"/result"}>
           <div className="flex gap-3 items-center">
-            <TbFileAnalytics className="text-xl" />
+            <div className="rounded-2xl bg-[#582CFF] p-2">
+              <IoNewspaperSharp className="text-xl" />
+            </div>
             Result
           </div>
         </ActiveLink>
         {/* Waiver */}
         <ActiveLink to={"/waiver"}>
           <div className="flex gap-3 items-center">
-            <RiMoneyDollarBoxLine className="text-xl" />
+            <div className="rounded-2xl bg-[#582CFF] p-2">
+              <RiMoneyPoundBoxFill className="text-xl" />
+            </div>
             Waiver and Fees
           </div>
         </ActiveLink>
