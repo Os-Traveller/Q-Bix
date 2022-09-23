@@ -11,6 +11,7 @@ import auth from "../firebase.init";
 import DpMaker from "./DpMaker";
 import { signOut } from "firebase/auth";
 import { useEffect } from "react";
+import myDp from "../img/dp.jpg";
 
 const SideNav = () => {
   const [user] = useAuthState(auth);
@@ -25,7 +26,7 @@ const SideNav = () => {
       <div className="flex flex-col gap-3">
         <div className="text-white">
           <div className="flex gap-3 mb-5">
-            <DpMaker name={user?.displayName} fontSize="20px" img={user?.photoURL} />
+            <DpMaker name={user?.displayName} fontSize="20px" img={myDp} />
             <div>
               <h1>{user?.displayName}</h1>
               <p className="text-gray-400 text-xs">{user?.email}</p>

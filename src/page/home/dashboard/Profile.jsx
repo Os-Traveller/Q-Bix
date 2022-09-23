@@ -7,7 +7,7 @@ import DpMaker from "../../../components/DpMaker";
 import { MdOutlineEdit } from "react-icons/md";
 const Profile = () => {
   const [user] = useAuthState(auth);
-  const radious = "40px";
+  // const radious = "40px";
   return (
     <>
       <div className="card relative p-0">
@@ -27,10 +27,8 @@ const Profile = () => {
           <div>
             <h1 className="text-3xl">{user?.displayName}</h1>
           </div>
-          <button
-            className="rounded-full bg-[#464A4D] centerXY buble"
-            style={{ height: radious, width: radious }}
-          >
+          <button className="rounded-xl py-1 px-5 bg-[#582CFF] flex items-center gap-2 buble">
+            Edit Profile
             <MdOutlineEdit className="text-xl" />
           </button>
         </div>
