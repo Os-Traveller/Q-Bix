@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div>
       <Profile />
-      <div className="mb-8"></div>
+      <div className="mb-5"></div>
       <StudentGraph />
     </div>
   );

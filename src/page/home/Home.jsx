@@ -8,10 +8,11 @@ import auth from "../../firebase.init";
 const Home = () => {
   const [user] = useAuthState(auth);
   useEffect(() => {}, [user]);
+
   return (
-    <section className="page p-3" style={{ backgroundImage: `url(${bg})` }}>
+    <section className="page p-5" style={{ backgroundImage: `url(${bg})` }}>
       <SideNav />
-      <div className="text-white">
+      <div className="text-white overflow-auto">
         <Outlet />
       </div>
     </section>

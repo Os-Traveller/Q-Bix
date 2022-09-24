@@ -7,7 +7,7 @@ const ActiveLink = ({ to, children }) => {
       style={{ width: "100%" }}
       className={({ isActive }) =>
         (isActive ? "bg-[#1A1F37] font-semibold" : "text-gray-400") +
-        " text-white block py-3 px-5 w-full rounded-xl "
+        " text-white block py-3 px-5 w-fit lg:w-full rounded-xl "
       }
       to={to}
     >

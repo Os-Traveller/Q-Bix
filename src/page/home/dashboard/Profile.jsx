@@ -1,18 +1,19 @@
 import React from "react";
 import myDp from "../../../img/dp.jpg";
-import cover from "../../../img/cover.jpg";
+import cover from "../../../img/cover.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
 import DpMaker from "../../../components/DpMaker";
 import { MdOutlineEdit } from "react-icons/md";
+import ProfileInfo from "./ProfileInfo";
+
 const Profile = () => {
   const [user] = useAuthState(auth);
-  // const radious = "40px";
   return (
     <>
-      <div className="card relative p-0">
+      <div className="card backdrop-filter-blur bg-opacity-40 relative p-0">
         <div
-          className="h-[180px] rounded-t-xl"
+          className="h-[250px] rounded-t-xl"
           style={{
             backgroundImage: `url(${cover})`,
             backgroundSize: "cover",
@@ -21,9 +22,9 @@ const Profile = () => {
           }}
         ></div>
         <div className="toUp">
-          <DpMaker img={myDp} height="150px" />
+          <DpMaker img={myDp} height="180px" />
         </div>
-        <div className="flex justify-between p-5 mt-14">
+        <div className="flex justify-between p-5 mt-24">
           <div>
             <h1 className="text-3xl">{user?.displayName}</h1>
           </div>
@@ -32,6 +33,10 @@ const Profile = () => {
             <MdOutlineEdit className="text-xl" />
           </button>
         </div>
+      </div>
+
+      <div className="mt-5">
+        <ProfileInfo />
       </div>
     </>
   );

@@ -35,7 +35,6 @@ export const areaChart = ({ fontColor, bgColors, categories }) => {
       },
       colors: ["#2CD9FF", "#582CFF"],
     },
-    colors: ["#2CD9FF", "#582CFF"],
     grid: {
       strokeDashArray: 5,
       borderColor: "#56577A",

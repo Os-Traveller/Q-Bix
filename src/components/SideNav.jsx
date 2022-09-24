@@ -71,12 +71,12 @@ const SideNav = () => {
           </div>
         </ActiveLink>
         {/* Waiver */}
-        <ActiveLink to={"/waiver"}>
+        <ActiveLink to={"/fees"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
               <RiMoneyPoundBoxFill className="text-xl" />
             </div>
-            Waiver and Fees
+            Fees
           </div>
         </ActiveLink>
       </div>

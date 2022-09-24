@@ -24,8 +24,7 @@ function App() {
         <Route path="cources" element={<Cources />} />
         <Route path="routine" element={<Routine />} />
         <Route path="result" element={<Result />} />
-        <Route path="waiver" element={<Waiver />} />
-        <Route path="waiver" element={<Waiver />} />
+        <Route path="fees" element={<Waiver />} />
       </Route>
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
