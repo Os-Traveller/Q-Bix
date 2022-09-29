@@ -12,6 +12,7 @@ import DpMaker from "./DpMaker";
 import { signOut } from "firebase/auth";
 import { useEffect } from "react";
 import myDp from "../img/dp.jpg";
+import Logo from "./Logo";
 
 const SideNav = () => {
   const [user] = useAuthState(auth);
@@ -21,7 +22,8 @@ const SideNav = () => {
   return (
     <section className="card sideNav backdrop-filter-blur">
       {/* app name */}
-      <h1 className="text-center text-white font-mono font-bold text-3xl mb-10">Q-Bix</h1>
+      <Logo font={"30px"} hideText={true} />
+      {/* <h1 className="text-center text-white font-mono font-bold text-3xl mb-10">Q-Bix</h1> */}
       {/* --------------------- links start here --------------------- */}
       <div className="flex flex-col gap-3">
         <div className="text-white">

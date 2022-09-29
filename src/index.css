@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lemonada&display=swap");
 
 html,
 body {
@@ -31,6 +33,15 @@ input:-webkit-autofill {
   background-clip: padding-box;
 }
 
+.logo {
+  /* font-family: "Monoton", cursive; */
+  /* font-family: "Oleo Script", cursive; */
+  /* font-family: "Fredericka the Great", cursive; */
+  font-family: "Lemonada", cursive;
+}
+.logoText {
+  font-family: "Parisienne", cursive;
+}
 .page {
   width: 100%;
   height: 100vh;
@@ -82,7 +93,7 @@ input:-webkit-autofill {
     @apply hover:scale-125 transition-all duration-300;
   }
   .card {
-    @apply bg-[#070B27] rounded-2xl p-5 w-full opacity-80;
+    @apply bg-[#070B27] rounded-2xl p-5 w-full opacity-70;
   }
   .centerXY {
     @apply flex items-center justify-center;

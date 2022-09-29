@@ -1,6 +1,7 @@
 import React from "react";
 import profileBg from "../../../img/bgProfile.png";
 import StatCard from "../../../components/StatCard";
+import Table from "../../../components/Table";
 
 const Cources = () => {
   return (
@@ -22,6 +23,8 @@ const Cources = () => {
         <StatCard title={"Cources"} completed={30} total={120} fontColor={"#582CFF"} />
         <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />
       </div>
+      {/* presrnt cources */}
+      <Table />
     </section>
   );
 };
