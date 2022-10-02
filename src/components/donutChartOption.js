@@ -3,7 +3,7 @@ export const donutChartOption = ({ fontColor, label }) => {
     plotOptions: {
       radialBar: {
         hollow: {
-          size: 60,
+          size: 50,
         },
       },
     },

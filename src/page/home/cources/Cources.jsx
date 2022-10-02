@@ -2,19 +2,13 @@ import React from "react";
 import profileBg from "../../../img/bgProfile.png";
 import StatCard from "../../../components/StatCard";
 import Table from "../../../components/Table";
+import { bgImg } from "../../../components/styles";
 
 const Cources = () => {
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-5">
-        <div
-          className="card w-fit flex-grow"
-          style={{
-            backgroundImage: `url(${profileBg})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
+        <div className="card w-fit flex-grow" style={{ ...bgImg(profileBg) }}>
           <h1 className="text-2xl">Welcome Back!</h1>
           <p className="mt-2">
             Nice to see you, <span className="text-xl font-bold font-mono">{"Faisal Ahmed"}</span>

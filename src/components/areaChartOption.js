@@ -10,8 +10,10 @@ export const areaChart = ({ fontColor, bgColors, categories }) => {
       theme: "dark",
     },
     colors: bgColors,
+    dataLabels: {
+      enabled: false,
+    },
     stroke: { width: 4, curve: "smooth" },
-
     xaxis: {
       labels: {
         style: {
@@ -45,6 +47,8 @@ export const areaChart = ({ fontColor, bgColors, categories }) => {
           colors: fontColor,
         },
       },
+      min: 0,
+      max: 4,
       title: {
         style: { fontSize: 18, color: fontColor },
       },

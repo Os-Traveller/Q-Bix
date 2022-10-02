@@ -1,14 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useMatch, useResolvedPath } from "react-router-dom";
 
 const ActiveLink = ({ to, children }) => {
+  let resolved = useResolvedPath(to);
+  let match = useMatch({ path: resolved.pathname, end: true });
   return (
     <NavLink
       style={{ width: "100%" }}
-      className={({ isActive }) =>
-        (isActive ? "bg-[#1A1F37] font-semibold" : "text-gray-400") +
-        " text-white block py-3 px-5 w-fit lg:w-full rounded-xl "
-      }
+      className={`text-white block py-3 px-5 w-fit lg:w-full rounded-xl ${
+        match ? "bg-[#1A1F37] font-semibold" : "text-gray-400"
+      }`}
       to={to}
     >
       {children}

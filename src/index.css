@@ -20,10 +20,6 @@ input:-webkit-autofill:active {
   outline: none;
 }
 
-input:-webkit-autofill {
-  -webkit-text-fill-color: #fff !important;
-}
-
 ::-webkit-scrollbar {
   width: 1px;
 }
@@ -34,9 +30,6 @@ input:-webkit-autofill {
 }
 
 .logo {
-  /* font-family: "Monoton", cursive; */
-  /* font-family: "Oleo Script", cursive; */
-  /* font-family: "Fredericka the Great", cursive; */
   font-family: "Lemonada", cursive;
 }
 .logoText {
@@ -50,20 +43,13 @@ input:-webkit-autofill {
   gap: 20px;
   overflow: hidden;
 }
-
 .sideNav {
   height: 100%;
   width: 100%;
   display: grid;
   grid-template-rows: 70px 1fr auto;
-  overflow: hidden;
+  overflow-y: auto;
 }
-
-/* @media only screen and (max-width: 1000px) {
-  .page {
-    grid-template-columns: 100px 1fr;
-  }
-} */
 .linerBg {
   background: linear-gradient(to bottom right, #222222, #392c58);
 }

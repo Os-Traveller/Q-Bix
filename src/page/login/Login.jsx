@@ -26,11 +26,11 @@ const Login = () => {
 
   return (
     <section className="bg-[#0B0F33] h-screen flex">
-      <div className="w-1/2 centerXY lg:flex hidden" style={{ ...bgImg(bgAuth) }}>
+      <div className="w-[60%] centerXY lg:flex hidden" style={{ ...bgImg(bgAuth) }}>
         <Logo font={"50px"} />
       </div>
-      <div className="md:pl-32 p-10 lg:w-1/2 w-full items-center flex justify-center md:justify-start text-white">
-        <form onSubmit={handleLogin}>
+      <div className="md:p-32 p-10 lg:w-1/2 w-full flex justify-center md:justify-start items-center text-white">
+        <form className="w-fit" onSubmit={handleLogin}>
           <h2 className="text-3xl font-semibold">Nice to see you!</h2>
           <p className="text-gray-400 mt-2">Enter Your Email and Password to Sign In</p>
           <div className="flex gap-5 mt-5">

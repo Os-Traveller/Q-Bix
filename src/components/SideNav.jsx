@@ -25,7 +25,7 @@ const SideNav = () => {
       <Logo font={"30px"} hideText={true} />
       {/* <h1 className="text-center text-white font-mono font-bold text-3xl mb-10">Q-Bix</h1> */}
       {/* --------------------- links start here --------------------- */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mt-5">
         <div className="text-white">
           <div className="flex gap-3 mb-5">
             <DpMaker name={user?.displayName} fontSize="20px" img={myDp} />

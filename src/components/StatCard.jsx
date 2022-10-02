@@ -26,7 +26,7 @@ const StatCard = ({ title, completed, total, fontColor }) => {
         <div>
           <Chart
             type="radialBar"
-            width={"100%"}
+            width={200}
             height={300}
             series={[size]}
             options={donutChartOption({ fontColor, label: title })}
