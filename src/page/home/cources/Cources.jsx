@@ -5,6 +5,63 @@ import Table from "../../../components/Table";
 import { bgImg } from "../../../components/styles";
 
 const Cources = () => {
+  const data = [
+    {
+      courseCode: "ACT 201",
+      courseTitle: "Accounting Fundamental",
+      credit: 2,
+      type: "Theory",
+      grade: "A+",
+      final: 34,
+      mid: 22.5,
+      out30: 25.5,
+      total: 82,
+    },
+    {
+      courseCode: "CSE 205",
+      courseTitle: "Digital Logic Design",
+      credit: 3,
+      type: "Theory",
+      grade: "A+",
+      final: 33,
+      mid: 24,
+      out30: 29,
+      total: 86,
+    },
+    {
+      courseCode: "CSE 207",
+      courseTitle: "Database Systems",
+      credit: 3,
+      type: "Theory",
+      grade: "A+",
+      final: 34,
+      mid: 24,
+      out30: 29,
+      total: 87,
+    },
+    {
+      courseCode: "CSE 208",
+      courseTitle: "Database Systems Lab",
+      credit: 3,
+      type: "Lab",
+      grade: "A+",
+      final: 37,
+      mid: 23,
+      out30: 27,
+      total: 87,
+    },
+  ];
+  const attribute = [
+    "Course Code",
+    "Course Title",
+    "Credit",
+    "Type",
+    "Grade",
+    "Final",
+    "Mid",
+    "Out of 30",
+    "Total",
+  ];
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-5">
@@ -18,7 +75,7 @@ const Cources = () => {
         <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />
       </div>
       {/* presrnt cources */}
-      <Table />
+      <Table data={data} attribute={attribute} title="Summer - 2020" color="#48BB78" />
     </section>
   );
 };

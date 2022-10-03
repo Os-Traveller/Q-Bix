@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import ActiveLink from "./ActiveLink";
 import { FaHome } from "react-icons/fa";
 import { MdCollectionsBookmark } from "react-icons/md";
 import { BsFillCalendar2DayFill } from "react-icons/bs";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { RiMoneyPoundBoxFill } from "react-icons/ri";
+import { BsToggle2On, BsToggle2Off } from "react-icons/bs";
 import { CgLogOut } from "react-icons/cg";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
@@ -15,6 +16,7 @@ import myDp from "../img/dp.jpg";
 import Logo from "./Logo";
 
 const SideNav = () => {
+  const [theme, setTheme] = useState("light");
   const [user] = useAuthState(auth);
   useEffect(() => {
     document.title = `${user?.displayName}'s Profile`;
@@ -81,6 +83,23 @@ const SideNav = () => {
             Fees
           </div>
         </ActiveLink>
+
+        <div
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="flex gap-3 items-center text-gray-400 cursor-pointer"
+        >
+          <div className="p-2">
+            <BsToggle2Off
+              className="text-xl"
+              style={{ display: theme === "dark" ? "none" : "block" }}
+            />
+            <BsToggle2On
+              className="text-xl"
+              style={{ display: theme === "dark" ? "block" : "none" }}
+            />
+          </div>
+          Theme
+        </div>
       </div>
       {/* --------------------- links ends here --------------------- */}
       <button
