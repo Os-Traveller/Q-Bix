@@ -23,7 +23,14 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="cources" element={<Cources />} />
         <Route path="routine" element={<Routine />} />
-        <Route path="result" element={<Result />} />
+        <Route path="result" element={<Result />}>
+          <Route path="semester" element={"Semester"} />
+          <Route path="all" element={"Semester"} />
+          <Route path="upcoming" element={"Semester"} />
+          <Route path="retake" element={"Semester"} />
+          <Route path="pending" element={"Semester"} />
+          <Route path="incomplete" element={"Semester"} />
+        </Route>
         <Route path="fees" element={<Waiver />} />
       </Route>
       <Route path="/signup" element={<Signup />} />

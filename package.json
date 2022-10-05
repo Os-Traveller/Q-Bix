@@ -15,7 +15,7 @@
     "nodemon": "^2.0.19",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
-    "react-dater": "^1.6.0",
+    "react-calendar": "^3.9.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.0.3",
     "react-icons": "^4.4.0",
