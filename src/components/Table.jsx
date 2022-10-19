@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = ({ data, attribute, title, color, full }) => {
+const Table = ({ data, attribute, title, color }) => {
   return (
     <div className="card">
       <h1
@@ -19,31 +19,31 @@ const Table = ({ data, attribute, title, color, full }) => {
         </thead>
 
         {data?.map((datam) => (
-          <TableROw cols={Object.values(datam)} color={color} full={full} />
+          <TableROw cols={datam} color={color} />
         ))}
       </table>
     </div>
   );
 };
 
-const TableROw = ({ cols, color, full }) => {
+const TableROw = ({ cols, color }) => {
+  console.log(cols);
+  const { courseCode, courseTitle, credit, type, grade, final, mid, out30, total } = cols;
   return (
     <tr className="border-b-[1px] border-gray-500 border-collapse text-center">
-      {cols?.map((col, index) => (
-        <td className="px-2 py-5 text-center font-semibold text-sm w-fit">
-          <span style={{ display: index === 0 ? "none" : "block" }}>{col}</span>
-          <button
-            className="py-2 px-3 rounded-md mx-auto text-sm"
-            style={{
-              display: index === 0 ? "block" : "none",
-              backgroundColor: color,
-              width: full ? "100%" : "fit-content",
-            }}
-          >
-            {col}
-          </button>
-        </td>
-      ))}
+      <td className="p-3">
+        <button className="py-2 px-3 rounded-md mx-auto text-sm" style={{ backgroundColor: color }}>
+          {courseCode}
+        </button>
+      </td>
+      <td>{courseTitle}</td>
+      <td>{credit}</td>
+      <td>{type}</td>
+      <td>{grade}</td>
+      <td>{final}</td>
+      <td>{mid}</td>
+      <td>{out30}</td>
+      <td>{total}</td>
     </tr>
   );
 };

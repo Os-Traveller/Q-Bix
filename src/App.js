@@ -5,9 +5,11 @@ import AuthProvider from "./authProvider/AuthProvider";
 import Home from "./page/home/Home";
 import Result from "./page/home/result/Result";
 import Routine from "./page/home/routine/Routine";
-import Waiver from "./page/home/waiver/Waiver";
 import Login from "./page/login/Login";
 import Signup from "./page/signup/Signup";
+import ResultSemester from "./page/home/result/ResultSemester";
+import ResultAll from "./page/home/result/ResultAll";
+import Fees from "./page/home/waiver/Fees";
 
 function App() {
   return (
@@ -24,14 +26,12 @@ function App() {
         <Route path="cources" element={<Cources />} />
         <Route path="routine" element={<Routine />} />
         <Route path="result" element={<Result />}>
-          <Route path="semester" element={"Semester"} />
-          <Route path="all" element={"Semester"} />
-          <Route path="upcoming" element={"Semester"} />
-          <Route path="retake" element={"Semester"} />
-          <Route path="pending" element={"Semester"} />
-          <Route path="incomplete" element={"Semester"} />
+          <Route index element={<ResultAll />} />
+          <Route path="semester" element={<ResultSemester />} />
+          <Route path="upcoming" element={"Upcoming"} />
+          <Route path="retake" element={"Retake"} />
         </Route>
-        <Route path="fees" element={<Waiver />} />
+        <Route path="fees" element={<Fees />} />
       </Route>
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />

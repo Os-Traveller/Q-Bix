@@ -20,11 +20,11 @@ input:-webkit-autofill:active {
   outline: none;
 }
 
-::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 1px;
 }
 
-::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: transparent;
   background-clip: padding-box;
 }
@@ -32,6 +32,7 @@ input:-webkit-autofill:active {
 .logo {
   font-family: "Lemonada", cursive;
 }
+
 .logoText {
   font-family: "Parisienne", cursive;
 }
@@ -62,6 +63,20 @@ input:-webkit-autofill:active {
   left: 20px;
   z-index: 10;
 }
+
+.modal {
+  background: rgba(9, 28, 82, 0.8);
+  min-height: 100vh;
+  min-width: 100vw;
+  position: fixed;
+  top: 0;
+}
+
+.modalBody {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
 @layer components {
   .btn {
     @apply px-5 py-2 text-center w-full;

@@ -34,7 +34,7 @@ const RoutineTable = ({ data, attribute, title, color }) => {
 
 const TableROw = ({ cols }) => {
   return (
-    <tr className="border-b-[1px] border-gray-500 border-collapse text-center text-sm">
+    <tr className="border-b-[1px] border-gray-500 border-collapse text-center text-sm h-[100px]">
       {cols?.map((col) => (
         <td className="px-1 py-5 text-center border-x-[1px]">{col}</td>
       ))}

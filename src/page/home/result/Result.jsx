@@ -1,16 +1,15 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import ActiveLinkResult from "../../../components/ActiveLinkResult";
 
 const Result = () => {
   return (
     <>
-      <div className="flex gap-5 flex-wrap justify-end">
-        <button className="card px-5 py-4 uppercase w-fit">Semester Wise Result</button>
-        <button className="card px-5 py-4 uppercase w-fit">All Published</button>
-        <button className="card px-5 py-4 uppercase w-fit">Upcoming Result</button>
-        <button className="card px-5 py-4 uppercase w-fit">Retake</button>
-        <button className="card px-5 py-4 uppercase w-fit">Pending</button>
-        <button className="card px-5 py-4 uppercase w-fit">Incomplete</button>
+      <div className="flex gap-3 flex-wrap justify-end mb-10">
+        <ActiveLinkResult to={"/result"}>All</ActiveLinkResult>
+        <ActiveLinkResult to={"semester"}>Semester Wise Result</ActiveLinkResult>
+        <ActiveLinkResult to={"upcoming"}>Upcoming Cources</ActiveLinkResult>
+        <ActiveLinkResult to={"retake"}>Retake</ActiveLinkResult>
       </div>
       <Outlet />
     </>
