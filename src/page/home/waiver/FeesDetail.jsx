@@ -40,7 +40,7 @@ const FeesDetail = () => {
   return (
     <div className="card">
       <h1
-        className="text-center font-semibold uppercase mb-10 text-2xl pt-3 px-5 border-t border-x border-gray-400 
+        className="text-center font-semibold uppercase mb-10 text-2xl pt-3 pb-2 px-5 border-t border-x border-gray-400 
         w-fit mx-auto rounded-tr-xl rounded-tl-xl"
         style={{ letterSpacing: "5px" }}
       >
@@ -98,7 +98,7 @@ const TableRow = ({ data }) => {
           <h1 className="text-xl font-semibold mb-8">Your Transaction</h1>
           <div className="flex flex-col gap-5">
             {detail?.map((data, index) => (
-              <div>
+              <div key={index}>
                 <h2 className="flex gap-2 items-center mb-2">
                   <BiCalendar className="text-2xl" />{" "}
                   <span className="uppercase text-sm font-semibold">{data?.date}</span>

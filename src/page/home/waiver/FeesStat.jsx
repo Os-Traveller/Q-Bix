@@ -52,7 +52,7 @@ const FeesBox = ({ radious, color, borderRadious, title, data }) => {
         className="mx-auto rounded-full centerXY"
       >
         <span className="font-semibold text-2xl" style={{ letterSpacing: "5px" }}>
-          {data} TK
+          &#x09F3; {data}
         </span>
       </div>
       <p className="mt-[-50px] font-semibold uppercase" style={{ letterSpacing: "2px" }}>
