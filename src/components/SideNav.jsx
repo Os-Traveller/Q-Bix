@@ -33,7 +33,9 @@ const SideNav = () => {
             <DpMaker name={user?.displayName} fontSize="20px" img={myDp} />
             <div>
               <h1>{user?.displayName}</h1>
-              <p className="text-gray-400 text-xs">{user?.email}</p>
+              <p className="text-gray-400 text-xs">
+                {user?.email.length > 25 ? user.email.slice(0, 22) + "..." : user.email}
+              </p>
             </div>
           </div>
         </div>
@@ -42,7 +44,7 @@ const SideNav = () => {
         <ActiveLink to={"/"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
-              <FaHome className="text-xl" />
+              <FaHome className="text-lg" />
             </div>
             Dashboard
           </div>
@@ -51,7 +53,7 @@ const SideNav = () => {
         <ActiveLink to={"/cources"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
-              <MdCollectionsBookmark className="text-xl" />
+              <MdCollectionsBookmark className="text-lg" />
             </div>
             Cources
           </div>
@@ -60,7 +62,7 @@ const SideNav = () => {
         <ActiveLink to={"/routine"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
-              <BsFillCalendar2DayFill className="text-xl" />
+              <BsFillCalendar2DayFill className="text-lg" />
             </div>
             Routine
           </div>
@@ -69,7 +71,7 @@ const SideNav = () => {
         <ActiveLink to={"/result"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
-              <IoNewspaperSharp className="text-xl" />
+              <IoNewspaperSharp className="text-lg" />
             </div>
             Result
           </div>
@@ -78,32 +80,32 @@ const SideNav = () => {
         <ActiveLink to={"/fees"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
-              <RiMoneyPoundBoxFill className="text-xl" />
+              <RiMoneyPoundBoxFill className="text-lg" />
             </div>
             Fees
           </div>
         </ActiveLink>
 
-        <div
+        {/* <div
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="flex gap-3 items-center text-gray-400 cursor-pointer"
         >
           <div className="p-2">
             <BsToggle2Off
-              className="text-xl"
+              className="text-lg"
               style={{ display: theme === "dark" ? "none" : "block" }}
             />
             <BsToggle2On
-              className="text-xl"
+              className="text-lg"
               style={{ display: theme === "dark" ? "block" : "none" }}
             />
           </div>
           Theme
-        </div>
+        </div> */}
       </div>
       {/* --------------------- links ends here --------------------- */}
       <button
-        className="bg-red-500 text-white rounded-xl flex gap-3 justify-center items-center 
+        className="bg-red-500 text-white rounded-lg flex gap-3 justify-center items-center 
       py-3 px-5 font-semibold mx-auto"
         onClick={() => signOut(auth)}
       >

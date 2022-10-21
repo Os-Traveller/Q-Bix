@@ -59,6 +59,7 @@ const FeesDetail = () => {
           <TableRow data={fee} key={index} />
         ))}
       </table>
+      {/* payment */}
     </div>
   );
 };

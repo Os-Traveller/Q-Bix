@@ -10,6 +10,7 @@ import Signup from "./page/signup/Signup";
 import ResultSemester from "./page/home/result/ResultSemester";
 import ResultAll from "./page/home/result/ResultAll";
 import Fees from "./page/home/waiver/Fees";
+import OnlinePayment from "./page/home/waiver/OnlinePayment";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="cources" element={<Cources />} />
         <Route path="routine" element={<Routine />} />
+        <Route path="online-payment" element={<OnlinePayment />} />
         <Route path="result" element={<Result />}>
           <Route index element={<ResultAll />} />
           <Route path="semester" element={<ResultSemester />} />

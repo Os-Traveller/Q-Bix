@@ -40,7 +40,7 @@ input:-webkit-autofill:active {
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 230px 1fr;
   gap: 20px;
   overflow: hidden;
 }
@@ -48,7 +48,7 @@ input:-webkit-autofill:active {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: 70px 1fr auto;
+  grid-template-rows: 60px 1fr auto;
   overflow-y: auto;
 }
 .linerBg {
@@ -76,13 +76,24 @@ input:-webkit-autofill:active {
   max-height: 500px;
   overflow-y: scroll;
 }
+.btnPay {
+  background: linear-gradient(45deg, #d8538d, #9c53f8);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  outline: none;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
+}
 
 @layer components {
   .btn {
     @apply px-5 py-2 text-center w-full;
-  }
-  .inputDiv {
-    @apply bg-[#1C1B22] flex items-center gap-3 py-2 px-3 text-white rounded-md optional:bg-[#1C1B22];
   }
   .input {
     @apply bg-transparent w-full outline-none text-white;

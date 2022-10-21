@@ -1,7 +1,10 @@
 import React from "react";
 import profileBg from "../../../img/bgProfile.png";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
 
 const ProfileInfo = () => {
+  const [user] = useAuthState(auth);
   return (
     <div className="flex flex-wrap gap-5">
       {/* greatings */}
@@ -15,7 +18,7 @@ const ProfileInfo = () => {
       >
         <h1 className="text-2xl">Welcome Back!</h1>
         <p className="mt-2">
-          Nice to see you, <span className="text-xl font-bold font-mono">{"Faisal Ahmed"}</span>
+          Nice to see you, <span className="text-xl font-bold font-mono">{user.displayName}</span>
         </p>
       </div>
       {/* profile information */}

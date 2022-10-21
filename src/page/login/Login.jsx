@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { GrGoogle } from "react-icons/gr";
 import { BsFacebook, BsGithub } from "react-icons/bs";
-import { RiMailSendLine, RiLockPasswordLine } from "react-icons/ri";
 import auth from "../../firebase.init";
 import bgAuth from "../../img/bgAuth.png";
 import { bgImg } from "../../components/styles";
 import Logo from "../../components/Logo";
 import Input from "../../components/Input";
 import IconCover from "../../components/IconCover";
+
 const Login = () => {
   const path = useNavigate();
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -42,10 +42,16 @@ const Login = () => {
             <Input title="Email" placeholder="Your email adress" name="email" type="email" />
             <Input title="Password" placeholder="Your password" name="password" type="password" />
             <p className="text-white font-semibold underline">Forgot password?</p>
-            <button className="btn bg-[#542DE1] rounded-xl">LOG IN</button>
+            <button className="btn bg-[#542DE1] rounded-xl uppercase">Login</button>
 
             <p className="text-gray-400 font-semibold text-center">
-              Don't have any Account? <span className="text-white font-semibold">Sing Up</span>
+              Don't have any Account?{" "}
+              <span
+                className="text-white font-semibold cursor-pointer"
+                onClick={() => path("/signup")}
+              >
+                Sing Up
+              </span>
             </p>
           </div>
         </form>
