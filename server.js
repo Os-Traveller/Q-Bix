@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
+require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 const ObjectId = require("mongodb").ObjectId;
@@ -14,7 +15,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-const url = `mongodb+srv://q-bix-db:all-u-want@ost-cluster.i42fc.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${process.env.user_name}:${process.env.pass}@ost-cluster.i42fc.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
