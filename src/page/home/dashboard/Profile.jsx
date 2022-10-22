@@ -18,11 +18,11 @@ const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
   const { data: stdDB, refetch: userRefetch } = useGetUser(user?.email);
   const std = new Student({ email: user?.email, name: user?.displayName });
-  const [dept, setDept] = useState(stdDB.dept);
-  const [intake, setIntake] = useState(stdDB.intake);
-  const [section, setSection] = useState(stdDB.section);
-  const [phone, setPhone] = useState(stdDB.phone);
-  const [location, setLocation] = useState(stdDB.location);
+  const [dept, setDept] = useState(stdDB?.dept);
+  const [intake, setIntake] = useState(stdDB?.intake);
+  const [section, setSection] = useState(stdDB?.section);
+  const [phone, setPhone] = useState(stdDB?.phone);
+  const [location, setLocation] = useState(stdDB?.location);
 
   // updating profile
   const updateProfile = (e) => {
