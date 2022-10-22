@@ -12,14 +12,16 @@ const Table = ({ data, attribute, title, color }) => {
       <table className="w-full mt-10">
         <thead className="border-y-[1px] border-gray-500 border-collapse">
           <tr className="text-gray-400 uppercase">
-            {attribute?.map((singleAtt) => (
-              <th className="py-2 font-semibold">{singleAtt}</th>
+            {attribute?.map((singleAtt, index) => (
+              <th key={index} className="py-2 font-semibold">
+                {singleAtt}
+              </th>
             ))}
           </tr>
         </thead>
 
-        {data?.map((datam) => (
-          <TableROw cols={datam} color={color} />
+        {data?.map((datam, index) => (
+          <TableROw cols={datam} color={color} key={index} />
         ))}
       </table>
     </div>
@@ -27,7 +29,6 @@ const Table = ({ data, attribute, title, color }) => {
 };
 
 const TableROw = ({ cols, color }) => {
-  console.log(cols);
   const { courseCode, courseTitle, credit, type, grade, final, mid, out30, total } = cols;
   return (
     <tr className="border-b-[1px] border-gray-500 border-collapse text-center">

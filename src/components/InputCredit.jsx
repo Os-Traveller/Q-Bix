@@ -1,10 +1,10 @@
 import React from "react";
 import { colorGray } from "./colors";
 
-const InputCredit = ({ id, type, title, state, setState, detail }) => {
+const InputCredit = ({ id, type, title, state, setState, detail, width }) => {
   return (
     <div className="w-full flex items-end">
-      <label className="my-2 block w-[30%]" htmlFor={id}>
+      <label className="my-2 block w-[30%]" htmlFor={id} style={{ width: width }}>
         <span className="font-semibold block">{title}</span>
         <span className="text-sm text-gray-400 mt-1">{detail}</span>
       </label>

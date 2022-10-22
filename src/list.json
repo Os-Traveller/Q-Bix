@@ -1,0 +1,9 @@
+{
+  "student": [
+    { "id": 19202103135, "name": "Faisal Ahmed", "account": false },
+    { "id": 19202103148, "name": "Shahidul Islam", "account": false },
+    { "id": 20211103012, "name": "Sadia Tasnim Sia", "account": false },
+    { "id": 20211103013, "name": "Meherun Nesa Mim", "account": false }
+  ],
+  "teacher": []
+}

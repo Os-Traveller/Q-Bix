@@ -1,7 +1,6 @@
 import React from "react";
 
 const RoutineTable = ({ data, attribute, title, color }) => {
-  console.log(data);
   return (
     <div className="card">
       <h1
@@ -24,8 +23,8 @@ const RoutineTable = ({ data, attribute, title, color }) => {
           </tr>
         </thead>
 
-        {data?.map((datam) => (
-          <TableROw cols={datam} />
+        {data?.map((datam, index) => (
+          <TableROw cols={datam} key={index} />
         ))}
       </table>
     </div>

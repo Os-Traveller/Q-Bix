@@ -11,6 +11,7 @@ const Input = ({ id, title, placeholder, type, name }) => {
         name={name}
         style={{ border: "1px solid white" }}
         placeholder={placeholder}
+        required
       />
     </div>
   );

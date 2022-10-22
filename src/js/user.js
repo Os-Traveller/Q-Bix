@@ -1,12 +1,48 @@
+import { serverAddress } from "../components/varables";
+
 class User {
-  constructor({ name, email, role, imgUrl }) {
+  //  variables
+  name;
+  email;
+  id;
+  role;
+  phone;
+  location;
+  // constuctor
+  constructor({ name, email, role, imgUrl, id }) {
     this.name = name;
     this.email = email;
     this.role = role;
     this.imgUrl = imgUrl;
+    this.id = id;
   }
-  displayAll() {
-    console.log(this.name, this.role);
+  // methods to get user information
+  getUserInfo() {
+    return {
+      name: this.name,
+      email: this.email,
+      role: this.role,
+      imgUrl: this.imgUrl,
+      id: this.id,
+    };
+  }
+  // crete user in DB
+  createUser() {
+    const url = `${serverAddress}/create-user`;
+    console.log(url);
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ name: this.name, email: this.email, role: this.role, id: this.id }),
+    };
+    const res = fetch(url, requestOptions).then((res) => res.json());
+    return res;
+  }
+  // getting userInfo from DB
+  getUserInfoServer(email) {
+    const url = `${serverAddress}/user/${email}`;
+    const user = fetch(url).then((res) => res.json());
+    return user;
   }
 }
 
