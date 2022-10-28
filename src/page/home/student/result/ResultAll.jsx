@@ -1,8 +1,42 @@
 import React from "react";
-import Table from "../../../components/Table";
-import { colorGreen } from "../../../components/colors";
-const ResultSemester = () => {
+import Table from "../../../../components/shared/Table";
+import { colorGreen } from "../../../../components/styles/colors";
+
+const ResultAll = () => {
   const data = [
+    {
+      courseCode: "CSE 111",
+      courseTitle: "Structured Programming Language",
+      credit: 3,
+      type: "Theory",
+      grade: "A+",
+      final: 34,
+      mid: 22.5,
+      out30: 25.5,
+      total: 82,
+    },
+    {
+      courseCode: "ENG 101",
+      courseTitle: "English Language-I",
+      credit: 3,
+      type: "Theory",
+      grade: "A+",
+      final: 34,
+      mid: 22.5,
+      out30: 25.5,
+      total: 82,
+    },
+    {
+      courseCode: "CSE 111",
+      courseTitle: "Structured Programming Language",
+      credit: 3,
+      type: "Theory",
+      grade: "A+",
+      final: 34,
+      mid: 22.5,
+      out30: 25.5,
+      total: 82,
+    },
     {
       courseCode: "ACT 201",
       courseTitle: "Accounting Fundamental",
@@ -62,9 +96,9 @@ const ResultSemester = () => {
 
   return (
     <div>
-      <Table attribute={attribute} data={data} color={colorGreen} title={"Summer - 2022"} />
+      <Table data={data} color={colorGreen} attribute={attribute} title={"All Semester"} />
     </div>
   );
 };
 
-export default ResultSemester;
+export default ResultAll;

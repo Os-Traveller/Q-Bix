@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import { donutChartOption } from "./donutChartOption";
+import { donutChartOption } from "../styles/donutChartOption";
 
 const StatCard = ({ title, completed, total, fontColor }) => {
   const size = parseInt((completed * 100) / total);

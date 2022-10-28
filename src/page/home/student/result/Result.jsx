@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import ActiveLinkResult from "../../../components/ActiveLinkResult";
+import ActiveLinkResult from "../../../../components/activeLink/ActiveLinkResult";
 
 const Result = () => {
   return (

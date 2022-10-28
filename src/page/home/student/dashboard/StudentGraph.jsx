@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import { areaChart } from "../../../components/areaChartOption";
+import { areaChart } from "../../../../components/styles/areaChartOption";
 
 const StudentGraph = () => {
   const fontColor = "white";

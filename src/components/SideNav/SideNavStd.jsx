@@ -1,26 +1,22 @@
-import React, { useState } from "react";
-import ActiveLink from "./ActiveLink";
+import React from "react";
+import ActiveLink from "../../components/activeLink/ActiveLink";
 import { FaHome } from "react-icons/fa";
 import { MdCollectionsBookmark } from "react-icons/md";
 import { BsFillCalendar2DayFill } from "react-icons/bs";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { RiMoneyPoundBoxFill } from "react-icons/ri";
-import { BsToggle2On, BsToggle2Off } from "react-icons/bs";
 import { CgLogOut } from "react-icons/cg";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase.init";
-import DpMaker from "./DpMaker";
+import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
-import { useEffect } from "react";
-import myDp from "../img/dp.jpg";
-import Logo from "./Logo";
+import myDp from "../../img/dp.jpg";
+import useGetUser from "../../hooks/useGetUser";
+import { useAuthState } from "react-firebase-hooks/auth";
+import DpMaker from "../shared/DpMaker";
+import Logo from "../shared/Logo";
 
-const SideNav = () => {
-  const [theme, setTheme] = useState("light");
-  const [user] = useAuthState(auth);
-  useEffect(() => {
-    document.title = `${user?.displayName}'s Profile`;
-  }, [user]);
+const SideNavStd = () => {
+  const [userFirebase] = useAuthState(auth);
+  const { data: user } = useGetUser(userFirebase?.email);
   return (
     <section className="card sideNav backdrop-filter-blur">
       {/* app name */}
@@ -30,11 +26,11 @@ const SideNav = () => {
       <div className="flex flex-col gap-3 mt-5">
         <div className="text-white">
           <div className="flex gap-3 mb-5">
-            <DpMaker name={user?.displayName} fontSize="20px" img={myDp} />
+            <DpMaker name={user?.name} fontSize="20px" img={myDp} />
             <div>
-              <h1>{user?.displayName}</h1>
+              <h1>{user?.name}</h1>
               <p className="text-gray-400 text-xs">
-                {user?.email.length > 25 ? user.email.slice(0, 22) + "..." : user.email}
+                {user?.email?.length > 25 ? user?.email?.slice(0, 22) + "..." : user?.email}
               </p>
             </div>
           </div>
@@ -50,12 +46,12 @@ const SideNav = () => {
           </div>
         </ActiveLink>
         {/* cources */}
-        <ActiveLink to={"/cources"}>
+        <ActiveLink to={"/courses"}>
           <div className="flex gap-3 items-center">
             <div className="rounded-2xl bg-[#582CFF] p-2">
               <MdCollectionsBookmark className="text-lg" />
             </div>
-            Cources
+            Courses
           </div>
         </ActiveLink>
         {/* Routine */}
@@ -85,28 +81,11 @@ const SideNav = () => {
             Fees
           </div>
         </ActiveLink>
-
-        {/* <div
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="flex gap-3 items-center text-gray-400 cursor-pointer"
-        >
-          <div className="p-2">
-            <BsToggle2Off
-              className="text-lg"
-              style={{ display: theme === "dark" ? "none" : "block" }}
-            />
-            <BsToggle2On
-              className="text-lg"
-              style={{ display: theme === "dark" ? "block" : "none" }}
-            />
-          </div>
-          Theme
-        </div> */}
       </div>
       {/* --------------------- links ends here --------------------- */}
       <button
-        className="bg-red-500 text-white rounded-lg flex gap-3 justify-center items-center 
-      py-3 px-5 font-semibold mx-auto"
+        className="bg-red-500 text-white rounded-lg flex gap-3 justify-center items-center py-3 px-5 font-semibold 
+        mx-auto"
         onClick={() => signOut(auth)}
       >
         <CgLogOut />
@@ -116,4 +95,4 @@ const SideNav = () => {
   );
 };
 
-export default SideNav;
+export default SideNavStd;

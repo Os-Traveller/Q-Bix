@@ -11,11 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClinet = new QueryClient();
 root.render(
   <QueryClientProvider client={queryClinet}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-        <ToastContainer />
-      </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+      <App />
+      <ToastContainer />
+    </BrowserRouter>
   </QueryClientProvider>
 );

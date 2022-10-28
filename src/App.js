@@ -1,16 +1,18 @@
 import { Route, Routes } from "react-router-dom";
-import Cources from "./page/home/cources/Cources";
-import Dashboard from "./page/home/dashboard/Dashboard";
 import AuthProvider from "./authProvider/AuthProvider";
+// components
 import Home from "./page/home/Home";
-import Result from "./page/home/result/Result";
-import Routine from "./page/home/routine/Routine";
 import Login from "./page/login/Login";
 import Signup from "./page/signup/Signup";
-import ResultSemester from "./page/home/result/ResultSemester";
-import ResultAll from "./page/home/result/ResultAll";
-import Fees from "./page/home/waiver/Fees";
-import OnlinePayment from "./page/home/waiver/OnlinePayment";
+import StdDashboard from "./page/home/student/dashboard/StdDashboard";
+import Result from "./page/home/student/result/Result";
+import Routine from "./page/home/student/routine/Routine";
+import ResultSemester from "./page/home/student/result/ResultSemester";
+import ResultAll from "./page/home/student/result/ResultAll";
+import Courses from "./page/home/student/courses/Courses";
+import OnlinePayment from "./page/home/student/waiver/OnlinePayment";
+import Registration from "./page/home/student/courses/Registration";
+import Fees from "./page/home/student/waiver/Fees";
 
 function App() {
   return (
@@ -23,10 +25,11 @@ function App() {
           </AuthProvider>
         }
       >
-        <Route index element={<Dashboard />} />
-        <Route path="cources" element={<Cources />} />
+        <Route index element={<StdDashboard />} />
+        <Route path="courses" element={<Courses />} />
         <Route path="routine" element={<Routine />} />
         <Route path="online-payment" element={<OnlinePayment />} />
+        <Route path="registration" element={<Registration />} />
         <Route path="result" element={<Result />}>
           <Route index element={<ResultAll />} />
           <Route path="semester" element={<ResultSemester />} />

@@ -1,9 +1,77 @@
 {
-  "student": [
-    { "id": 19202103135, "name": "Faisal Ahmed", "account": false },
-    { "id": 19202103148, "name": "Shahidul Islam", "account": false },
-    { "id": 20211103012, "name": "Sadia Tasnim Sia", "account": false },
-    { "id": 20211103013, "name": "Meherun Nesa Mim", "account": false }
-  ],
-  "teacher": []
+  "courseInfoStd": {
+    "semesterName": "summer - 2022",
+    "subject": [
+      {
+        "title": "Name",
+        "code": "courseCode",
+        "credit": "credit",
+        "mid": "mid",
+        "thirty": "thirty",
+        "final": "final"
+      }
+    ]
+  },
+
+  "allCourse": {
+    "cse": [
+      [
+        { "title": "Physics", "code": "phy 201", "credit": 3, "type": "theory" },
+        {
+          "title": "Differential and Integral Calculus",
+          "code": "mat 101",
+          "credit": 3,
+          "type": "theory"
+        },
+        {
+          "title": "Structured Programming Language",
+          "code": "cse 111",
+          "credit": 3,
+          "type": "theory"
+        },
+        {
+          "title": "Structured Programming Language Lab",
+          "code": "cse 112",
+          "credit": 1.5,
+          "type": "lab"
+        },
+        {
+          "title": "English Language-I",
+          "code": "eng 101",
+          "credit": 3,
+          "type": "theory"
+        }
+      ],
+      [
+        { "title": "Accounting Fundamental", "code": "act 201", "credit": 2, "type": "theory" },
+        { "title": "Digital Logic Design", "code": "cse 205", "credit": 3, "type": "theory" },
+        { "title": "Digital Logic Design Lab", "code": "cse 206", "credit": 1.5, "type": "lab" },
+        { "title": "Database System", "code": "cse 207", "credit": 3, "type": "theory" },
+        { "title": "Database System Lab", "code": "cse 208", "credit": 1.5, "type": "lab" },
+        { "title": "Fourier Analysis", "code": "mat 331", "credit": 3, "type": "theory" }
+      ],
+      [
+        { "title": "Accounting Fundamental", "code": "act 201", "credit": 2, "type": "theory" },
+        { "title": "Digital Logic Design", "code": "cse 205", "credit": 3, "type": "theory" },
+        { "title": "Digital Logic Design Lab", "code": "cse 206", "credit": 1.5, "type": "lab" },
+        { "title": "Database System", "code": "cse 207", "credit": 3, "type": "theory" },
+        { "title": "Database System Lab", "code": "cse 208", "credit": 1.5, "type": "lab" },
+        { "title": "Fourier Analysis", "code": "mat 331", "credit": 3, "type": "theory" }
+      ]
+    ]
+  },
+  "dept": {
+    "cse": {
+      "intake": {
+        "44": { "semester": 3 },
+        "45": { "semester": 2 },
+        "46": { "semester": 1 }
+      }
+    },
+    "eee": {
+      "intake": {
+        "32": [1]
+      }
+    }
+  }
 }

@@ -1,11 +1,19 @@
 import React from "react";
-import profileBg from "../../../img/bgProfile.png";
-import StatCard from "../../../components/StatCard";
-import Table from "../../../components/Table";
-import { bgImg } from "../../../components/styles";
-import { colorGreen } from "../../../components/colors";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 
-const Cources = () => {
+// images
+import cardBg from "../../../../img/cardBG.png";
+// components
+import { bgImg } from "../../../../components/styles/styles";
+import StatCard from "../../../../components/shared/StatCard";
+import auth from "../../../../firebase.init";
+import Table from "../../../../components/shared/Table";
+import { colorGreen } from "../../../../components/styles/colors";
+
+const Courses = () => {
+  const [userFirebase] = useAuthState(auth);
+  const path = useNavigate();
   const data = [
     {
       courseCode: "ACT 201",
@@ -66,11 +74,24 @@ const Cources = () => {
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-5">
-        <div className="card w-fit flex-grow" style={{ ...bgImg(profileBg) }}>
-          <h1 className="text-2xl">Welcome Back!</h1>
-          <p className="mt-2">
-            Nice to see you, <span className="text-xl font-bold font-mono">{"Faisal Ahmed"}</span>
-          </p>
+        <div
+          className="card w-fit flex-grow flex flex-col justify-between"
+          style={{ ...bgImg(cardBg) }}
+        >
+          <div>
+            <h1 className="text-2xl">Welcome Back!</h1>
+            <p className="mt-2">
+              Nice to see you,{" "}
+              <span className="text-xl font-bold font-mono">{userFirebase?.displayName}</span>
+            </p>
+          </div>
+          <button
+            className="btn rounded-lg w-fit ml-auto"
+            style={{ backgroundColor: colorGreen }}
+            onClick={() => path("/registration")}
+          >
+            Registration
+          </button>
         </div>
         <StatCard title={"Cources"} completed={30} total={120} fontColor={"#582CFF"} />
         <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />
@@ -81,4 +102,4 @@ const Cources = () => {
   );
 };
 
-export default Cources;
+export default Courses;

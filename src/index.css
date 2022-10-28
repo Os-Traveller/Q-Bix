@@ -91,6 +91,10 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #fff !important;
 }
 
+.profileCover {
+  background: linear-gradient(45deg, #080814, #000029);
+}
+
 @layer components {
   .btn {
     @apply px-5 py-2 text-center w-full;

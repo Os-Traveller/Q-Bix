@@ -1,5 +1,5 @@
 import React from "react";
-import { colorGray } from "./colors";
+import { colorGray } from "../styles/colors";
 
 const InputCredit = ({ id, type, title, state, setState, detail, width }) => {
   return (

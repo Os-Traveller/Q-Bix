@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { colorGreen } from "../../../components/colors";
-import Modal from "../../../components/Modal";
 import { BiCalendar } from "react-icons/bi";
+import Modal from "../../../../components/shared/Modal";
+import { colorGreen } from "../../../../components/styles/colors";
 
 const FeesDetail = () => {
   const fees = [

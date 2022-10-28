@@ -26,8 +26,11 @@ async function run() {
   try {
     await client.connect().then(() => console.log("connected"));
     const database = client.db("q-bix");
+    // all tables
     const userCollection = database.collection("users");
     const studentsCollection = database.collection("students");
+    const courseCollection = database.collection("allCourse");
+    const deptCollection = database.collection("dept");
 
     // geting all student information
     app.get("/students", async (req, res) => {
@@ -82,6 +85,17 @@ async function run() {
       const query = { email: email };
       const user = await userCollection.findOne(query);
       res.send(user);
+    });
+
+    // get allCourse List
+    app.get("/course/:dept/:intake", async (req, res) => {
+      const dept = req.params.dept;
+      const intake = req.params.intake;
+      const intakeInfo = await deptCollection.findOne({});
+      // the current semester to find the course of that semester
+      const semester = intakeInfo[dept]?.intake[intake].semester;
+      const course = await courseCollection.findOne({});
+      res.send(course?.[dept]?.[semester - 1]);
     });
   } catch (err) {
     console.error(err);

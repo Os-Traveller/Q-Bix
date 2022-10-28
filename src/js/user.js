@@ -16,16 +16,6 @@ class User {
     this.imgUrl = imgUrl;
     this.id = id;
   }
-  // methods to get user information
-  getUserInfo() {
-    return {
-      name: this.name,
-      email: this.email,
-      role: this.role,
-      imgUrl: this.imgUrl,
-      id: this.id,
-    };
-  }
   // crete user in DB
   createUser() {
     const url = `${serverAddress}/create-user`;
@@ -39,11 +29,6 @@ class User {
     return res;
   }
   // getting userInfo from DB
-  getUserInfoServer(email) {
-    const url = `${serverAddress}/user/${email}`;
-    const user = fetch(url).then((res) => res.json());
-    return user;
-  }
 }
 
 export default User;

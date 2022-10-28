@@ -1,15 +1,12 @@
-import React, { useEffect } from "react";
-import profileBg from "../../../img/bgProfile.png";
+import React from "react";
+import profileBg from "../../../../img/bgProfile.png";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../../firebase.init";
-import useGetUser from "../../../hooks/useGetUser";
+import useGetUser from "../../../../hooks/useGetUser";
+import auth from "../../../../firebase.init";
 
-const ProfileInfo = () => {
-  const [user] = useAuthState(auth);
-  const { data: stdInfo, refetch } = useGetUser(user?.email);
-  useEffect(() => {
-    refetch();
-  }, []);
+const StdProfileInfo = () => {
+  const [userFirebase] = useAuthState(auth);
+  const { data: user } = useGetUser(userFirebase?.email);
 
   return (
     <div className="flex flex-wrap gap-5">
@@ -24,7 +21,7 @@ const ProfileInfo = () => {
       >
         <h1 className="text-2xl">Welcome Back!</h1>
         <p className="mt-2">
-          Nice to see you, <span className="text-xl font-bold font-mono">{stdInfo?.name}</span>
+          Nice to see you, <span className="text-xl font-bold font-mono">{user?.name}</span>
         </p>
       </div>
       {/* profile information */}
@@ -35,21 +32,18 @@ const ProfileInfo = () => {
         <div className="flex flex-col gap-3">
           <h1 className="text-gray-400">
             Department of{" "}
-            <span className="text-white uppercase">
-              {stdInfo?.dept ? stdInfo?.dept : " - - - - - -"}
-            </span>
+            <span className="text-white uppercase">{user?.dept ? user?.dept : " - - - - - -"}</span>
           </h1>
 
           <h1 className="text-gray-400">
             Intake / Section :{" "}
             <span className="text-white">
-              {stdInfo?.intake ? stdInfo?.intake : ""} -{" "}
-              {stdInfo?.section ? stdInfo.section : " - - - - -"}
+              {user?.intake ? user?.intake : ""} - {user?.section ? user?.section : " - - - - -"}
             </span>
           </h1>
 
           <h1 className="text-gray-400">
-            ID : <span className="text-white">{stdInfo?.id ? stdInfo?.id : " - - - - - -"}</span>
+            ID : <span className="text-white">{user?.id ? user?.id : " - - - - - -"}</span>
           </h1>
         </div>
       </div>
@@ -61,16 +55,14 @@ const ProfileInfo = () => {
         <div className="flex flex-col gap-3">
           <h1 className="text-gray-400">
             Mobile :{" "}
-            <span className="text-white">{stdInfo?.phone ? stdInfo?.phone : " - - - - - -"}</span>
+            <span className="text-white">{user?.phone ? user?.phone : " - - - - - -"}</span>
           </h1>
           <h1 className="text-gray-400">
-            Email : <span className="text-white">{stdInfo?.email}</span>
+            Email : <span className="text-white">{user?.email ? user?.email : " - - - - - -"}</span>
           </h1>
           <h1 className="text-gray-400">
             Location :{" "}
-            <span className="text-white">
-              {stdInfo?.location ? stdInfo.location : " - - - - - -"}
-            </span>
+            <span className="text-white">{user?.location ? user?.location : " - - - - - -"}</span>
           </h1>
         </div>
       </div>
@@ -78,4 +70,4 @@ const ProfileInfo = () => {
   );
 };
 
-export default ProfileInfo;
+export default StdProfileInfo;

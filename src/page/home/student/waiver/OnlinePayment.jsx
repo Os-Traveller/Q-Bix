@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { colorGray } from "../../../components/colors";
-import InputCredit from "../../../components/InputCredit";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../../firebase.init";
+import InputCredit from "../../../../components/shared/InputCredit";
+import { colorGray } from "../../../../components/styles/colors";
+import auth from "../../../../firebase.init";
 
 const OnlinePayment = () => {
   const [user] = useAuthState(auth);

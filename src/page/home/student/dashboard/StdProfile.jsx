@@ -1,58 +1,75 @@
+// library
 import React, { useEffect, useState } from "react";
-import myDp from "../../../img/dp.jpg";
-import cover from "../../../img/cover.png";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../../firebase.init";
-import DpMaker from "../../../components/DpMaker";
-import { MdOutlineEdit } from "react-icons/md";
-import ProfileInfo from "./ProfileInfo";
-import Modal from "../../../components/Modal";
-import InputCredit from "../../../components/InputCredit";
-import { colorGray, colorGreen, colorRed } from "../../../components/colors";
-import Student from "../../../js/student";
-import useGetUser from "../../../hooks/useGetUser";
+// hooks
 
-const Profile = () => {
+// images
+import myDp from "../../../../img/dp.jpg";
+import cover from "../../../../img/cover.png";
+// icons
+import { MdOutlineEdit } from "react-icons/md";
+// utilities
+
+// class
+
+// components
+import Student from "../../../../js/Student";
+import InputCredit from "../../../../components/shared/InputCredit";
+import Modal from "../../../../components/shared/Modal";
+import DpMaker from "../../../../components/shared/DpMaker";
+import { colorGray, colorGreen, colorRed } from "../../../../components/styles/colors";
+import useGetUser from "../../../../hooks/useGetUser";
+import auth from "../../../../firebase.init";
+
+const StdProfile = () => {
   const width = "45%";
-  const [user] = useAuthState(auth);
+  const [userFirebase] = useAuthState(auth);
+  const { data: user, refetch: userRefetch } = useGetUser(userFirebase?.email);
   const [openModal, setOpenModal] = useState(false);
-  const { data: stdDB, refetch: userRefetch } = useGetUser(user?.email);
+
+  useEffect(() => {
+    setDept(user?.dept);
+    setIntake(user?.intake);
+    setSection(user?.section);
+    setPhone(user?.phone);
+    setLocation(user?.location);
+  }, [user, userFirebase, userRefetch]);
+
   const std = new Student({ email: user?.email, name: user?.displayName });
-  const [dept, setDept] = useState(stdDB?.dept);
-  const [intake, setIntake] = useState(stdDB?.intake);
-  const [section, setSection] = useState(stdDB?.section);
-  const [phone, setPhone] = useState(stdDB?.phone);
-  const [location, setLocation] = useState(stdDB?.location);
+  const [dept, setDept] = useState(user?.dept);
+  const [intake, setIntake] = useState(user?.intake);
+  const [section, setSection] = useState(user?.section);
+  const [phone, setPhone] = useState(user?.phone);
+  const [location, setLocation] = useState(user?.location);
 
   // updating profile
   const updateProfile = (e) => {
     e.preventDefault();
-    const res = std.updateProfileInfo({ dept, intake, section, phone, location });
+    std.updateProfileInfo({ dept, intake, section, phone, location });
     userRefetch();
     setOpenModal(false);
   };
 
-  useEffect(() => {
-    userRefetch();
-  }, [userRefetch]);
   return (
     <>
       <div className="card backdrop-filter-blur bg-opacity-40 relative p-0">
         <div
-          className="h-[250px] rounded-t-xl"
-          style={{
-            backgroundImage: `url(${cover})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
+          className="h-[250px] rounded-t-xl profileCover"
+          style={
+            {
+              // backgroundImage: `url(${cover})`,
+              // backgroundSize: "cover",
+              // backgroundPosition: "center",
+              // backgroundRepeat: "no-repeat",
+            }
+          }
         ></div>
         <div className="toUp">
-          <DpMaker img={myDp} height="180px" name={user?.displayName} />
+          <DpMaker img={myDp} height="180px" name={user?.name} />
         </div>
         <div className="flex justify-between p-5 mt-24">
           <div>
-            <h1 className="text-3xl">{user?.displayName}</h1>
+            <h1 className="text-3xl">{user?.name}</h1>
           </div>
           <button
             className="rounded-xl py-1 px-5 bg-[#582CFF] flex items-center gap-2 buble hover:bg-[#350ad3]"
@@ -143,12 +160,8 @@ const Profile = () => {
           </Modal>
         </div>
       </div>
-
-      <div className="mt-5">
-        <ProfileInfo />
-      </div>
     </>
   );
 };
 
-export default Profile;
+export default StdProfile;

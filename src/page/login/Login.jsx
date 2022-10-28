@@ -1,14 +1,20 @@
+// library
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+// styles
+import { bgImg } from "../../components/styles/styles";
+// incons
 import { GrGoogle } from "react-icons/gr";
 import { BsFacebook, BsGithub } from "react-icons/bs";
+// utilities
 import auth from "../../firebase.init";
+// hooks
+// components
 import bgAuth from "../../img/bgAuth.png";
-import { bgImg } from "../../components/styles";
-import Logo from "../../components/Logo";
-import Input from "../../components/Input";
-import IconCover from "../../components/IconCover";
+import Logo from "../../components/shared/Logo";
+import IconCover from "../../components/shared/IconCover";
+import Input from "../../components/shared/Input";
 
 const Login = () => {
   const path = useNavigate();

@@ -1,7 +1,7 @@
 import React from "react";
 import DpMaker from "./DpMaker";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase.init";
+import auth from "../../firebase.init";
 import myDp from "../img/dp.jpg";
 
 const UserInfo = () => {

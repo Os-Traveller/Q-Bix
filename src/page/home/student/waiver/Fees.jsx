@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { colorGreen } from "../../../components/colors";
-import { bgImg } from "../../../components/styles";
-import cardBG from "../../../img/cardBG.png";
+import { colorGreen } from "../../../../components/styles/colors";
+import { bgImg } from "../../../../components/styles/styles";
+import cardBG from "../../../../img/cardBG.png";
 import FeesDetail from "./FeesDetail";
 import FeesStat from "./FeesStat";
 

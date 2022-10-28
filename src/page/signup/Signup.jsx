@@ -1,20 +1,30 @@
+// library
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+import auth from "../../firebase.init";
+import { toast } from "react-toastify";
+// hooks
+import useGetStudentList from "../../hooks/useGetStudentList";
+// styles
+// icons
 import { GrGoogle } from "react-icons/gr";
 import { BsFacebook, BsGithub } from "react-icons/bs";
-import auth from "../../firebase.init";
-import Input from "../../components/Input";
-import IconCover from "../../components/IconCover";
-import Logo from "../../components/Logo";
-import { bgImg } from "../../components/styles";
+// images
 import bgAuth from "../../img/bgAuth.png";
-import useGetStudentList from "../../hooks/useGetStudentList";
-import User from "../../js/user";
+// utilities
 import { serverAddress } from "../../components/varables";
-import { toast } from "react-toastify";
 import { toastConfig } from "../../toastConfig";
+// class
+
+// components
+
+import { bgImg } from "../../components/styles/styles";
+import Logo from "../../components/shared/Logo";
+import Input from "../../components/shared/Input";
+import IconCover from "../../components/shared/IconCover";
+import User from "../../js/User";
 
 const Signup = () => {
   const radious = "35px";

@@ -163,14 +163,11 @@ const rowMaker = ({ data }) => {
   return newArr;
 };
 
-const compMaker = ({ course, faculty, building, room }) => {
+const compMaker = ({ course, building, room }) => {
   return (
     <div className="flex flex-col gap-1" style={{ display: course ? "block" : "none" }}>
-      <p>{course}</p>
-      <p>
-        FC : <strong>{faculty}</strong>
-      </p>
-      <p>
+      <p className="text-xs">{course}</p>
+      <p className="text-xs">
         B : <strong>{building}</strong> {"=>"} R : <strong>{room}</strong>
       </p>
     </div>

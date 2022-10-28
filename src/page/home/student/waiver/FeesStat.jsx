@@ -1,7 +1,8 @@
 import React from "react";
-import { colorBlue, colorGreen, colorPurple, colorRed } from "../../../components/colors";
+import { colorBlue, colorGreen, colorPurple, colorRed } from "../../../../components/styles/colors";
+
 const FeesStat = () => {
-  const radious = "210px";
+  const radious = "180px";
   const borderRadious = "10px";
   return (
     <>
@@ -51,7 +52,7 @@ const FeesBox = ({ radious, color, borderRadious, title, data }) => {
         }}
         className="mx-auto rounded-full centerXY"
       >
-        <span className="font-semibold text-2xl" style={{ letterSpacing: "5px" }}>
+        <span className="font-semibold text-xl" style={{ letterSpacing: "5px" }}>
           &#x09F3; {data}
         </span>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useMatch, useResolvedPath } from "react-router-dom";
-import { colorGreen } from "./colors";
+import { colorGreen } from "../styles/colors";
 
 const ActiveLinkResult = ({ to, children }) => {
   let resolved = useResolvedPath(to);

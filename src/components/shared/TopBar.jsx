@@ -1,7 +1,7 @@
 import React from "react";
 import { CgSearch } from "react-icons/cg";
 import { signOut } from "firebase/auth";
-import auth from "../firebase.init";
+import auth from "../../firebase.init";
 
 const TopBar = () => {
   return (
