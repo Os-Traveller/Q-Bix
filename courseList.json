@@ -1,0 +1,99 @@
+[
+    [
+        { "title": "Computer and Programming Concepts", "code": "CSE 101", "credit":3, "type": "Theory" },
+        { "title": "Computer and Programming Concepts Lab", "code": "CSE 102", "credit":1.50, "type": "Lab" },
+        { "title": "Differential and Integral Calculus", "code": "MAT 101", "credit":3, "type": "Theory" },
+        { "title": "English Language-I", "code": "ENG 101", "credit":3, "type": "Theory" },
+        { "title": "Physics", "code": "PHY 101", "credit":3, "type": "Theory" },
+        { "title": "Co-Ordinate Geometry and Vector Calculus", "code": "MAT 111", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "English Language-II", "code": "ENG 111", "credit":3, "type": "Theory" },
+        { "title": "Electrical Technology", "code": "EEE 101", "credit":3, "type": "Theory" },
+        { "title": "Electrical Technology lab", "code": "EEE 102", "credit":3, "type": "Lab" },
+        { "title": "Structured Programming Language", "code": "CSE 111", "credit":3, "type": "Theory" },
+        { "title": "Structured Programming Language Lab", "code": "CSE 112", "credit":3, "type": "Lab" },
+        { "title": "Discrete Mathematics", "code": "CSE 103", "credit":3, "type": "Theory" },
+        { "title": "Linear Algebras and Differential Equations", "code": "MAT 121", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Object Oriented Programming Language", "code": "CSE 121", "credit":3, "type": "Theory" },
+        { "title": "Object Oriented Programming Language Lab", "code": "CSE 122", "credit":1.50, "type": "Lab" },
+        { "title": "Principles of Economics", "code": "ECO 101", "credit":2, "type": "Theory" },
+        { "title": "Software Development I", "code": "CSE 100", "credit":0.75, "type": "Theory" },
+        { "title": "Electronic Devices and Circuits", "code": "EEE 211", "credit":3, "type": "Theory" },
+        { "title": "Electronic Devices and Circuits Lab", "code": "EEE 212", "credit":1.50, "type": "Lab" }
+     ],
+     [
+        { "title": "Statistics", "code": "STA 231", "credit":3, "type": "Theory" },
+        { "title": "Theory of Computing & Automata Theory ", "code": "CSE 213", "credit":3, "type": "Theory" },
+        { "title": "Data Structures", "code": "CSE 231", "credit":3, "type": "Theory" },
+        { "title": "Data Structures Lab", "code": "CSE 232", "credit":1.50, "type": "Lab" },
+        { "title": "Complex Variable and Furrier Analysis", "code": "MAT 231", "credit":3, "type": "Theory" },
+        { "title": "Digital Logic Design", "code": "CSE 205", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Digital Logic Design Lab", "code": "CSE 206", "credit":1.50, "type": "Lab" },
+        { "title": "Data Communication", "code": "CSE 209", "credit":3, "type": "Theory" },
+        { "title": "Algorithms", "code": "CSE 241", "credit":3, "type": "Theory" },
+        { "title": "Algorithms Lab", "code": "CSE 242", "credit":1.50, "type": "Lab" },
+        { "title": "Database Systems", "code": "CSE 207", "credit":3, "type": "Theory" },
+        { "title": "Database Systems Lab", "code": "CSE 208", "credit":1.50, "type": "Lab" }
+     ],
+     [
+        { "title": "Computer Architecture", "code": "CSE 215", "credit":3, "type": "Theory" },
+        { "title": "Numerical Analysis", "code": "CSE 223", "credit":3, "type": "Theory" },
+        { "title": "Numerical Analysis Lab", "code": "CSE 224", "credit":0.75, "type": "Lab" },
+        { "title": "Accounting Fundamentals", "code": "ACT 201", "credit":2, "type": "Theory" },
+        { "title": "Software Development II", "code": "CSE 200", "credit":0.75, "type": "Theory" },
+        { "title": "System Analysis and Design", "code": "CSE 317", "credit":3, "type": "Theory" }
+     ],
+
+     [
+        { "title": "System Analysis and Design Lab", "code": "CSE 318", "credit":1.50, "type": "Lab" },
+        { "title": "Advanced Programming", "code": "CSE 331", "credit":3, "type": "Theory" },
+        { "title": "Advanced Programming Lab", "code": "CSE 332", "credit":1.50, "type": "Lab" },
+        { "title": "Microprocessor and Interfacing", "code": "CSE 315", "credit":3, "type": "Theory" },
+        { "title": "Microprocessor and Interfacing Lab", "code": "CSE 316", "credit":1.50, "type": "Lab" },
+        { "title": "Operating Systems", "code": "CSE 309", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Operating Systems Lab", "code": "CSE 310", "credit":1.50, "type": "Lab" },
+        { "title": "Compiler Design", "code": "CSE 323", "credit":3, "type": "Theory" },
+        { "title": "Compiler Design Lab", "code": "CSE 324", "credit":0.75, "type": "Lab" },
+        { "title": "Software Engineering", "code": "CSE 327", "credit":3, "type": "Theory" },
+        { "title": "Software Engineering Lab", "code": "CSE 328", "credit":0.75, "type": "Lab" },
+        { "title": "Mathematical Analysis for Computer Science", "code": "CSE 313", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Artificial Intelligence and Expert System", "code": "CSE 351", "credit":3, "type": "Theory" },
+        { "title": "Artificial Intelligence and Expert System lab", "code": "CSE 352", "credit":1.50, "type": "Lab" },
+        { "title": "Computer Networks", "code": "CSE 319", "credit":3, "type": "Theory" },
+        { "title": "Computer Networks Lab", "code": "CSE 320", "credit":1.50, "type": "Lab" },
+        { "title": "Computer Graphics", "code": "CSE 341", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Computer Graphics Lab", "code": "CSE 342", "credit":0.75, "type": "Lab" },
+        { "title": "Software Development III", "code": "CSE 300", "credit":0.75, "type": "Lab" },
+        { "title": "Information System Management", "code": "CSE 407", "credit":2, "type": "Theory" },
+        { "title": "Microcontroller and Embedded Systems ", "code": "CSE 425", "credit":3, "type": "Theory" },
+        { "title": "Microcontroller and Embedded Systems Lab", "code": "CSE 426", "credit":1.50, "type": "Lab" },
+        { "title": "Distributed Database Management Systems", "code": "CSE 417", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Distributed Database Management Systems Lab", "code": "CSE 418", "credit":1.50, "type": "Lab" },
+        { "title": "Digital Electronics and Pulse Technique", "code": "CSE 411", "credit":3, "type": "Theory" },
+        { "title": "Digital Electronics and Pulse Technique Lab", "code": "CSE 412", "credit":1.50, "type": "Lab" },
+        { "title": "Software Development IV", "code": "CSE 400", "credit":0.75, "type": "Theory" },
+        { "title": "Option-I (Elective)", "code": "CSE 4**", "credit":3, "type": "Theory" }
+     ],
+     [
+        { "title": "Option-I (Elective)", "code": "CSE 4**", "credit":3, "type": "Theory" },
+        { "title": "Option-II (Elective)", "code": "CSE 4**", "credit":3, "type": "Lab" },
+        { "title": "Fiber Optics Communication", "code": "CSE 433", "credit":3, "type": "Theory" },
+        { "title": "Communication Engineering", "code": "CSE 431", "credit":3, "type": "Theory" },
+        { "title": "Network Security", "code": "CSE 435", "credit":3, "type": "Theory" },
+        { "title": "Project/Thesis", "code": "CSE 498", "credit":"No credit", "type": "Lab" }
+     ]
+    
+]
