@@ -97,6 +97,40 @@ async function run() {
       const course = await courseCollection.findOne({});
       res.send(course?.[dept]?.[semester - 1]);
     });
+
+    // registration
+    app.post("/registration/:email", async (req, res) => {
+      const email = req.params.email;
+      const courseList = req.body;
+      const filter = { email: email };
+      const studentInfo = await userCollection.findOne(filter);
+      let { subjects } = studentInfo;
+
+      if (subjects) {
+        subjects.push(courseList);
+      } else {
+        // for new studenst
+        subjects = [];
+        subjects.push(courseList);
+      }
+
+      const updateDoc = {
+        $set: {
+          subjects: subjects,
+          registered: true,
+        },
+      };
+
+      const result = await userCollection.updateOne(filter, updateDoc, { upsert: true });
+      res.send(result);
+    });
+
+    // resgitration status
+    app.get("/registered/:email", async (req, res) => {
+      const email = req.params.email;
+      const regStatus = await userCollection.findOne({ email: email });
+      res.send(regStatus.registered);
+    });
   } catch (err) {
     console.error(err);
   } finally {

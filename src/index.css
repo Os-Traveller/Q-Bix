@@ -95,6 +95,13 @@ input:-webkit-autofill {
   background: linear-gradient(45deg, #080814, #000029);
 }
 
+@media screen and (max-width: 1600px) {
+  html,
+  body {
+    font-size: 85%;
+  }
+}
+
 @layer components {
   .btn {
     @apply px-5 py-2 text-center w-full;
@@ -109,7 +116,7 @@ input:-webkit-autofill {
     @apply hover:scale-125 transition-all duration-300;
   }
   .card {
-    @apply bg-[#070B27] rounded-2xl p-5 w-full opacity-70;
+    @apply bg-[#070B27] rounded-2xl p-5 w-full opacity-70 shadow-lg border-gray-800 border-2;
   }
   .centerXY {
     @apply flex items-center justify-center;

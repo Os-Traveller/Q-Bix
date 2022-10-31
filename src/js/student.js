@@ -23,6 +23,24 @@ class Student extends User {
     };
     fetch(url, requestOptions).then((res) => res.json());
   }
+
+  async courseRegister(courseList) {
+    const url = `${serverAddress}/registration/${this.email}`;
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(courseList),
+    };
+    const response = await fetch(url, requestOptions);
+    console.log(response);
+    return response;
+  }
+
+  async registerdYet() {
+    const url = `${serverAddress}/registered/${this.email}`;
+    const regStatus = await fetch(url).then((res) => res.json());
+    console.log(regStatus);
+  }
 }
 
 export default Student;

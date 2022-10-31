@@ -9,7 +9,8 @@ import { bgImg } from "../../../../components/styles/styles";
 import StatCard from "../../../../components/shared/StatCard";
 import auth from "../../../../firebase.init";
 import Table from "../../../../components/shared/Table";
-import { colorGreen } from "../../../../components/styles/colors";
+import { colorGreen, colorRed } from "../../../../components/styles/colors";
+import Student from "../../../../js/Student";
 
 const Courses = () => {
   const [userFirebase] = useAuthState(auth);
@@ -71,6 +72,10 @@ const Courses = () => {
     "Out of 30",
     "Total",
   ];
+
+  const std = new Student({ email: userFirebase?.email });
+  const resStatus = std.registerdYet();
+
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-5">
@@ -85,13 +90,22 @@ const Courses = () => {
               <span className="text-xl font-bold font-mono">{userFirebase?.displayName}</span>
             </p>
           </div>
-          <button
-            className="btn rounded-lg w-fit ml-auto"
-            style={{ backgroundColor: colorGreen }}
-            onClick={() => path("/registration")}
-          >
-            Registration
-          </button>
+          {resStatus ? (
+            <h2
+              className="text-lg btn rounded-lg w-fit cursor-not-allowed mx-auto"
+              style={{ background: colorRed }}
+            >
+              You are Already Registered
+            </h2>
+          ) : (
+            <button
+              className="btn rounded-lg w-fit ml-auto"
+              style={{ backgroundColor: colorGreen }}
+              onClick={() => path("/registration")}
+            >
+              Registration
+            </button>
+          )}
         </div>
         <StatCard title={"Cources"} completed={30} total={120} fontColor={"#582CFF"} />
         <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />

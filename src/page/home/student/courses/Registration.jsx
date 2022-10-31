@@ -4,6 +4,7 @@ import { colorGreen, colorPurple, colorRed } from "../../../../components/styles
 import { serverAddress } from "../../../../components/varables";
 import auth from "../../../../firebase.init";
 import useGetUser from "../../../../hooks/useGetUser";
+import Student from "../../../../js/Student";
 
 const Registration = () => {
   const [userFirebase] = useAuthState(auth);
@@ -11,6 +12,7 @@ const Registration = () => {
   const [allCourse, setAllCourse] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState([]);
   const [credit, setCredit] = useState(0);
+  const stdUser = new Student({ id: std?.email });
 
   useEffect(() => {
     document.title = "Course Registration";
@@ -30,12 +32,11 @@ const Registration = () => {
 
   const addCourse = (code) => {
     const course = allCourse.filter((cr) => cr.code === code);
-    setSelectedCourse([...selectedCourse, ...course]);
+    setSelectedCourse((prev) => [...prev, ...course]);
   };
   const removeCourse = (code) => {
     const remaining = selectedCourse.filter((cr) => cr.code !== code);
     setSelectedCourse(remaining);
-    console.log(selectedCourse);
   };
 
   return (
@@ -65,18 +66,27 @@ const Registration = () => {
           ))}
         </table>
       </div>
-      <div className="card mt-10">
-        <h2 className="text-xl w-fit font-semibold font-sans uppercase">Selected Course</h2>
-        <div className="mt-4 flex justify-between">
-          <p>Credit : {credit}</p>
-          <p>Course Selected : {selectedCourse.length}</p>
+      {selectedCourse.length !== 0 && (
+        <div className="card mt-5">
+          <h2 className="text-xl w-fit font-semibold font-sans uppercase">Selected Course</h2>
+          <div className="mt-4 flex justify-between">
+            <p>Credit : {credit}</p>
+            <p>Course Selected : {selectedCourse.length}</p>
+          </div>
+          <div className="flex gap-3 mt-10 flex-wrap">
+            {selectedCourse.map((course, index) => (
+              <CourseBox title={course?.title} code={course?.code} key={index} />
+            ))}
+          </div>
+          <button
+            className="btn w-fit rounded-md buble block hover:scale-110 mt-8 ml-auto"
+            style={{ background: colorGreen }}
+            onClick={() => stdUser.courseRegister(selectedCourse)}
+          >
+            Confrim Registration
+          </button>
         </div>
-        <div className="flex gap-3 mt-10 flex-wrap">
-          {selectedCourse.map((course, index) => (
-            <CourseBox title={course?.title} code={course?.code} key={index} />
-          ))}
-        </div>
-      </div>
+      )}
     </section>
   );
 };
@@ -120,7 +130,10 @@ const Row = ({ title, code, credit, type, addCourse, removeCourse }) => {
 
 const CourseBox = ({ title, code }) => {
   return (
-    <div className="py-3 px-8 text-center rounded-md flex-grow" style={{ background: colorPurple }}>
+    <div
+      className="py-3 px-8 text-center rounded-md flex-grow shadow-lg border-gray-400 border"
+      style={{ background: colorPurple }}
+    >
       <h3 className="font-mono font-semibold text-xl mb-3">{title}</h3>
       <p className="uppercase">{code}</p>
     </div>
