@@ -52,7 +52,11 @@ const FeesStat = () => {
         color={colorRed}
         borderRadious={borderRadious}
         title="Due"
-        data={feesInfo.stdTotalCredit * feesInfo.feesPerCr - (feesInfo.paid ? feesInfo.paid : 0)}
+        data={
+          feesInfo.stdTotalCredit * feesInfo.feesPerCr -
+          (feesInfo.paid ? feesInfo.paid : 0) -
+          (feesInfo.waiver ? feesInfo.waiver : 0)
+        }
       />
     </>
   );

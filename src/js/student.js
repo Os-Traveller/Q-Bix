@@ -76,6 +76,18 @@ class Student extends User {
     const currentCourse = await fetch(url).then((res) => res.json());
     return currentCourse;
   }
+
+  async payFees(feesInfo) {
+    const url = `${serverAddress}/pay-fees/${this.email}`;
+    console.log(url);
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(feesInfo),
+    };
+    const response = await fetch(url, requestOptions);
+    return response;
+  }
 }
 
 export default Student;

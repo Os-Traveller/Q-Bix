@@ -1,18 +1,37 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import InputCredit from "../../../../components/shared/InputCredit";
 import { colorGray } from "../../../../components/styles/colors";
 import auth from "../../../../firebase.init";
+import useGetUser from "../../../../hooks/useGetUser";
+import Student from "../../../../js/student";
 
 const OnlinePayment = () => {
-  const [user] = useAuthState(auth);
+  const path = useNavigate();
+  const [userFirebase] = useAuthState(auth);
+  const { data: userData, refetch } = useGetUser(userFirebase?.email);
   const style = { backgroundColor: colorGray, padding: "10px 8px", borderRadius: "5px" };
 
-  const [crCard, setCrCard] = useState("");
   const [stdId, setStdId] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [amount, setAmount] = useState("");
   const [payType, setPayType] = useState("");
+
+  useEffect(() => {
+    refetch();
+    setStdId(userData?.id);
+  }, [refetch, userData]);
+
+  const payFees = async (e) => {
+    e.preventDefault();
+    const std = new Student({ email: userData?.email });
+    await std.payFees({ mobileNo, amount, payType });
+    setAmount("");
+    setMobileNo("");
+    path("/fees");
+  };
 
   return (
     <section className="grid gap-5" style={{ gridTemplateColumns: "1fr 400px" }}>
@@ -28,7 +47,8 @@ const OnlinePayment = () => {
             <span style={style}>Y</span>
           </p>
         </div>
-        <form className="flex flex-col gap-5" action="">
+
+        <form className="flex flex-col gap-5" onSubmit={payFees}>
           <div>
             <h1 className="font-semibold mb-2">Chose Payment Type</h1>
             <div
@@ -40,25 +60,17 @@ const OnlinePayment = () => {
                 name="paymentType"
                 className="w-full outline-none"
                 style={{ backgroundColor: colorGray }}
-                onChange={(e) => setPayType(e.target.value)}
+                onBlur={(e) => setPayType(e.target.value)}
                 required
               >
-                <option value="type">Choose Payment Type</option>
-                <option value="admission">Admission Fee</option>
+                <option value={"null"}>Choose Payment Type</option>
                 <option value="tuition">Tuition Fee</option>
+                <option value="admission">Admission Fee</option>
                 <option value="other">Other Fee</option>
               </select>
             </div>
           </div>
-          {/* CrCard */}
-          <InputCredit
-            type={"number"}
-            title={"Card Number"}
-            id={"creditCardNo"}
-            state={crCard}
-            setState={setCrCard}
-            detail={"Enter the 8-digit card number"}
-          />
+
           {/* StdID */}
           <InputCredit
             type={"number"}
@@ -68,6 +80,7 @@ const OnlinePayment = () => {
             setState={setStdId}
             detail={"Enter your 11 digit id"}
             axis="x"
+            readOnly={true}
           />
           {/* Mobile */}
           <InputCredit
@@ -98,7 +111,7 @@ const OnlinePayment = () => {
         <div className="card bg-[#323232] mx-auto">
           <h1 className="font-semibold logo text-2xl uppercase text-center">Q-Pay</h1>
           <h2 className="text-center font-semibold mt-8 text-lg" style={{ letterSpacing: "2px" }}>
-            {user.displayName}
+            {userData.name}
           </h2>
         </div>
         {/* body info */}

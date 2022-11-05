@@ -39,25 +39,23 @@ const FeesDetail = () => {
 
   return (
     <div className="card">
-      <h1
-        className="text-center font-semibold uppercase mb-10 text-2xl pt-3 pb-2 px-5 border-t border-x border-gray-400 
-        w-fit mx-auto rounded-tr-xl rounded-tl-xl"
-        style={{ letterSpacing: "5px" }}
-      >
+      <h1 className="font-semibold uppercase mb-10 text-2xl" style={{ letterSpacing: "5px" }}>
         All Fees & Waiver
       </h1>
-      <table className="w-full border-b">
-        <thead className="uppercase border-collapse border-b text-center text-gray-400 font-semibold">
+      <table className="w-full">
+        <thead className="uppercase text-sm text-center text-gray-400 font-semibold border-b">
           <td className="py-3">Semester</td>
           <td>Demand</td>
           <td>Waiver</td>
           <td>Payment</td>
           <td>Due</td>
-          <td>Remarks</td>
+          <td>Details</td>
         </thead>
-        {fees?.map((fee, index) => (
-          <TableRow data={fee} key={index} />
-        ))}
+        <tbody>
+          {fees?.map((fee, index) => (
+            <TableRow data={fee} key={index} />
+          ))}
+        </tbody>
       </table>
       {/* payment */}
     </div>
@@ -70,7 +68,7 @@ const TableRow = ({ data }) => {
   return (
     <>
       <tr className="w-full text-center text-sm">
-        <td className="py-4">{semester}</td>
+        <td className="py-5">{semester}</td>
         <td>{demand}</td>
         <td>{waiver}</td>
         <td>{paid}</td>
@@ -79,11 +77,7 @@ const TableRow = ({ data }) => {
           <button
             className="py-2 px-5 rounded buble"
             style={{ backgroundColor: colorGreen }}
-            onClick={() => {
-              console.log("Clicked");
-              setOpenModal(true);
-              console.log(openModal);
-            }}
+            onClick={() => setOpenModal(true)}
           >
             Detail
           </button>

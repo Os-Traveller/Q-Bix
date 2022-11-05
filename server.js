@@ -190,6 +190,48 @@ async function run() {
       const subjects = stdInfo?.subjects;
       res.send(subjects[subjects.length - 1]);
     });
+
+    // pay fees
+    app.post("/pay-fees/:email", async (req, res) => {
+      const email = req.params.email;
+      const userInfo = await userCollection.findOne({ email: email });
+      const othersInfo = await othersCollection.findOne({});
+      const currentSemester = othersInfo.currentSemester;
+      let fees = userInfo.fees;
+      const transcationId = "qb-" + Date.now();
+      console.log(transcationId);
+      const arrFees = [];
+      arrFees.push({ ...req.body, transcationId });
+      if (fees) {
+        // if fees already exists
+        if (fees[currentSemester]) {
+          // if current semester on fees object exists
+          fees[currentSemester] = [...fees[currentSemester], arrFees];
+        } else {
+          // fees exists but current semester does not exists
+          fees[currentSemester] = arrFees;
+        }
+      } else {
+        // fees does not exists
+        fees = {};
+        fees[currentSemester] = arrFees;
+      }
+
+      // update fees sagment
+      const updateDoc = {
+        $set: {
+          fees: fees,
+        },
+      };
+
+      const result = await userCollection.updateOne({ email: email }, updateDoc);
+
+      if (result) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    });
   } catch (err) {
     console.error(err);
   } finally {
