@@ -4,6 +4,8 @@ import Modal from "../../../../components/shared/Modal";
 import { colorGreen } from "../../../../components/styles/colors";
 
 const FeesDetail = () => {
+  const [feesInfo, setFeesInfo] = useState({});
+
   const fees = [
     {
       semester: "Spring - 2020",

@@ -106,9 +106,7 @@ async function run() {
       const courseList = req.body;
       const filter = { email: email };
       const studentInfo = await userCollection.findOne(filter);
-
-      let subjects = studentInfo?.subjects;
-
+      let subjects = studentInfo.subjects;
       if (subjects) {
         subjects.push(courseList);
       } else {
@@ -164,7 +162,7 @@ async function run() {
       res.send({ totalCourseCount, totalCredit, stdTotalCourseCount, stdTotalCredit });
     });
 
-    // student Fees Info
+    // students Fees Info
     app.get("/fees-info/:email/:dept", async (req, res) => {
       const email = req.params.email;
       const dept = req.params.dept;
@@ -174,13 +172,29 @@ async function run() {
       const userCourseList = userInfo?.subjects;
       const userFeesInfo = userInfo?.fees;
 
+      let paid = 0;
+      Object.values(userFeesInfo).map((feesInfo) => {
+        for (let i = 0; i < feesInfo.length; i++) {
+          paid += parseFloat(feesInfo[i].amount);
+        }
+        return paid;
+      });
+
       let stdTotalCredit = 0;
       for (let i = 0; i < userCourseList.length; i++) {
         for (let j = 0; j < userCourseList[i].length; j++) {
           stdTotalCredit += userCourseList[i][j].credit;
         }
       }
-      res.send({ stdTotalCredit, ...userFeesInfo, feesPerCr });
+      res.send({ stdTotalCredit, paid, feesPerCr });
+    });
+
+    // student feesinfo in detail
+    app.get("/fees-info-details/:email", async (req, res) => {
+      const email = req.params.email;
+      const userInfo = await userCollection.findOne({ email: email });
+      const feesInfo = userInfo.fees;
+      res.send(feesInfo);
     });
 
     // cureent course info
@@ -199,14 +213,13 @@ async function run() {
       const currentSemester = othersInfo.currentSemester;
       let fees = userInfo.fees;
       const transcationId = "qb-" + Date.now();
-      console.log(transcationId);
       const arrFees = [];
       arrFees.push({ ...req.body, transcationId });
       if (fees) {
         // if fees already exists
         if (fees[currentSemester]) {
           // if current semester on fees object exists
-          fees[currentSemester] = [...fees[currentSemester], arrFees];
+          fees[currentSemester] = [...fees[currentSemester], ...arrFees];
         } else {
           // fees exists but current semester does not exists
           fees[currentSemester] = arrFees;
@@ -223,14 +236,7 @@ async function run() {
           fees: fees,
         },
       };
-
-      const result = await userCollection.updateOne({ email: email }, updateDoc);
-
-      if (result) {
-        res.send(true);
-      } else {
-        res.send(false);
-      }
+      await userCollection.updateOne({ email: email }, updateDoc);
     });
   } catch (err) {
     console.error(err);

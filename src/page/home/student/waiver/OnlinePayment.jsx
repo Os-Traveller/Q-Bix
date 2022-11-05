@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import InputCredit from "../../../../components/shared/InputCredit";
 import { colorGray } from "../../../../components/styles/colors";
 import auth from "../../../../firebase.init";
 import useGetUser from "../../../../hooks/useGetUser";
 import Student from "../../../../js/student";
+import { toastConfig } from "../../../../toastConfig";
 
 const OnlinePayment = () => {
   const path = useNavigate();
@@ -27,9 +29,10 @@ const OnlinePayment = () => {
   const payFees = async (e) => {
     e.preventDefault();
     const std = new Student({ email: userData?.email });
-    await std.payFees({ mobileNo, amount, payType });
+    std.payFees({ mobileNo, amount, payType: payType ? payType : "tuition" });
     setAmount("");
     setMobileNo("");
+    toast("Payment Complete", toastConfig);
     path("/fees");
   };
 
