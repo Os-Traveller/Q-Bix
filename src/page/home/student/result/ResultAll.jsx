@@ -1,6 +1,5 @@
 import React from "react";
-import Table from "../../../../components/shared/Table";
-import { colorGreen } from "../../../../components/styles/colors";
+import CourseTable from "../courses/CourseTable";
 
 const ResultAll = () => {
   const data = [
@@ -82,21 +81,10 @@ const ResultAll = () => {
       total: 87,
     },
   ];
-  const attribute = [
-    "Course Code",
-    "Course Title",
-    "Credit",
-    "Type",
-    "Grade",
-    "Final",
-    "Mid",
-    "Out of 30",
-    "Total",
-  ];
 
   return (
     <div>
-      <Table data={data} color={colorGreen} attribute={attribute} title={"All Semester"} />
+      <CourseTable courses={data} />
     </div>
   );
 };

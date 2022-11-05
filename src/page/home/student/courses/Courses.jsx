@@ -1,24 +1,27 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-
 // images
 import cardBg from "../../../../img/cardBG.png";
 // components
 import { bgImg } from "../../../../components/styles/styles";
 import StatCard from "../../../../components/shared/StatCard";
 import auth from "../../../../firebase.init";
-import Table from "../../../../components/shared/Table";
 import { colorGreen, colorRed } from "../../../../components/styles/colors";
 import Student from "../../../../js/Student";
+import { useState } from "react";
+import { useEffect } from "react";
+import CourseTable from "./CourseTable";
+import { serverAddress } from "../../../../components/varables";
 
 const Courses = () => {
   const [userFirebase] = useAuthState(auth);
   const path = useNavigate();
+
   const data = [
     {
-      courseCode: "ACT 201",
-      courseTitle: "Accounting Fundamental",
+      code: "ACT 201",
+      title: "Accounting Fundamental",
       credit: 2,
       type: "Theory",
       grade: "A+",
@@ -28,8 +31,8 @@ const Courses = () => {
       total: 82,
     },
     {
-      courseCode: "CSE 205",
-      courseTitle: "Digital Logic Design",
+      code: "CSE 205",
+      title: "Digital Logic Design",
       credit: 3,
       type: "Theory",
       grade: "A+",
@@ -39,8 +42,8 @@ const Courses = () => {
       total: 86,
     },
     {
-      courseCode: "CSE 207",
-      courseTitle: "Database Systems",
+      code: "CSE 207",
+      title: "Database Systems",
       credit: 3,
       type: "Theory",
       grade: "A+",
@@ -50,8 +53,8 @@ const Courses = () => {
       total: 87,
     },
     {
-      courseCode: "CSE 208",
-      courseTitle: "Database Systems Lab",
+      code: "CSE 208",
+      title: "Database Systems Lab",
       credit: 3,
       type: "Lab",
       grade: "A+",
@@ -61,20 +64,16 @@ const Courses = () => {
       total: 87,
     },
   ];
-  const attribute = [
-    "Course Code",
-    "Course Title",
-    "Credit",
-    "Type",
-    "Grade",
-    "Final",
-    "Mid",
-    "Out of 30",
-    "Total",
-  ];
 
   const std = new Student({ email: userFirebase?.email });
-  const resStatus = std.registerdYet();
+  const [regStatus, setRegStatus] = useState(false);
+
+  useEffect(() => {
+    const url = `${serverAddress}/registered/${userFirebase?.email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setRegStatus(res));
+  }, [userFirebase]);
 
   return (
     <section className="flex flex-col gap-5">
@@ -90,7 +89,7 @@ const Courses = () => {
               <span className="text-xl font-bold font-mono">{userFirebase?.displayName}</span>
             </p>
           </div>
-          {resStatus ? (
+          {regStatus ? (
             <h2
               className="text-lg btn rounded-lg w-fit cursor-not-allowed mx-auto"
               style={{ background: colorRed }}
@@ -111,7 +110,7 @@ const Courses = () => {
         <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />
       </div>
       {/* presrnt cources */}
-      <Table data={data} attribute={attribute} title="Summer - 2020" color={colorGreen} />
+      <CourseTable courses={data} />
     </section>
   );
 };

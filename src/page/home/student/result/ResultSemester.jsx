@@ -1,6 +1,6 @@
 import React from "react";
-import Table from "../../../../components/shared/Table";
 import { colorGreen } from "../../../../components/styles/colors";
+import CourseTable from "../courses/CourseTable";
 
 const ResultSemester = () => {
   const data = [
@@ -63,7 +63,7 @@ const ResultSemester = () => {
 
   return (
     <div>
-      <Table attribute={attribute} data={data} color={colorGreen} title={"Summer - 2022"} />
+      <CourseTable attribute={attribute} data={data} color={colorGreen} title={"Summer - 2022"} />
     </div>
   );
 };

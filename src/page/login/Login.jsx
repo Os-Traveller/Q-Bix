@@ -15,19 +15,28 @@ import bgAuth from "../../img/bgAuth.png";
 import Logo from "../../components/shared/Logo";
 import IconCover from "../../components/shared/IconCover";
 import Input from "../../components/shared/Input";
+import { toast } from "react-toastify";
+import { toastConfig } from "../../toastConfig";
+import Loader from "../../components/shared/loader/Loader";
 
 const Login = () => {
   const path = useNavigate();
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
   const radious = "35px";
+
+  if (user) {
+    path("/");
+  }
+
+  if (error) {
+    toast.error(error.code, { ...toastConfig });
+  }
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
-    signInWithEmailAndPassword(email, password).then(() => {
-      path("/");
-    });
-    path("/");
+    signInWithEmailAndPassword(email, password);
   };
 
   return (
@@ -48,7 +57,9 @@ const Login = () => {
             <Input title="Email" placeholder="Your email adress" name="email" type="email" />
             <Input title="Password" placeholder="Your password" name="password" type="password" />
             <p className="text-white font-semibold underline">Forgot password?</p>
-            <button className="btn bg-[#542DE1] rounded-xl uppercase">Login</button>
+            <button className="btn bg-[#542DE1] rounded-xl uppercase">
+              {loading ? <Loader /> : "Login"}
+            </button>
 
             <p className="text-gray-400 font-semibold text-center">
               Don't have any Account?{" "}

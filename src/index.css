@@ -94,13 +94,13 @@ input:-webkit-autofill {
 .profileCover {
   background: linear-gradient(45deg, #080814, #000029);
 }
-
+/* 
 @media screen and (max-width: 1600px) {
   html,
   body {
     font-size: 85%;
   }
-}
+} */
 
 @layer components {
   .btn {

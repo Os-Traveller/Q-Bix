@@ -39,7 +39,13 @@ class Student extends User {
   async registerdYet() {
     const url = `${serverAddress}/registered/${this.email}`;
     const regStatus = await fetch(url).then((res) => res.json());
-    console.log(regStatus);
+    return regStatus;
+  }
+
+  async getCurrentCourse() {
+    const url = `${serverAddress}/current-course/${this.email}`;
+    const currentCourse = await fetch(url).then((res) => res.json());
+    return currentCourse;
   }
 }
 

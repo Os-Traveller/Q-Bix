@@ -120,7 +120,6 @@ async function run() {
           registered: true,
         },
       };
-
       const result = await userCollection.updateOne(filter, updateDoc, { upsert: true });
       res.send(result);
     });
@@ -130,6 +129,12 @@ async function run() {
       const email = req.params.email;
       const regStatus = await userCollection.findOne({ email: email });
       res.send(regStatus.registered);
+    });
+
+    app.get("/current-course/:email", async (req, res) => {
+      const email = req.params.email;
+      const stdInfo = await userCollection.findOne({ email: email });
+      res.send(stdInfo?.subjects);
     });
   } catch (err) {
     console.error(err);
