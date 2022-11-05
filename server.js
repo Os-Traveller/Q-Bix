@@ -133,6 +133,36 @@ async function run() {
       res.send(regStatus.registered);
     });
 
+    // course ratio
+    app.get("/course-ratio/:dept/:email", async (req, res) => {
+      const dept = req.params.dept;
+      const email = req.params.email;
+      const allCourse = await courseCollection.findOne({});
+      const courseList = allCourse?.[dept];
+      const userInfo = await userCollection.findOne({ email: email });
+      const userCourseList = userInfo?.subjects;
+      // get total course;
+      let totalCourseCount = 0;
+      let totalCredit = 0;
+      for (let i = 0; i < courseList.length; i++) {
+        for (let j = 0; j < courseList[i].length; j++) {
+          totalCourseCount++;
+          totalCredit += courseList[i][j].credit;
+        }
+      }
+      // get total course for std
+      let stdTotalCourseCount = 0;
+      let stdTotalCredit = 0;
+      for (let i = 0; i < userCourseList.length; i++) {
+        for (let j = 0; j < userCourseList[i].length; j++) {
+          stdTotalCourseCount++;
+          stdTotalCredit += userCourseList[i][j].credit;
+        }
+      }
+
+      res.send({ totalCourseCount, totalCredit, stdTotalCourseCount, stdTotalCredit });
+    });
+
     app.get("/current-course/:email", async (req, res) => {
       const email = req.params.email;
       const stdInfo = await userCollection.findOne({ email: email });
@@ -147,7 +177,6 @@ async function run() {
 }
 
 run();
-
 app.get("/", (req, res) => {
   res.send("Server is Connected");
 });

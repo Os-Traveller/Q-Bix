@@ -6,7 +6,7 @@ import { colorGreen, colorPurple, colorRed } from "../../../../components/styles
 import { serverAddress } from "../../../../components/varables";
 import auth from "../../../../firebase.init";
 import useGetUser from "../../../../hooks/useGetUser";
-import Student from "../../../../js/Student";
+import Student from "../../../../js/student";
 
 const Registration = () => {
   const [userFirebase, loading] = useAuthState(auth);

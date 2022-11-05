@@ -1,5 +1,5 @@
 import { serverAddress } from "../components/varables";
-import User from "./User";
+import User from "./user";
 
 class Student extends User {
   dept;

@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 import { donutChartOption } from "../styles/donutChartOption";
 
 const StatCard = ({ title, completed, total, fontColor }) => {
-  const size = parseInt((completed * 100) / total);
+  const size = total === 0 ? 0 : parseInt((completed * 100) / total);
   return (
     <div className="card opacity-70 w-fit flex-grow">
       <h1 className="text-2xl text-center mb-5">{title}</h1>

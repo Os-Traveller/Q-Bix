@@ -12,13 +12,18 @@ import { useState } from "react";
 import { useEffect } from "react";
 import CourseTable from "./CourseTable";
 import { serverAddress } from "../../../../components/varables";
+import useGetUser from "../../../../hooks/useGetUser";
 
 const Courses = () => {
   const [userFirebase] = useAuthState(auth);
   const path = useNavigate();
-
   const [regStatus, setRegStatus] = useState(false);
   const [courses, setCourses] = useState([]);
+  const { data: userData, refetch } = useGetUser(userFirebase?.email);
+  const [totalCourse, setTotalCourse] = useState(0);
+  const [totalCredit, setTotalCredit] = useState(0);
+  const [takenCourse, setTakenCourse] = useState(0);
+  const [takenCredit, setTakenCredit] = useState(0);
 
   useEffect(() => {
     const url = `${serverAddress}/registered/${userFirebase?.email}`;
@@ -33,6 +38,19 @@ const Courses = () => {
       .then((res) => res.json())
       .then((res) => setCourses(res));
   }, [userFirebase]);
+
+  useEffect(() => {
+    refetch();
+    const url = `${serverAddress}/course-ratio/${userData?.dept}/${userFirebase?.email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        setTotalCourse(res.totalCourseCount);
+        setTakenCourse(res.stdTotalCourseCount);
+        setTotalCredit(res.totalCredit);
+        setTakenCredit(res.stdTotalCredit);
+      });
+  }, [userFirebase, refetch, userData]);
 
   return (
     <section className="flex flex-col gap-5">
@@ -65,8 +83,18 @@ const Courses = () => {
             </button>
           )}
         </div>
-        <StatCard title={"Cources"} completed={30} total={120} fontColor={"#582CFF"} />
-        <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />
+        <StatCard
+          title={"Cources"}
+          completed={takenCourse}
+          total={totalCourse}
+          fontColor={"#582CFF"}
+        />
+        <StatCard
+          title={"Credit"}
+          completed={takenCredit}
+          total={totalCredit}
+          fontColor={"#08987B"}
+        />
       </div>
       {/* presrnt cources */}
       {courses.length !== 0 && <CourseTable courses={courses} />}

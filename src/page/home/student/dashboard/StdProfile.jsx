@@ -2,18 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 // hooks
-
 // images
 import myDp from "../../../../img/dp.jpg";
 import cover from "../../../../img/cover.png";
 // icons
 import { MdOutlineEdit } from "react-icons/md";
 // utilities
-
 // class
-
 // components
-import Student from "../../../../js/Student";
+import Student from "../../../../js/student";
 import InputCredit from "../../../../components/shared/InputCredit";
 import Modal from "../../../../components/shared/Modal";
 import DpMaker from "../../../../components/shared/DpMaker";

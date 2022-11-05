@@ -17,12 +17,12 @@ import bgAuth from "../../img/bgAuth.png";
 import { serverAddress } from "../../components/varables";
 import { toastConfig } from "../../toastConfig";
 // class
+import Student from "../../js/student";
 // components
 import { bgImg } from "../../components/styles/styles";
 import Logo from "../../components/shared/Logo";
 import Input from "../../components/shared/Input";
 import IconCover from "../../components/shared/IconCover";
-import Student from "../../js/Student";
 
 const Signup = () => {
   const radious = "35px";
