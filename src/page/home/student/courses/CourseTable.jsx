@@ -52,11 +52,11 @@ const Row = ({ title, code, credit, type, grade, final, mid, out30, total }) => 
       <td className="px-3 py-5">{title}</td>
       <td className="px-3 py-5">{credit}</td>
       <td className="px-3 py-5 capitalize">{type}</td>
-      <td className="px-3 py-5">{out30}</td>
-      <td className="px-3 py-5">{mid}</td>
-      <td className="px-3 py-5">{final}</td>
-      <td className="px-3 py-5">{total}</td>
-      <td className="px-3 py-5">{grade}</td>
+      <td className="px-3 py-5">{out30 ? out30 : "***"}</td>
+      <td className="px-3 py-5">{mid ? mid : "***"}</td>
+      <td className="px-3 py-5">{final ? final : "***"}</td>
+      <td className="px-3 py-5">{total ? total : "***"}</td>
+      <td className="px-3 py-5">{grade ? grade : "***"}</td>
     </tr>
   );
 };

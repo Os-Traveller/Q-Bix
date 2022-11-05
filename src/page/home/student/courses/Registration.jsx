@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../../../components/shared/loader/Loader";
 import { colorGreen, colorPurple, colorRed } from "../../../../components/styles/colors";
 import { serverAddress } from "../../../../components/varables";
 import auth from "../../../../firebase.init";
@@ -7,12 +9,13 @@ import useGetUser from "../../../../hooks/useGetUser";
 import Student from "../../../../js/Student";
 
 const Registration = () => {
-  const [userFirebase] = useAuthState(auth);
+  const [userFirebase, loading] = useAuthState(auth);
   const { data: std, refetch } = useGetUser(userFirebase?.email);
   const [allCourse, setAllCourse] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState([]);
   const [credit, setCredit] = useState(0);
-  const stdUser = new Student({ id: std?.email });
+  const stdUser = new Student({ email: userFirebase?.email });
+  const path = useNavigate();
 
   useEffect(() => {
     document.title = "Course Registration";
@@ -29,6 +32,10 @@ const Registration = () => {
 
     setCredit(countCr);
   }, [refetch, std, selectedCourse]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   const addCourse = (code) => {
     const course = allCourse.filter((cr) => cr.code === code);
@@ -81,7 +88,10 @@ const Registration = () => {
           <button
             className="btn w-fit rounded-md buble block hover:scale-110 mt-8 ml-auto"
             style={{ background: colorGreen }}
-            onClick={() => stdUser.courseRegister(selectedCourse)}
+            onClick={() => {
+              stdUser.courseRegister(selectedCourse);
+              path("/courses");
+            }}
           >
             Confrim Registration
           </button>

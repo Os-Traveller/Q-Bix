@@ -17,14 +17,12 @@ import bgAuth from "../../img/bgAuth.png";
 import { serverAddress } from "../../components/varables";
 import { toastConfig } from "../../toastConfig";
 // class
-
 // components
-
 import { bgImg } from "../../components/styles/styles";
 import Logo from "../../components/shared/Logo";
 import Input from "../../components/shared/Input";
 import IconCover from "../../components/shared/IconCover";
-import User from "../../js/User";
+import Student from "../../js/Student";
 
 const Signup = () => {
   const radious = "35px";
@@ -41,23 +39,25 @@ const Signup = () => {
     const id = e.target.elements.id.value.trim();
     const role = e.target.elements.role.value.trim();
 
-    let std;
+    let user;
     let createAccount = false;
     if (role === "student") {
-      [std] = students.filter((std) => std.id === parseInt(id));
-      createAccount = !std.account;
+      [user] = students.filter((std) => std.id === parseInt(id));
+      createAccount = !user.account;
     } else if (role === "teacher") {
     }
 
     if (createAccount) {
       createUserWithEmailAndPassword(email, password).then(() => {
         updateProfile({ displayName: name });
-        // creating user
-        const user = new User({ name, email, role, id });
-        user.createUser();
+        if (role === "student") {
+          const newUser = new Student({ name, email, role, id });
+          newUser.createUser();
+        } else if (role === "teacher") {
+        }
         // updating list so that no more account can be created with the same id
         if (role === "student") {
-          const url = `${serverAddress}/acc-created-std/${std._id}`;
+          const url = `${serverAddress}/acc-created-std/${user._id}`;
           fetch(url)
             .then((res) => res.json())
             .then((res) => console.log(res));

@@ -8,7 +8,6 @@ import { bgImg } from "../../../../components/styles/styles";
 import StatCard from "../../../../components/shared/StatCard";
 import auth from "../../../../firebase.init";
 import { colorGreen, colorRed } from "../../../../components/styles/colors";
-import Student from "../../../../js/Student";
 import { useState } from "react";
 import { useEffect } from "react";
 import CourseTable from "./CourseTable";
@@ -18,61 +17,21 @@ const Courses = () => {
   const [userFirebase] = useAuthState(auth);
   const path = useNavigate();
 
-  const data = [
-    {
-      code: "ACT 201",
-      title: "Accounting Fundamental",
-      credit: 2,
-      type: "Theory",
-      grade: "A+",
-      final: 34,
-      mid: 22.5,
-      out30: 25.5,
-      total: 82,
-    },
-    {
-      code: "CSE 205",
-      title: "Digital Logic Design",
-      credit: 3,
-      type: "Theory",
-      grade: "A+",
-      final: 33,
-      mid: 24,
-      out30: 29,
-      total: 86,
-    },
-    {
-      code: "CSE 207",
-      title: "Database Systems",
-      credit: 3,
-      type: "Theory",
-      grade: "A+",
-      final: 34,
-      mid: 24,
-      out30: 29,
-      total: 87,
-    },
-    {
-      code: "CSE 208",
-      title: "Database Systems Lab",
-      credit: 3,
-      type: "Lab",
-      grade: "A+",
-      final: 37,
-      mid: 23,
-      out30: 27,
-      total: 87,
-    },
-  ];
-
-  const std = new Student({ email: userFirebase?.email });
   const [regStatus, setRegStatus] = useState(false);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const url = `${serverAddress}/registered/${userFirebase?.email}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => setRegStatus(res));
+  }, [userFirebase]);
+
+  useEffect(() => {
+    const url = `${serverAddress}/current-course/${userFirebase?.email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setCourses(res));
   }, [userFirebase]);
 
   return (
@@ -110,7 +69,7 @@ const Courses = () => {
         <StatCard title={"Credit"} completed={52.5} total={130} fontColor={"#08987B"} />
       </div>
       {/* presrnt cources */}
-      <CourseTable courses={data} />
+      {courses.length !== 0 && <CourseTable courses={courses} />}
     </section>
   );
 };

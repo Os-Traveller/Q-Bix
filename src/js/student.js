@@ -5,7 +5,9 @@ class Student extends User {
   dept;
   intake;
   section;
+  registerd;
   result = [];
+
   constructor({ name, email, id, role, intake, dept, section }) {
     super({ name, email, role, id });
     this.intake = intake;
@@ -13,7 +15,32 @@ class Student extends User {
     this.section = section;
   }
 
-  updateProfileInfo({ intake, dept, section, location, phone }) {
+  async createUser() {
+    const url = `${serverAddress}/create-user`;
+    // making an object of all info on a student
+    const stdInfo = {
+      name: this.name,
+      email: this.email,
+      role: this.role,
+      id: this.id,
+      dept: this.dept,
+      intake: this.intake,
+      section: this.section,
+      registerd: this.registerd,
+      result: this.result,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(stdInfo),
+    };
+
+    const response = await fetch(url, requestOptions).then((res) => res.json());
+    return response;
+  }
+
+  async updateProfileInfo({ intake, dept, section, location, phone }) {
     const url = `${serverAddress}/update-profile`;
     console.log(url);
     const requestOptions = {
@@ -26,11 +53,13 @@ class Student extends User {
 
   async courseRegister(courseList) {
     const url = `${serverAddress}/registration/${this.email}`;
+    console.log(url);
     const requestOptions = {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(courseList),
     };
+
     const response = await fetch(url, requestOptions);
     console.log(response);
     return response;

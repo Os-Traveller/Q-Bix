@@ -101,10 +101,12 @@ async function run() {
     // registration
     app.post("/registration/:email", async (req, res) => {
       const email = req.params.email;
+      console.log(email);
       const courseList = req.body;
       const filter = { email: email };
       const studentInfo = await userCollection.findOne(filter);
-      let { subjects } = studentInfo;
+
+      let subjects = studentInfo?.subjects;
 
       if (subjects) {
         subjects.push(courseList);
@@ -120,7 +122,7 @@ async function run() {
           registered: true,
         },
       };
-      const result = await userCollection.updateOne(filter, updateDoc, { upsert: true });
+      const result = await userCollection.updateOne(filter, updateDoc);
       res.send(result);
     });
 
@@ -134,7 +136,8 @@ async function run() {
     app.get("/current-course/:email", async (req, res) => {
       const email = req.params.email;
       const stdInfo = await userCollection.findOne({ email: email });
-      res.send(stdInfo?.subjects);
+      const subjects = stdInfo?.subjects;
+      res.send(subjects[subjects.length - 1]);
     });
   } catch (err) {
     console.error(err);
