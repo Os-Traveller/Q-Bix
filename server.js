@@ -31,6 +31,7 @@ async function run() {
     const studentsCollection = database.collection("students");
     const courseCollection = database.collection("allCourse");
     const deptCollection = database.collection("dept");
+    const othersCollection = database.collection("others");
 
     // geting all student information
     app.get("/students", async (req, res) => {
@@ -163,6 +164,26 @@ async function run() {
       res.send({ totalCourseCount, totalCredit, stdTotalCourseCount, stdTotalCredit });
     });
 
+    // student Fees Info
+    app.get("/fees-info/:email/:dept", async (req, res) => {
+      const email = req.params.email;
+      const dept = req.params.dept;
+      const userInfo = await userCollection.findOne({ email: email });
+      const othersInfo = await othersCollection.findOne({});
+      const feesPerCr = othersInfo.feesPerCr?.[dept];
+      const userCourseList = userInfo?.subjects;
+      const userFeesInfo = userInfo?.fees;
+
+      let stdTotalCredit = 0;
+      for (let i = 0; i < userCourseList.length; i++) {
+        for (let j = 0; j < userCourseList[i].length; j++) {
+          stdTotalCredit += userCourseList[i][j].credit;
+        }
+      }
+      res.send({ stdTotalCredit, ...userFeesInfo, feesPerCr });
+    });
+
+    // cureent course info
     app.get("/current-course/:email", async (req, res) => {
       const email = req.params.email;
       const stdInfo = await userCollection.findOne({ email: email });

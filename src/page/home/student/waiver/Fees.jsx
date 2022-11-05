@@ -9,11 +9,11 @@ import FeesStat from "./FeesStat";
 const Fees = () => {
   const path = useNavigate();
   return (
-    <div>
+    <section>
       {/* top */}
       <div className="w-full flex gap-5 mb-10">
         {/* greating */}
-        <div className="card flex flex-col justify-between" style={bgImg(cardBG)}>
+        <div className="card flex flex-col gap-5 justify-between" style={bgImg(cardBG)}>
           <div>
             <p className="text-xl font-semibold uppercase" style={{ letterSpacing: "3px" }}>
               Welcome Back!
@@ -35,7 +35,7 @@ const Fees = () => {
       </div>
       <FeesDetail />
       {/* body */}
-    </div>
+    </section>
   );
 };
 
