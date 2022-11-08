@@ -41,9 +41,9 @@ const CourseTable = ({ courses }) => {
 const Row = ({ title, code, credit, type, grade, final, mid, out30, total }) => {
   return (
     <tr className="w-full border-t">
-      <td className="px-3 py-5 uppercase">
+      <td className="px-3 py-5">
         <button
-          className="py-1 px-3 rounded-md"
+          className="py-1 px-3 rounded-md uppercase"
           style={{ background: colorGreen, display: code ? "block" : "none" }}
         >
           {code}

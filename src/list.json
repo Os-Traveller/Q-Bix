@@ -1,79 +1,54 @@
 {
-  "courseInfoStd": {
-    "semesterName": "summer - 2022",
-    "subject": [
+  "_id": { "$oid": "63663e2fd785646a3b824f74" },
+  "name": "Faisal Ahmed",
+  "email": "faisal@gmail.com",
+  "id": "19202103135",
+  "role": "student",
+  "dept": "cse",
+  "intake": "44",
+  "location": "Dhaka",
+  "phone": "01575008359",
+  "section": "3",
+  "registered": true,
+  "subjects": {
+    "summer:2022": [
       {
-        "title": "Name",
-        "code": "courseCode",
-        "credit": "credit",
-        "mid": "mid",
-        "thirty": "thirty",
-        "final": "final"
+        "title": "Object Oriented Programming Language",
+        "code": "CSE 121",
+        "credit": { "$numberInt": "3" },
+        "type": "Theory"
+      },
+      {
+        "title": "Object Oriented Programming Language Lab",
+        "code": "CSE 122",
+        "credit": { "$numberDouble": "1.5" },
+        "type": "Lab"
+      },
+      {
+        "title": "Principles of Economics",
+        "code": "ECO 101",
+        "credit": { "$numberInt": "2" },
+        "type": "Theory"
+      },
+      {
+        "title": "Software Development I",
+        "code": "CSE 100",
+        "credit": { "$numberDouble": "0.75" },
+        "type": "Theory"
+      },
+      {
+        "title": "Electronic Devices and Circuits",
+        "code": "EEE 211",
+        "credit": { "$numberInt": "3" },
+        "type": "Theory"
+      },
+      {
+        "title": "Electronic Devices and Circuits Lab",
+        "code": "EEE 212",
+        "credit": { "$numberDouble": "1.5" },
+        "type": "Lab"
       }
     ]
   },
-
-  "allCourse": {
-    "cse": [
-      [
-        { "title": "Physics", "code": "phy 201", "credit": 3, "type": "theory" },
-        {
-          "title": "Differential and Integral Calculus",
-          "code": "mat 101",
-          "credit": 3,
-          "type": "theory"
-        },
-        {
-          "title": "Structured Programming Language",
-          "code": "cse 111",
-          "credit": 3,
-          "type": "theory"
-        },
-        {
-          "title": "Structured Programming Language Lab",
-          "code": "cse 112",
-          "credit": 1.5,
-          "type": "lab"
-        },
-        {
-          "title": "English Language-I",
-          "code": "eng 101",
-          "credit": 3,
-          "type": "theory"
-        }
-      ],
-      [
-        { "title": "Accounting Fundamental", "code": "act 201", "credit": 2, "type": "theory" },
-        { "title": "Digital Logic Design", "code": "cse 205", "credit": 3, "type": "theory" },
-        { "title": "Digital Logic Design Lab", "code": "cse 206", "credit": 1.5, "type": "lab" },
-        { "title": "Database System", "code": "cse 207", "credit": 3, "type": "theory" },
-        { "title": "Database System Lab", "code": "cse 208", "credit": 1.5, "type": "lab" },
-        { "title": "Fourier Analysis", "code": "mat 331", "credit": 3, "type": "theory" }
-      ],
-      [
-        { "title": "Accounting Fundamental", "code": "act 201", "credit": 2, "type": "theory" },
-        { "title": "Digital Logic Design", "code": "cse 205", "credit": 3, "type": "theory" },
-        { "title": "Digital Logic Design Lab", "code": "cse 206", "credit": 1.5, "type": "lab" },
-        { "title": "Database System", "code": "cse 207", "credit": 3, "type": "theory" },
-        { "title": "Database System Lab", "code": "cse 208", "credit": 1.5, "type": "lab" },
-        { "title": "Fourier Analysis", "code": "mat 331", "credit": 3, "type": "theory" }
-      ]
-    ]
-  },
-
-  "dept": {
-    "cse": {
-      "intake": {
-        "44": { "semester": 3 },
-        "45": { "semester": 2 },
-        "46": { "semester": 1 }
-      }
-    },
-
-    "eee": {
-      "intake": {
-        "32": [1]
-      }
-    }
-  }
+  "waiver": { "summer:2022": { "$numberLong": "10000" } }
 }

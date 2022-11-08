@@ -1,9 +1,1 @@
-[
-  [
-    { "title": "Physics", "code": "phy 201", "credit": 3, "type": "theory" },
-    { "title": "Physics", "code": "phy 201", "credit": 3, "type": "theory" },
-    { "title": "Physics", "code": "phy 201", "credit": 3, "type": "theory" },
-    { "title": "Physics", "code": "phy 201", "credit": 3, "type": "theory" }
-  ],
-  []
-]
+[{ "title": "Accounting Fundamental", "code": "ACT - 101", "type": "Theory", "credit": 2 }]

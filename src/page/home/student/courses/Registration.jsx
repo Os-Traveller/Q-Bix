@@ -24,7 +24,6 @@ const Registration = () => {
     fetch(url)
       .then((res) => res.json())
       .then((res) => setAllCourse(res));
-
     let countCr = 0;
     selectedCourse.forEach((course) => {
       countCr += course.credit;

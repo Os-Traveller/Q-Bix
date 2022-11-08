@@ -29,11 +29,11 @@ const OnlinePayment = () => {
   const payFees = async (e) => {
     e.preventDefault();
     const std = new Student({ email: userData?.email });
-    std.payFees({ mobileNo, amount, payType: payType ? payType : "tuition" });
+    await std.payFees({ mobileNo, amount, payType: payType ? payType : "tuition" });
     setAmount("");
     setMobileNo("");
     toast("Payment Complete", toastConfig);
-    path("/fees");
+    path("/");
   };
 
   return (

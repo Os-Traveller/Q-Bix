@@ -11,7 +11,7 @@ const Fees = () => {
   return (
     <section>
       {/* top */}
-      <div className="w-full flex gap-5 mb-10">
+      <div className="w-full flex gap-5 mb-5">
         {/* greating */}
         <div className="card flex flex-col gap-5 justify-between" style={bgImg(cardBG)}>
           <div>

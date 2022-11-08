@@ -79,7 +79,6 @@ class Student extends User {
 
   async payFees(feesInfo) {
     const url = `${serverAddress}/pay-fees/${this.email}`;
-    console.log(url);
     const requestOptions = {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -87,6 +86,15 @@ class Student extends User {
     };
     const response = await fetch(url, requestOptions);
     return response;
+  }
+
+  getDate() {
+    const date = new Date();
+    const day = date.toLocaleDateString("en-US", { weekday: "long" });
+    const month = date.toLocaleDateString("en-US", { month: "long" });
+    const year = date.getFullYear();
+
+    console.log(day, month, year, date.getDate());
   }
 }
 

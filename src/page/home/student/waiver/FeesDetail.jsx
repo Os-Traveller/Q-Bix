@@ -1,43 +1,22 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { BiCalendar } from "react-icons/bi";
 import Modal from "../../../../components/shared/Modal";
 import { colorGreen } from "../../../../components/styles/colors";
+import { serverAddress } from "../../../../components/varables";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../../firebase.init";
 
 const FeesDetail = () => {
   const [feesInfo, setFeesInfo] = useState({});
+  const [userFirebase] = useAuthState(auth);
 
-  const fees = [
-    {
-      semester: "Spring - 2020",
-      demand: 47570,
-      waiver: 15390,
-      paid: 32180,
-      detail: [
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-      ],
-    },
-    {
-      semester: "Summer - 2021",
-      demand: 36820,
-      waiver: 28500,
-      paid: 8230,
-      detail: [
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-        { date: "01 March 2020", amount: 15600, trxId: "#tu:22.00:1:3:2020:135" },
-        { date: "15 April 2020", amount: 7800, trxId: "#tu:22.32:15:4:2020:135" },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const url = `${serverAddress}/fees-info-details/${userFirebase?.email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setFeesInfo(res));
+  }, [userFirebase]);
 
   return (
     <div className="card">
@@ -46,17 +25,20 @@ const FeesDetail = () => {
       </h1>
       <table className="w-full">
         <thead className="uppercase text-sm text-center text-gray-400 font-semibold border-b">
-          <td className="py-3">Semester</td>
-          <td>Demand</td>
-          <td>Waiver</td>
-          <td>Payment</td>
-          <td>Due</td>
-          <td>Details</td>
+          <th className="py-3">Semester</th>
+          <th>Demand</th>
+          <th>Waiver</th>
+          <th>Payment</th>
+          <th>Due</th>
+          <th>Details</th>
         </thead>
         <tbody>
-          {fees?.map((fee, index) => (
-            <TableRow data={fee} key={index} />
+          {Object.keys(feesInfo).map((semester, index) => (
+            <TableRow data={feesInfo[semester]} semester={semester} key={index} />
           ))}
+          {/* {fees?.map((fee, index) => (
+            <TableRow data={fee} key={index} />
+          ))} */}
         </tbody>
       </table>
       {/* payment */}
@@ -64,9 +46,10 @@ const FeesDetail = () => {
   );
 };
 
-const TableRow = ({ data }) => {
-  const { semester, demand, waiver, paid, detail } = data;
+const TableRow = ({ data, semester }) => {
+  const { demand, waiver, paid, fees } = data;
   const [openModal, setOpenModal] = useState(false);
+
   return (
     <>
       <tr className="w-full text-center text-sm">
@@ -94,14 +77,19 @@ const TableRow = ({ data }) => {
         <div className="rounded-md bg-[#131B4D] opacity-80 text-white p-5">
           <h1 className="text-xl font-semibold mb-8">Your Transaction</h1>
           <div className="flex flex-col gap-5">
-            {detail?.map((data, index) => (
+            {fees?.map((data, index) => (
               <div key={index}>
+                <h2 className="capitalize text-lg mb-2">{data.payType} Fees</h2>
                 <h2 className="flex gap-2 items-center mb-2">
                   <BiCalendar className="text-2xl" />{" "}
-                  <span className="uppercase text-sm font-semibold">{data?.date}</span>
+                  <span className="uppercase text-lg font-semibold" style={{ wordSpacing: "5px" }}>
+                    {data?.date.day} {data?.date?.month} {data?.date?.year}
+                  </span>
                 </h2>
                 <div className="flex justify-between text-lg text-gray-400">
-                  <p>{data?.trxId}</p>
+                  <p className="text-sm">
+                    Trx ID : <strong>{data?.transcationId}</strong>
+                  </p>
                   <p>
                     &#x09F3; <strong>{data?.amount}</strong>
                   </p>

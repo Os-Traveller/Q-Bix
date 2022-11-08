@@ -102,17 +102,17 @@ async function run() {
     // registration
     app.post("/registration/:email", async (req, res) => {
       const email = req.params.email;
-      console.log(email);
       const courseList = req.body;
-      const filter = { email: email };
-      const studentInfo = await userCollection.findOne(filter);
+      const othersInfo = await othersCollection.findOne({});
+      const currentSemester = othersInfo.currentSemester;
+      const studentInfo = await userCollection.findOne({ email: email });
       let subjects = studentInfo.subjects;
+
       if (subjects) {
-        subjects.push(courseList);
+        subjects[currentSemester] = courseList;
       } else {
-        // for new studenst
-        subjects = [];
-        subjects.push(courseList);
+        subjects = {};
+        subjects[currentSemester] = courseList;
       }
 
       const updateDoc = {
@@ -121,7 +121,8 @@ async function run() {
           registered: true,
         },
       };
-      const result = await userCollection.updateOne(filter, updateDoc);
+
+      const result = await userCollection.updateOne({ email: email }, updateDoc);
       res.send(result);
     });
 
@@ -140,26 +141,43 @@ async function run() {
       const courseList = allCourse?.[dept];
       const userInfo = await userCollection.findOne({ email: email });
       const userCourseList = userInfo?.subjects;
+      console.log(userCourseList);
       // get total course;
       let totalCourseCount = 0;
       let totalCredit = 0;
+      let stdTotalCourseCount = 0;
+      let stdTotalCredit = 0;
+
       for (let i = 0; i < courseList.length; i++) {
         for (let j = 0; j < courseList[i].length; j++) {
           totalCourseCount++;
           totalCredit += courseList[i][j].credit;
         }
       }
-      // get total course for std
-      let stdTotalCourseCount = 0;
-      let stdTotalCredit = 0;
-      for (let i = 0; i < userCourseList.length; i++) {
-        for (let j = 0; j < userCourseList[i].length; j++) {
-          stdTotalCourseCount++;
-          stdTotalCredit += userCourseList[i][j].credit;
-        }
-      }
 
+      if (userCourseList) {
+        Object.values(userCourseList).forEach((sem) => {
+          for (let i = 0; i < sem.length; i++) {
+            stdTotalCourseCount++;
+            stdTotalCredit += sem[i].credit;
+          }
+        });
+      }
       res.send({ totalCourseCount, totalCredit, stdTotalCourseCount, stdTotalCredit });
+    });
+
+    // cureent course info
+    app.get("/current-course/:email", async (req, res) => {
+      const email = req.params.email;
+      const stdInfo = await userCollection.findOne({ email: email });
+      const othersInfo = await othersCollection.findOne({});
+      const currentSemester = othersInfo.currentSemester;
+      const subjects = stdInfo?.subjects;
+      if (subjects) {
+        res.send(subjects[currentSemester]);
+      } else {
+        res.send([]);
+      }
     });
 
     // students Fees Info
@@ -171,38 +189,66 @@ async function run() {
       const feesPerCr = othersInfo.feesPerCr?.[dept];
       const userCourseList = userInfo?.subjects;
       const userFeesInfo = userInfo?.fees;
+      const waiverInfo = userInfo?.waiver;
+
+      let waiver = 0;
+      if (waiverInfo) {
+        Object.values(waiverInfo).forEach((semesterWaiver) => {
+          waiver += semesterWaiver;
+        });
+      }
 
       let paid = 0;
-      Object.values(userFeesInfo).map((feesInfo) => {
-        for (let i = 0; i < feesInfo.length; i++) {
-          paid += parseFloat(feesInfo[i].amount);
-        }
-        return paid;
-      });
+      if (userFeesInfo) {
+        Object.values(userFeesInfo).forEach((feesInfo) => {
+          for (let i = 0; i < feesInfo.length; i++) {
+            paid += parseFloat(feesInfo[i].amount);
+          }
+        });
+      }
 
       let stdTotalCredit = 0;
-      for (let i = 0; i < userCourseList.length; i++) {
-        for (let j = 0; j < userCourseList[i].length; j++) {
-          stdTotalCredit += userCourseList[i][j].credit;
-        }
+      if (userCourseList) {
+        Object.values(userCourseList).forEach((sem) => {
+          for (let i = 0; i < sem.length; i++) {
+            stdTotalCredit += sem[i].credit;
+          }
+        });
       }
-      res.send({ stdTotalCredit, paid, feesPerCr });
+      res.send({ stdTotalCredit, paid, waiver, feesPerCr });
     });
 
     // student feesinfo in detail
     app.get("/fees-info-details/:email", async (req, res) => {
       const email = req.params.email;
       const userInfo = await userCollection.findOne({ email: email });
-      const feesInfo = userInfo.fees;
-      res.send(feesInfo);
-    });
+      const othersInfo = await othersCollection.findOne({});
+      const feesPerCr = othersInfo.feesPerCr?.[userInfo?.dept];
+      const fees = userInfo.fees;
+      const subjects = userInfo.subjects;
+      const waiver = userInfo.waiver;
+      const semesterList = Object.keys(subjects);
+      const feesInfoObj = {};
+      semesterList.forEach((semester) => {
+        // geting demand for any semester
+        let demand = 0;
+        subjects?.[semester].forEach((sub) => {
+          demand += +sub.credit * feesPerCr;
+        });
+        // getting paid fees for any semester
+        let paid = 0;
+        fees?.[semester].forEach((fee) => {
+          paid += +fee.amount;
+        });
 
-    // cureent course info
-    app.get("/current-course/:email", async (req, res) => {
-      const email = req.params.email;
-      const stdInfo = await userCollection.findOne({ email: email });
-      const subjects = stdInfo?.subjects;
-      res.send(subjects[subjects.length - 1]);
+        feesInfoObj[semester] = {
+          waiver: waiver?.[semester],
+          demand: demand,
+          paid: paid,
+          fees: fees?.[semester],
+        };
+      });
+      res.send(feesInfoObj);
     });
 
     // pay fees
@@ -214,7 +260,13 @@ async function run() {
       let fees = userInfo.fees;
       const transcationId = "qb-" + Date.now();
       const arrFees = [];
-      arrFees.push({ ...req.body, transcationId });
+
+      const date = new Date();
+      const month = date.toLocaleDateString("en-US", { month: "long" });
+      const year = date.getFullYear();
+      const day = date.getDate();
+
+      arrFees.push({ ...req.body, transcationId, date: { day, month, year } });
       if (fees) {
         // if fees already exists
         if (fees[currentSemester]) {
@@ -236,10 +288,11 @@ async function run() {
           fees: fees,
         },
       };
-      await userCollection.updateOne({ email: email }, updateDoc);
+      const result = await userCollection.updateOne({ email: email }, updateDoc);
+      res.send(result);
     });
   } catch (err) {
-    console.error(err);
+    console.log(err);
   } finally {
     // do nothing
   }
