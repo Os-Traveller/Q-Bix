@@ -237,7 +237,7 @@ async function run() {
         });
         // getting paid fees for any semester
         let paid = 0;
-        fees?.[semester].forEach((fee) => {
+        fees?.[semester]?.forEach((fee) => {
           paid += +fee.amount;
         });
 

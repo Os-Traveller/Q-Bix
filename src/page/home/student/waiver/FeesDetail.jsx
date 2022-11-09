@@ -55,9 +55,9 @@ const TableRow = ({ data, semester }) => {
       <tr className="w-full text-center text-sm">
         <td className="py-5">{semester}</td>
         <td>{demand}</td>
-        <td>{waiver}</td>
-        <td>{paid}</td>
-        <td>{demand - waiver - paid}</td>
+        <td>{waiver ? waiver : "-----"}</td>
+        <td>{paid && paid !== 0 ? paid : "-----"}</td>
+        <td>{demand - (waiver ? waiver : 0) - paid}</td>
         <td>
           <button
             className="py-2 px-5 rounded buble"
@@ -77,25 +77,30 @@ const TableRow = ({ data, semester }) => {
         <div className="rounded-md bg-[#131B4D] opacity-80 text-white p-5">
           <h1 className="text-xl font-semibold mb-8">Your Transaction</h1>
           <div className="flex flex-col gap-5">
-            {fees?.map((data, index) => (
-              <div key={index}>
-                <h2 className="capitalize text-lg mb-2">{data.payType} Fees</h2>
-                <h2 className="flex gap-2 items-center mb-2">
-                  <BiCalendar className="text-2xl" />{" "}
-                  <span className="uppercase text-lg font-semibold" style={{ wordSpacing: "5px" }}>
-                    {data?.date.day} {data?.date?.month} {data?.date?.year}
-                  </span>
-                </h2>
-                <div className="flex justify-between text-lg text-gray-400">
-                  <p className="text-sm">
-                    Trx ID : <strong>{data?.transcationId}</strong>
-                  </p>
-                  <p>
-                    &#x09F3; <strong>{data?.amount}</strong>
-                  </p>
+            {fees &&
+              fees?.map((data, index) => (
+                <div key={index}>
+                  <h2 className="capitalize text-lg mb-2">{data?.payType} Fees</h2>
+                  <h2 className="flex gap-2 items-center mb-2">
+                    <BiCalendar className="text-2xl" />{" "}
+                    <span
+                      className="uppercase text-lg font-semibold"
+                      style={{ wordSpacing: "5px" }}
+                    >
+                      {data?.date?.day} {data?.date?.month} {data?.date?.year}
+                    </span>
+                  </h2>
+                  <div className="flex justify-between text-lg text-gray-400">
+                    <p className="text-sm">
+                      Trx ID : <strong>{data?.transcationId}</strong>
+                    </p>
+                    <p>
+                      &#x09F3; <strong>{data?.amount}</strong>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            {!fees && <h1>No Transaction Found Yet</h1>}
           </div>
         </div>
       </Modal>
