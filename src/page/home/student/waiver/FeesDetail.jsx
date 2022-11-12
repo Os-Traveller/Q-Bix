@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { BiCalendar } from "react-icons/bi";
 import Modal from "../../../../components/shared/Modal";
 import { colorGreen } from "../../../../components/styles/colors";
-import { serverAddress } from "../../../../components/varables";
+import { serverAddress } from "../../../../components/variables";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../../firebase.init";
 

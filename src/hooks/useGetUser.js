@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { serverAddress } from "../components/varables";
+import { serverAddress } from "../components/variables";
 
 const useGetUser = (email) => {
   const url = `${serverAddress}/user/${email}`;

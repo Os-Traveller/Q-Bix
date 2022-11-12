@@ -66,7 +66,6 @@ const OnlinePayment = () => {
                 onBlur={(e) => setPayType(e.target.value)}
                 required
               >
-                <option value={"null"}>Choose Payment Type</option>
                 <option value="tuition">Tuition Fee</option>
                 <option value="admission">Admission Fee</option>
                 <option value="other">Other Fee</option>

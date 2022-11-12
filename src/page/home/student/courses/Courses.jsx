@@ -11,7 +11,7 @@ import { colorGreen, colorRed } from "../../../../components/styles/colors";
 import { useState } from "react";
 import { useEffect } from "react";
 import CourseTable from "./CourseTable";
-import { serverAddress } from "../../../../components/varables";
+import { serverAddress } from "../../../../components/variables";
 import useGetUser from "../../../../hooks/useGetUser";
 
 const Courses = () => {

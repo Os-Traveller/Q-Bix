@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const { async } = require("@firebase/util");
 
 require("dotenv").config();
 const app = express();
@@ -29,29 +30,43 @@ async function run() {
     // all tables
     const userCollection = database.collection("users");
     const studentsCollection = database.collection("students");
+    const teachersCollection = database.collection("teacher");
     const courseCollection = database.collection("allCourse");
     const deptCollection = database.collection("dept");
     const othersCollection = database.collection("others");
 
     // geting all student information
     app.get("/students", async (req, res) => {
-      const query = {};
-      const cursor = studentsCollection.find(query);
+      const cursor = studentsCollection.find({});
       const students = await cursor.toArray();
       res.send(students);
     });
 
+    // geting all teachers info
+    app.get("/teachers", async (req, res) => {
+      const cursor = teachersCollection.find({});
+      const teachers = await cursor.toArray();
+      res.send(teachers);
+    });
+
     // if user created update list
-    app.get("/acc-created-std/:id", async (req, res) => {
+    app.get("/acc-created/:id/:role", async (req, res) => {
       const _id = req.params.id;
+      const role = req.params.role;
       const filter = { _id: ObjectId(_id) };
       const updateDoc = {
         $set: {
           account: true,
         },
       };
-      const result = await studentsCollection.updateOne(filter, updateDoc);
-      res.send(result);
+
+      if (role === "student") {
+        const result = await studentsCollection.updateOne(filter, updateDoc);
+        res.send(result);
+      } else if (role === "teacher") {
+        const result = await teachersCollection.updateOne(filter, updateDoc);
+        res.send(result);
+      }
     });
 
     // creating new user
@@ -141,17 +156,17 @@ async function run() {
       const courseList = allCourse?.[dept];
       const userInfo = await userCollection.findOne({ email: email });
       const userCourseList = userInfo?.subjects;
-      console.log(userCourseList);
+
       // get total course;
       let totalCourseCount = 0;
       let totalCredit = 0;
       let stdTotalCourseCount = 0;
       let stdTotalCredit = 0;
 
-      for (let i = 0; i < courseList.length; i++) {
-        for (let j = 0; j < courseList[i].length; j++) {
+      for (let i = 0; i < courseList?.length; i++) {
+        for (let j = 0; j < courseList[i]?.length; j++) {
           totalCourseCount++;
-          totalCredit += courseList[i][j].credit;
+          totalCredit += courseList[i][j]?.credit;
         }
       }
 
@@ -290,6 +305,25 @@ async function run() {
       };
       const result = await userCollection.updateOne({ email: email }, updateDoc);
       res.send(result);
+    });
+
+    app.get("/get-all-students-info", async (req, res) => {
+      const cursor = userCollection.find({ role: "student" });
+      const students = await cursor.toArray();
+      const otherInfo = await othersCollection.findOne({});
+      const semester = otherInfo.currentSemester;
+      let dept = await deptCollection.findOne({});
+      delete dept._id;
+      res.send({ students, semester, dept });
+    });
+
+    app.get("/find-student-result/:id", async (req, res) => {
+      const id = req.params.id;
+      const otherInfo = await othersCollection.findOne({});
+      const semester = otherInfo.currentSemester;
+      const userInfo = await userCollection.findOne({ id: id });
+      const subjects = userInfo?.subjects?.[semester];
+      res.send(subjects);
     });
   } catch (err) {
     console.log(err);

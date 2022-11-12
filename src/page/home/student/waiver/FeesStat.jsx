@@ -4,7 +4,7 @@ import { colorBlue, colorGreen, colorPurple, colorRed } from "../../../../compon
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../../firebase.init";
 import useGetUser from "../../../../hooks/useGetUser";
-import { serverAddress } from "../../../../components/varables";
+import { serverAddress } from "../../../../components/variables";
 
 const FeesStat = () => {
   const radious = "150px";

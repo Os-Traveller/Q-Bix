@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../../components/shared/loader/Loader";
 import { colorGreen, colorPurple, colorRed } from "../../../../components/styles/colors";
-import { serverAddress } from "../../../../components/varables";
+import { serverAddress } from "../../../../components/variables";
 import auth from "../../../../firebase.init";
 import useGetUser from "../../../../hooks/useGetUser";
 import Student from "../../../../js/student";

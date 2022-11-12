@@ -1,4 +1,4 @@
-import { serverAddress } from "../components/varables";
+import { serverAddress } from "../components/variables";
 import User from "./user";
 
 class Student extends User {
@@ -17,17 +17,11 @@ class Student extends User {
 
   async createUser() {
     const url = `${serverAddress}/create-user`;
-    // making an object of all info on a student
     const stdInfo = {
       name: this.name,
       email: this.email,
       role: this.role,
       id: this.id,
-      dept: this.dept,
-      intake: this.intake,
-      section: this.section,
-      registerd: this.registerd,
-      result: this.result,
     };
 
     const requestOptions = {

@@ -1,54 +1,27 @@
-{
-  "_id": { "$oid": "63663e2fd785646a3b824f74" },
-  "name": "Faisal Ahmed",
-  "email": "faisal@gmail.com",
-  "id": "19202103135",
-  "role": "student",
-  "dept": "cse",
-  "intake": "44",
-  "location": "Dhaka",
-  "phone": "01575008359",
-  "section": "3",
-  "registered": true,
-  "subjects": {
-    "summer:2022": [
-      {
-        "title": "Object Oriented Programming Language",
-        "code": "CSE 121",
-        "credit": { "$numberInt": "3" },
-        "type": "Theory"
-      },
-      {
-        "title": "Object Oriented Programming Language Lab",
-        "code": "CSE 122",
-        "credit": { "$numberDouble": "1.5" },
-        "type": "Lab"
-      },
-      {
-        "title": "Principles of Economics",
-        "code": "ECO 101",
-        "credit": { "$numberInt": "2" },
-        "type": "Theory"
-      },
-      {
-        "title": "Software Development I",
-        "code": "CSE 100",
-        "credit": { "$numberDouble": "0.75" },
-        "type": "Theory"
-      },
-      {
-        "title": "Electronic Devices and Circuits",
-        "code": "EEE 211",
-        "credit": { "$numberInt": "3" },
-        "type": "Theory"
-      },
-      {
-        "title": "Electronic Devices and Circuits Lab",
-        "code": "EEE 212",
-        "credit": { "$numberDouble": "1.5" },
-        "type": "Lab"
-      }
-    ]
+[
+  {
+    "id": { "$numberLong": "19202103135" },
+    "name": "Mohammad Rizwan",
+    "account": false
   },
-  "waiver": { "summer:2022": { "$numberLong": "10000" } }
-}
+  {
+    "id": { "$numberLong": "19202103136" },
+    "name": "Babar Azam",
+    "account": false
+  },
+  {
+    "id": { "$numberLong": "19202103137" },
+    "name": "Nawaz Ahmed",
+    "account": false
+  },
+  {
+    "id": { "$numberLong": "19202103138" },
+    "name": "Rohit Sharma",
+    "account": false
+  },
+  {
+    "id": { "$numberLong": "19202103139" },
+    "name": "Virat Kohli",
+    "account": false
+  }
+]

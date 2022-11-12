@@ -14,7 +14,7 @@ import { BsFacebook, BsGithub } from "react-icons/bs";
 // images
 import bgAuth from "../../img/bgAuth.png";
 // utilities
-import { serverAddress } from "../../components/varables";
+import { serverAddress } from "../../components/variables";
 import { toastConfig } from "../../toastConfig";
 // class
 import Student from "../../js/student";
@@ -23,13 +23,18 @@ import { bgImg } from "../../components/styles/styles";
 import Logo from "../../components/shared/Logo";
 import Input from "../../components/shared/Input";
 import IconCover from "../../components/shared/IconCover";
+import Teacher from "../../js/teacher";
+import Loader from "../../components/shared/loader/Loader";
+import useGetTeacherList from "../../hooks/useGetTeacherList";
 
 const Signup = () => {
   const radious = "35px";
   const path = useNavigate();
-  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, , loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
   const [updateProfile] = useUpdateProfile(auth);
   const { data: students } = useGetStudentList();
+  const { data: teachers } = useGetTeacherList();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -42,26 +47,32 @@ const Signup = () => {
     let user;
     let createAccount = false;
     if (role === "student") {
-      [user] = students.filter((std) => std.id === parseInt(id));
+      [user] = students?.filter((std) => std.id === parseInt(id));
       createAccount = !user.account;
     } else if (role === "teacher") {
+      console.log(teachers);
+      [user] = teachers?.filter((teacher) => teacher.id === parseInt(id));
+      createAccount = !user.account;
     }
 
     if (createAccount) {
       createUserWithEmailAndPassword(email, password).then(() => {
         updateProfile({ displayName: name });
+        let accCreated = false;
         if (role === "student") {
           const newUser = new Student({ name, email, role, id });
-          newUser.createUser();
+          accCreated = newUser.createUser();
         } else if (role === "teacher") {
+          const newUser = new Teacher({ name, email, role, id });
+          accCreated = newUser.createUser();
         }
+
         // updating list so that no more account can be created with the same id
-        if (role === "student") {
-          const url = `${serverAddress}/acc-created-std/${user._id}`;
+        if (accCreated) {
+          const url = `${serverAddress}/acc-created/${user._id}/${role}`;
           fetch(url)
             .then((res) => res.json())
             .then((res) => console.log(res));
-        } else if (role === "teacher") {
         }
         // singing out the user
         signOut(auth);
@@ -72,6 +83,10 @@ const Signup = () => {
       toast.error("Invalid Id", toastConfig);
     }
   };
+
+  if (error) {
+    toast(error.code, toastConfig);
+  }
 
   return (
     <section className="bg-[#0B0F33] h-screen flex">
@@ -112,7 +127,9 @@ const Signup = () => {
             <Input title="Email" placeholder="Your email adress" name="email" type="email" />
             <Input title="Password" placeholder="Your password" name="password" type="password" />
 
-            <button className="btn mt-5 bg-[#542DE1] rounded-xl uppercase">Sign Up</button>
+            <button className="btn mt-5 bg-[#542DE1] rounded-xl uppercase">
+              {loading ? <Loader /> : "Sign Up"}
+            </button>
 
             <p className="text-gray-400 font-semibold text-center">
               Already have an Account?{" "}
