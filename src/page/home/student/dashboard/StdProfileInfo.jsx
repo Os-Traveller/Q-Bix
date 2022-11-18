@@ -36,10 +36,7 @@ const StdProfileInfo = () => {
           </h1>
 
           <h1 className="text-gray-400">
-            Intake / Section :{" "}
-            <span className="text-white">
-              {user?.intake ? user?.intake : ""} - {user?.section ? user?.section : " - - - - -"}
-            </span>
+            Intake : <span className="text-white">{user?.intake ? user?.intake : ""}</span>
           </h1>
 
           <h1 className="text-gray-400">

@@ -106,15 +106,6 @@ const StdProfile = () => {
               />
               <InputCredit
                 type={"number"}
-                title="Section"
-                detail={"Enter Your Section"}
-                id="section"
-                state={section}
-                setState={setSection}
-                width={width}
-              />
-              <InputCredit
-                type={"number"}
                 title="Phone"
                 detail={"Enter Your Phone Number"}
                 id="phone"
