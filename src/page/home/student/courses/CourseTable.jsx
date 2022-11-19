@@ -1,49 +1,55 @@
 import React from "react";
 import { colorGreen } from "../../../../components/styles/colors";
+import Student from "../../../../js/student";
 
-const CourseTable = ({ courses }) => {
+const CourseTable = ({ courses, semester }) => {
   return (
     <section>
       <div className="card">
-        <h2 className="text-xl w-fit font-semibold font-sans uppercase">Summer : 2022</h2>
+        <h2 className="text-xl w-fit font-semibold font-sans uppercase">{semester}</h2>
         <table className="w-full mt-10">
           <thead className="uppercase text-sm text-gray-400">
-            <td className="px-2 pb-3">Course Title</td>
-            <td className="px-2 pb-3">Course Code</td>
-            <td className="px-2 pb-3">Credit</td>
-            <td className="px-2 pb-3">Type</td>
-            <td className="px-2 pb-3">Out Of 30</td>
-            <td className="px-2 pb-3">Mid</td>
-            <td className="px-2 pb-3">Final</td>
-            <td className="px-2 pb-3">Total</td>
-            <td className="px-2 pb-3">Grade</td>
+            <tr>
+              <th className="px-2 pb-3">Course Title</th>
+              <th className="px-2 pb-3">Course Code</th>
+              <th className="px-2 pb-3">Credit</th>
+              <th className="px-2 pb-3">Type</th>
+              <th className="px-2 pb-3">Out Of 30</th>
+              <th className="px-2 pb-3">Mid</th>
+              <th className="px-2 pb-3">Final</th>
+              <th className="px-2 pb-3">Total</th>
+              <th className="px-2 pb-3">Grade</th>
+            </tr>
           </thead>
-          {courses.map((course, index) => (
-            <Row
-              key={index}
-              title={course.title}
-              code={course.code}
-              credit={course.credit}
-              type={course.type}
-              final={course.final}
-              mid={course.mid}
-              out30={course.out30}
-              total={course.total}
-              grade={course.grade}
-            />
-          ))}
+          <tbody>
+            {courses?.map((course, index) => (
+              <Row
+                key={index}
+                title={course?.title}
+                code={course?.code}
+                credit={course?.credit}
+                type={course?.type}
+                final={course?.final}
+                mid={course?.mid}
+                out30={course.out30}
+              />
+            ))}
+          </tbody>
         </table>
       </div>
     </section>
   );
 };
 
-const Row = ({ title, code, credit, type, grade, final, mid, out30, total }) => {
+const Row = ({ title, code, credit, type, mid, out30, final }) => {
+  const total = parseFloat(mid) + parseFloat(out30) + parseFloat(final);
+  const std = new Student({});
+  const grade = std.calcGrade(total);
   return (
-    <tr className="w-full border-t">
+    <tr className="w-full border-t text-center">
       <td className="px-3 py-5">
         <button
-          className="py-1 px-3 rounded-md uppercase"
+          className="py-1 px-3 rounded-md uppercase mx-auto"
           style={{ background: colorGreen, display: code ? "block" : "none" }}
         >
           {code}

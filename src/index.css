@@ -80,6 +80,18 @@ input:-webkit-autofill:active {
   background: linear-gradient(45deg, #d8538d, #9c53f8);
 }
 
+.dpMaker {
+  background-position: center;
+  background-size: cover;
+}
+
+.uniInfo {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

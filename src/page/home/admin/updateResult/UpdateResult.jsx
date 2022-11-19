@@ -2,13 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
-import {
-  colorBlue,
-  colorDark,
-  colorGray,
-  colorGreen,
-  colorOrange,
-} from "../../../../components/styles/colors";
+import Searchbox from "../../../../components/shared/search/Searchbox";
+import { colorGray, colorGreen } from "../../../../components/styles/colors";
 import { serverAddress } from "../../../../components/variables";
 import Admin from "../../../../js/admin";
 
@@ -45,13 +40,17 @@ const UpdateResult = () => {
       .then((res) => setSubjects(res));
   }, [selectedId]);
 
-  const hanldeUpdateAllRes = (e) => {
+  const hanldeUpdateAllRes = async (e) => {
     e.preventDefault();
+    const admin = new Admin();
+    const response = await admin.updateResultOnServer({ id: selectedId, subjects });
+    console.log(response);
   };
 
   return (
     <section>
-      <div className="card">
+      <Searchbox />
+      <div className="card mt-5">
         <h2 className="text-xl text-center font-semibold font-mono">Update Result</h2>
         <div className="mt-10">
           <form onSubmit={hanldeUpdateAllRes}>
@@ -161,7 +160,7 @@ const TableOFResult = ({ data, allData, setAllData }) => {
   return (
     <div className="grid grid-cols-5 gap-5">
       <div>
-        <h1 className="font-semibold">{title.length > 25 ? title?.slice(0, 30) + "..." : title}</h1>
+        <h1 className="font-semibold">{title.length > 25 ? title?.slice(0, 25) + "..." : title}</h1>
         <p className="text-sm text-gray-400 mt-1">{code}</p>
       </div>
       <input

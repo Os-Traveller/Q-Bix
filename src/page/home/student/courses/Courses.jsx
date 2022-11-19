@@ -97,7 +97,9 @@ const Courses = () => {
         />
       </div>
       {/* presrnt cources */}
-      {courses.length !== 0 && <CourseTable courses={courses} />}
+      {courses.length !== 0 && (
+        <CourseTable courses={courses.subjects} semester={courses.semester} />
+      )}
     </section>
   );
 };

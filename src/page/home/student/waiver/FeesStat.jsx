@@ -15,7 +15,7 @@ const FeesStat = () => {
 
   useEffect(() => {
     refetch();
-    const url = `${serverAddress}/fees-info/${userData?.email}/${userData?.dept}`;
+    const url = `${serverAddress}/fees-info/${userData?.email}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => setFeesInfo(res));
@@ -28,7 +28,7 @@ const FeesStat = () => {
         color={colorGreen}
         borderRadious={borderRadious}
         title="Demand"
-        data={feesInfo.stdTotalCredit * feesInfo.feesPerCr}
+        data={feesInfo.demand}
       />
       {/* waiver */}
       <FeesBox
@@ -53,7 +53,7 @@ const FeesStat = () => {
         borderRadious={borderRadious}
         title="Due"
         data={
-          feesInfo.stdTotalCredit * feesInfo.feesPerCr -
+          feesInfo.demand -
           (feesInfo.paid ? feesInfo.paid : 0) -
           (feesInfo.waiver ? feesInfo.waiver : 0)
         }

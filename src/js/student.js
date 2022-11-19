@@ -7,12 +7,24 @@ class Student extends User {
   section;
   registerd;
   result = [];
-
   constructor({ name, email, id, role, intake, dept, section }) {
     super({ name, email, role, id });
     this.intake = intake;
     this.dept = dept;
     this.section = section;
+  }
+
+  calcGrade(total) {
+    if (total < 40) return "F";
+    else if (total < 45) return "D-";
+    else if (total < 50) return "D";
+    else if (total < 55) return "C-";
+    else if (total < 60) return "C";
+    else if (total < 65) return "B-";
+    else if (total < 70) return "B";
+    else if (total < 75) return "A-";
+    else if (total < 80) return "A";
+    else if (total >= 80) return "A+";
   }
 
   async createUser() {
@@ -34,13 +46,13 @@ class Student extends User {
     return response;
   }
 
-  async updateProfileInfo({ intake, dept, section, location, phone }) {
+  async updateProfileInfo({ intake, dept, location, phone }) {
     const url = `${serverAddress}/update-profile`;
     console.log(url);
     const requestOptions = {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ intake, dept, section, location, phone, email: this.email }),
+      body: JSON.stringify({ intake, dept, location, phone, email: this.email }),
     };
     fetch(url, requestOptions).then((res) => res.json());
   }
@@ -80,15 +92,6 @@ class Student extends User {
     };
     const response = await fetch(url, requestOptions);
     return response;
-  }
-
-  getDate() {
-    const date = new Date();
-    const day = date.toLocaleDateString("en-US", { weekday: "long" });
-    const month = date.toLocaleDateString("en-US", { month: "long" });
-    const year = date.getFullYear();
-
-    console.log(day, month, year, date.getDate());
   }
 }
 

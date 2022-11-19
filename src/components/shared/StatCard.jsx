@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { donutChartOption } from "../styles/donutChartOption";
 
-const StatCard = ({ title, completed, total, fontColor }) => {
+const StatCard = ({ title, completed, total, fontColor, additional }) => {
   const size = total === 0 ? 0 : parseInt((completed * 100) / total);
   return (
     <div className="card opacity-70 w-fit flex-grow">
@@ -18,7 +18,9 @@ const StatCard = ({ title, completed, total, fontColor }) => {
           {/* detail - 2 */}
           <div>
             <div className="card bg-[#02051b] text-center mt-5">
-              <h2 className="text-gray-400 mb-2">Completed {title}</h2>
+              <h2 className="text-gray-400 mb-2">
+                {additional ? additional : "Completed"} {title}
+              </h2>
               <p className="text-xl font-semibold">{completed}</p>
             </div>
           </div>

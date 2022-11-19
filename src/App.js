@@ -4,7 +4,6 @@ import Home from "./page/home/Home";
 import Login from "./page/login/Login";
 import Signup from "./page/signup/Signup";
 import Result from "./page/home/student/result/Result";
-import Routine from "./page/home/student/routine/Routine";
 import ResultSemester from "./page/home/student/result/ResultSemester";
 import ResultAll from "./page/home/student/result/ResultAll";
 import Courses from "./page/home/student/courses/Courses";
@@ -27,14 +26,12 @@ function App() {
       >
         <Route index element={<DashBoard />} />
         <Route path="courses" element={<Courses />} />
-        <Route path="routine" element={<Routine />} />
         <Route path="online-payment" element={<OnlinePayment />} />
         <Route path="registration" element={<Registration />} />
         <Route path="update-result" element={<UpdateResult />} />
         <Route path="result" element={<Result />}>
-          <Route index element={<ResultAll />} />
-          <Route path="semester" element={<ResultSemester />} />
-          <Route path="upcoming" element={"Upcoming"} />
+          <Route index element={<ResultSemester />} />
+          <Route index path="all" element={<ResultAll />} />
           <Route path="retake" element={"Retake"} />
         </Route>
         <Route path="fees" element={<Fees />} />

@@ -1,21 +1,32 @@
 import React from "react";
+import { colorRed } from "../styles/colors";
 
 const DpMaker = ({ name, height, color, onClick, fontSize, img }) => {
+  const styleImg = {
+    height: height ? height : "45px",
+    width: height ? height : "45px",
+    backgroundColor: color ? color : colorRed,
+    background: img ? `url(${img})` : "",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  };
+  const style = {
+    height: height ? height : "45px",
+    width: height ? height : "45px",
+    backgroundColor: color ? color : colorRed,
+  };
+
   return (
     <div
       className="rounded-full flex justify-center items-center cursor-pointer overflow-hidden"
-      style={{
-        height: height ? height : "37px",
-        width: height ? height : "37px",
-        backgroundColor: color ? color : "#3C2E67",
-      }}
-      onClick={onClick}
+      style={img ? styleImg : style}
     >
       <>
         {img ? (
-          <img src={img} alt="" />
+          // <img src={img} alt="" />
+          <h1>{""}</h1>
         ) : (
-          <h1 className={`text-white`} style={{ fontSize: fontSize ? fontSize : "20px" }}>
+          <h1 className={`text-white`} style={{ fontSize: fontSize ? fontSize : "30px" }}>
             {name && name[0]}
           </h1>
         )}

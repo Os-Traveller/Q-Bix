@@ -28,6 +28,7 @@ const InputCredit = ({ id, type, title, state, setState, detail, width, readOnly
           placeholder={state ? "" : detail}
           value={state}
           onChange={(e) => setState(e.target.value)}
+          required
         />
       )}
     </div>

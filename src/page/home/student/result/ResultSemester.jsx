@@ -1,70 +1,27 @@
-import React from "react";
-import { colorGreen } from "../../../../components/styles/colors";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { serverAddress } from "../../../../components/variables";
+import auth from "../../../../firebase.init";
 import CourseTable from "../courses/CourseTable";
 
 const ResultSemester = () => {
-  const data = [
-    {
-      courseCode: "ACT 201",
-      courseTitle: "Accounting Fundamental",
-      credit: 2,
-      type: "Theory",
-      grade: "A+",
-      final: 34,
-      mid: 22.5,
-      out30: 25.5,
-      total: 82,
-    },
-    {
-      courseCode: "CSE 205",
-      courseTitle: "Digital Logic Design",
-      credit: 3,
-      type: "Theory",
-      grade: "A+",
-      final: 33,
-      mid: 24,
-      out30: 29,
-      total: 86,
-    },
-    {
-      courseCode: "CSE 207",
-      courseTitle: "Database Systems",
-      credit: 3,
-      type: "Theory",
-      grade: "A+",
-      final: 34,
-      mid: 24,
-      out30: 29,
-      total: 87,
-    },
-    {
-      courseCode: "CSE 208",
-      courseTitle: "Database Systems Lab",
-      credit: 3,
-      type: "Lab",
-      grade: "A+",
-      final: 37,
-      mid: 23,
-      out30: 27,
-      total: 87,
-    },
-  ];
-  const attribute = [
-    "Course Code",
-    "Course Title",
-    "Credit",
-    "Type",
-    "Grade",
-    "Final",
-    "Mid",
-    "Out of 30",
-    "Total",
-  ];
+  const [userFirebase] = useAuthState(auth);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const url = `${serverAddress}/current-course/${userFirebase?.email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setCourses(res));
+  }, [userFirebase]);
 
   return (
-    <div>
-      <CourseTable attribute={attribute} data={data} color={colorGreen} title={"Summer - 2022"} />
-    </div>
+    <>
+      {courses.length !== 0 && (
+        <CourseTable courses={courses.subjects} semester={courses.semester} />
+      )}
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 // library
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import myDp from "../../../../img/dp.jpg";
 import { MdOutlineEdit } from "react-icons/md";
 import Student from "../../../../js/student";
 import InputCredit from "../../../../components/shared/InputCredit";
@@ -20,7 +19,6 @@ const StdProfile = () => {
   useEffect(() => {
     setDept(user?.dept);
     setIntake(user?.intake);
-    setSection(user?.section);
     setPhone(user?.phone);
     setLocation(user?.location);
   }, [user, userFirebase, userRefetch]);
@@ -28,14 +26,13 @@ const StdProfile = () => {
   const std = new Student({ email: user?.email, name: user?.displayName });
   const [dept, setDept] = useState(user?.dept);
   const [intake, setIntake] = useState(user?.intake);
-  const [section, setSection] = useState(user?.section);
   const [phone, setPhone] = useState(user?.phone);
   const [location, setLocation] = useState(user?.location);
 
   // updating profile
   const updateProfile = (e) => {
     e.preventDefault();
-    std.updateProfileInfo({ dept, intake, section, phone, location });
+    std.updateProfileInfo({ dept, intake, phone, location });
     userRefetch();
     setOpenModal(false);
   };
@@ -43,19 +40,9 @@ const StdProfile = () => {
   return (
     <>
       <div className="card backdrop-filter-blur bg-opacity-40 relative p-0">
-        <div
-          className="h-[250px] rounded-t-xl profileCover"
-          style={
-            {
-              // backgroundImage: `url(${cover})`,
-              // backgroundSize: "cover",
-              // backgroundPosition: "center",
-              // backgroundRepeat: "no-repeat",
-            }
-          }
-        ></div>
+        <div className="h-[250px] rounded-t-xl profileCover"></div>
         <div className="toUp">
-          <DpMaker img={myDp} height="180px" name={user?.name} />
+          <DpMaker height="140px" fontSize={"90px"} color={"#654DEE"} name={user?.name} />
         </div>
         <div className="flex justify-between p-5 mt-24">
           <div>

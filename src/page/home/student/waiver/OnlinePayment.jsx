@@ -17,7 +17,6 @@ const OnlinePayment = () => {
   const style = { backgroundColor: colorGray, padding: "10px 8px", borderRadius: "5px" };
 
   const [stdId, setStdId] = useState("");
-  const [mobileNo, setMobileNo] = useState("");
   const [amount, setAmount] = useState("");
   const [payType, setPayType] = useState("");
 
@@ -29,11 +28,15 @@ const OnlinePayment = () => {
   const payFees = async (e) => {
     e.preventDefault();
     const std = new Student({ email: userData?.email });
-    await std.payFees({ mobileNo, amount, payType: payType ? payType : "tuition" });
-    setAmount("");
-    setMobileNo("");
-    toast("Payment Complete", toastConfig);
-    path("/");
+    if (parseFloat(amount) < 499 || parseFloat(amount) > 50000) {
+      setAmount("");
+      toast("Amount Should be more than 500 and less than 50,000", toastConfig);
+    } else {
+      await std.payFees({ amount, payType: payType ? payType : "tuition" });
+      setAmount("");
+      toast("Payment Completed", toastConfig);
+      path("/");
+    }
   };
 
   return (
@@ -84,15 +87,6 @@ const OnlinePayment = () => {
             axis="x"
             readOnly={true}
           />
-          {/* Mobile */}
-          <InputCredit
-            type={"number"}
-            title={"Mobile No"}
-            id={"creditCardNo"}
-            state={mobileNo}
-            setState={setMobileNo}
-            detail={"Enter your Mobile Number"}
-          />
           {/* Amount */}
           <InputCredit
             type={"number"}
@@ -131,10 +125,7 @@ const OnlinePayment = () => {
               <span className="text-gray-400 upp">Payment Type</span>{" "}
               <strong className="uppercase">{payType ? payType : "****"}</strong>
             </p>
-            <p className="flex justify-between items-center text-lg">
-              <span className="text-gray-400 upp">Phone</span>{" "}
-              <strong className="uppercase">{mobileNo ? mobileNo : "****"}</strong>
-            </p>
+
             <p className="flex justify-between items-center text-lg">
               <span className="text-gray-400 upp">Amount</span>{" "}
               <strong className="uppercase"> {amount ? amount : "****"}</strong>
