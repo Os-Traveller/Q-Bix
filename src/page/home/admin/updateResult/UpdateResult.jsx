@@ -123,7 +123,7 @@ const Options = ({ title, name, values, setState }) => {
           onChange={(e) => setState(e.target.value)}
           required
         >
-          <option value={null}>Choose {title}</option>
+          <option value={{}}>Choose {title}</option>
           {values?.map((value, index) => (
             <option key={index} className="uppercase" value={value}>
               {value}

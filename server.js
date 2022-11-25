@@ -33,6 +33,12 @@ async function run() {
     const deptCollection = database.collection("dept");
     const othersCollection = database.collection("others");
 
+    app.get("/get-admission-info", async (req, res) => {
+      const otherInfo = await othersCollection.findOne({});
+      console.log(otherInfo);
+      res.send(otherInfo);
+    });
+
     // geting all student information
     app.get("/students", async (req, res) => {
       const cursor = studentsCollection.find({});
@@ -405,10 +411,58 @@ async function run() {
     app.put("/update-waiver-all", async (req, res) => {
       const cursor = userCollection.find({ role: "student" });
       const students = await cursor.toArray();
-      console.log("Clicked");
+      const otherInfo = await othersCollection.findOne({});
+      const currentSemester = otherInfo.currentSemester;
+      let totalUpdate = 0;
+
+      const distributeWaiver = (cgpa) => {
+        if (cgpa === 4.0) return 1;
+        else if (cgpa >= 3.9) return 0.5;
+        else if (cgpa >= 3.75) return 0.25;
+        else if (cgpa >= 3.5) return 0.1;
+        else return 0;
+      };
+
       // updating waiver for all students
-      students.forEach((std) => {
+      students.forEach(async (std) => {
         const courses = std.subjects;
+        const feesPerCr = otherInfo.feesPerCr[std.dept];
+        const cgpa = std.cgpa;
+        let waiverList = std.waiver;
+        const id = std.id;
+        console.log(id);
+
+        let waiver = 0;
+        let demand = 0;
+        // checked if courses exist or not
+        if (courses) {
+          const currentCourse = courses?.[currentSemester];
+          // checking if std registered or not
+          if (currentCourse) {
+            currentCourse.forEach((sub) => {
+              demand += sub.credit * feesPerCr;
+            });
+          }
+          waiver = demand * distributeWaiver(parseFloat(cgpa));
+        }
+
+        if (waiverList) {
+          waiverList[currentSemester] = waiver;
+        } else {
+          waiverList = {};
+          waiverList[currentSemester] = waiver;
+        }
+
+        // updatting waiver on database
+        const updateDoc = {
+          $set: {
+            waiver: waiverList,
+          },
+        };
+        const res = await userCollection.updateOne({ id: id }, updateDoc);
+        if (res.acknowledged) {
+          totalUpdate++;
+        }
       });
       res.send(true);
     });
