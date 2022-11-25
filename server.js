@@ -375,6 +375,43 @@ async function run() {
       });
       res.send({ totalStd: allStd.length, registeredStd: registeredStd.length, demand, paid });
     });
+
+    app.put("/update-cgpa-all", async (req, res) => {
+      const cursor = userCollection.find({ role: "student" });
+      const students = await cursor.toArray();
+
+      // finding cgpa for all students
+      students.forEach(async (std) => {
+        const subjects = std.subjects;
+        const id = std.id;
+        let totalGradeCrPro = 0;
+        let totalCredit = 0;
+        Object.values(subjects).forEach((semester) => {
+          semester.forEach((sub) => {
+            totalCredit += sub.credit;
+            totalGradeCrPro += sub.credit * sub.gradePoint;
+          });
+        });
+        const cgpa = totalGradeCrPro / totalCredit;
+        const updateDoc = {
+          $set: {
+            cgpa: parseFloat(cgpa.toFixed(2)),
+          },
+        };
+        await userCollection.updateOne({ id: id }, updateDoc);
+      });
+    });
+
+    app.put("/update-waiver-all", async (req, res) => {
+      const cursor = userCollection.find({ role: "student" });
+      const students = await cursor.toArray();
+      console.log("Clicked");
+      // updating waiver for all students
+      students.forEach((std) => {
+        const courses = std.subjects;
+      });
+      res.send(true);
+    });
   } catch (err) {
     console.log(err);
   } finally {

@@ -93,6 +93,35 @@ class Student extends User {
     const response = await fetch(url, requestOptions);
     return response;
   }
+
+  collectionCgpaSgpa({ courses }) {
+    const sgpa = [];
+    const cgpa = [];
+    const semesterList = [];
+    let point = 0;
+    let credit = 0;
+    Object.keys(courses).forEach((semester) => {
+      let sempoint = 0;
+      let semCr = 0;
+
+      courses[semester].forEach((sub) => {
+        // for sgpa
+        sempoint += sub.credit * sub.gradePoint;
+        semCr += sub.credit;
+        // for cgpa
+        point += sub.credit * sub.gradePoint;
+        credit += sub.credit;
+      });
+      const sg = sempoint / semCr;
+      const cg = point / credit;
+
+      semesterList.push(semester);
+      sgpa.push(parseFloat(sg.toFixed(2)));
+      cgpa.push(parseFloat(cg.toFixed(2)));
+    });
+
+    return { semesterList, cgpa, sgpa };
+  }
 }
 
 export default Student;

@@ -7,3 +7,4 @@ export const colorCard = "#1A1F37";
 export const colorPupmkin = "#d35400";
 export const colorOrange = "#f39c12";
 export const colorGray = "#343434";
+export const colorDarkBlue = "#131B4D";

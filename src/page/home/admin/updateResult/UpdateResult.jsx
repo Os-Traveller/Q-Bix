@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Searchbox from "../../../../components/shared/search/Searchbox";
 import { colorGray, colorGreen } from "../../../../components/styles/colors";
 import { serverAddress } from "../../../../components/variables";
@@ -15,6 +16,7 @@ const UpdateResult = () => {
   const [allStudents, setAllStudenst] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const [subjects, setSubjects] = useState([]);
+  const path = useNavigate();
 
   useEffect(() => {
     const url = `${serverAddress}/get-all-students-info`;
@@ -44,7 +46,7 @@ const UpdateResult = () => {
     e.preventDefault();
     const admin = new Admin();
     const response = await admin.updateResultOnServer({ id: selectedId, subjects });
-    console.log(response);
+    if (response) path("/");
   };
 
   return (
@@ -169,6 +171,7 @@ const TableOFResult = ({ data, allData, setAllData }) => {
         type="number"
         placeholder={mid}
         ref={midRef}
+        step="0.5"
       />
       <input
         className={className}
@@ -176,6 +179,7 @@ const TableOFResult = ({ data, allData, setAllData }) => {
         type="number"
         placeholder={out30}
         ref={out30Ref}
+        step="0.5"
       />
       <input
         className={className}
@@ -183,6 +187,7 @@ const TableOFResult = ({ data, allData, setAllData }) => {
         type="number"
         placeholder={final}
         ref={finalRef}
+        step="0.5"
       />
       <p
         className="centerXY px-5 py-2 w-fit mx-auto rounded-lg buble hover:scale-110 font-semibold"

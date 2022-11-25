@@ -6,7 +6,6 @@ import StatCard from "../../../../components/shared/StatCard";
 import { colorGreen, colorPurple } from "../../../../components/styles/colors";
 import { serverAddress } from "../../../../components/variables";
 import bubtLogo from "../../../../img/bubt_logo.png";
-// import StatCard from "../../../../components/shared/StatCard";
 
 const UniversityInfo = () => {
   const [allData, setAllData] = useState({});
@@ -16,7 +15,6 @@ const UniversityInfo = () => {
     fetch(url)
       .then((res) => res.json())
       .then((res) => setAllData(res));
-    console.log(allData);
   }, []);
 
   return (
@@ -32,7 +30,7 @@ const UniversityInfo = () => {
         />
         <StatCard
           title={"Fees"}
-          additional={"Paid"}
+          additional={"Collected"}
           total={allData.demand}
           completed={allData.paid}
           fontColor={colorPurple}
