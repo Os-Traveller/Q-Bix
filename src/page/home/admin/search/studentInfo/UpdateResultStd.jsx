@@ -23,7 +23,6 @@ const UpdateResultStd = ({ id, closeModal }) => {
     if (res.response) {
       toast.success("Result Updated", toastConfig);
       closeModal();
-      window.location.reload();
     } else {
       toast.error("Something Went Wrong", toastConfig);
       closeModal();

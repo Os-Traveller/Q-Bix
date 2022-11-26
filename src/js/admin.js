@@ -83,10 +83,10 @@ class Admin {
     const response = await fetch(url, { method: "PUT" }).then((res) => res.json());
     return response;
   }
-
-  async updaWaiverAll() {
+  // updating waiver
+  async updateWaiverAll() {
     const url = `${serverAddress}/update-waiver-all`;
-    const response = await fetch(url, { method: "PUT" }).then((res) => res.json);
+    const response = await fetch(url, { method: "PUT" }).then((res) => res.json());
     return response;
   }
 
@@ -115,6 +115,12 @@ class Admin {
 
   async modifyReg(id) {
     const url = `${serverAddress}/modify-reg/${id}`;
+    const res = await fetch(url, { method: "PUT" }).then((res) => res.json());
+    return res;
+  }
+
+  async createNewSem(semester) {
+    const url = `${serverAddress}/new-semester/${semester}`;
     const res = await fetch(url, { method: "PUT" }).then((res) => res.json());
     return res;
   }

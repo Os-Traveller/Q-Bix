@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { colorGray } from "../../styles/colors";
 
-const Option = ({ title, name, values, setState, color }) => {
+const Option = ({ title, name, values, setState, color, except }) => {
   const [selected, setSelected] = useState(false);
+  const allVales = values.filter((val) => val !== except);
   return (
     <div className="w-full">
       <h1 className="font-semibold mb-2">{title}</h1>
@@ -22,7 +23,7 @@ const Option = ({ title, name, values, setState, color }) => {
         >
           {!selected && <option>Choose {title}</option>}
 
-          {values?.map((value, index) => (
+          {allVales?.map((value, index) => (
             <option key={index} className="uppercase" value={value}>
               {value}
             </option>

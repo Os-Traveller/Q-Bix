@@ -1,27 +1,6 @@
-[
-  {
-    "id": { "$numberLong": "19202103135" },
-    "name": "Mohammad Rizwan",
-    "account": false
-  },
-  {
-    "id": { "$numberLong": "19202103136" },
-    "name": "Babar Azam",
-    "account": false
-  },
-  {
-    "id": { "$numberLong": "19202103137" },
-    "name": "Nawaz Ahmed",
-    "account": false
-  },
-  {
-    "id": { "$numberLong": "19202103138" },
-    "name": "Rohit Sharma",
-    "account": false
-  },
-  {
-    "id": { "$numberLong": "19202103139" },
-    "name": "Virat Kohli",
-    "account": false
-  }
-]
+{
+  "_id": { "$oid": "63665b8dea809115b7ca5a90" },
+  "feesPerCr": { "cse": { "$numberDouble": "2000.0" }, "eee": { "$numberDouble": "2300.0" } },
+  "currentSemester": "summer : 2022",
+  "previousSemester": "spring : 2022"
+}

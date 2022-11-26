@@ -9,6 +9,7 @@ import {
   colorInput,
   colorPupmkin,
   colorPurple,
+  colorRed,
 } from "../../../../components/styles/colors";
 import Admin from "../../../../js/admin";
 import Input from "../../../../components/shared/Input";
@@ -21,20 +22,31 @@ const ControlCenter = () => {
   const styleClass = `px-5 py-3 rounded-lg w-fit font-semibold buble hover:scale-110`;
   const admin = new Admin();
   const [addmissionModal, setAdmissionModal] = useState(false);
+  const [newSemModal, setNewSemModal] = useState(false);
 
   const updateCgpa = async () => {
-    const res = await admin.updateCgpaAll();
-    if (res) {
-      toast("Updated!", toastConfig);
-    } else {
-      toast("Something Went Wrong", toastConfig);
+    const update = window.confirm("Are you sure to update cgpa?");
+    if (update) {
+      const res = await admin.updateCgpaAll();
+
+      if (res.response) {
+        toast.success(`Cgpa Updated`, toastConfig);
+      } else {
+        toast("Something Went Wrong", toastConfig);
+      }
     }
   };
 
   const updateWaiver = async () => {
-    const res = await admin.updaWaiverAll();
-    if (res) {
-      toast("Updated", toastConfig);
+    const update = window.confirm("Are you sure to update waiver?");
+    if (update) {
+      const res = await admin.updateWaiverAll();
+
+      if (res.response) {
+        toast.success(`Waiver Updated`, toastConfig);
+      } else {
+        toast.error(`Something Went Wrong`, toastConfig);
+      }
     }
   };
 
@@ -56,9 +68,21 @@ const ControlCenter = () => {
         >
           Update Waiver
         </button>
-        <button className={styleClass} style={{ backgroundColor: colorBlue }}>
+        <button
+          className={styleClass}
+          style={{ backgroundColor: colorBlue }}
+          onClick={() => setNewSemModal(true)}
+        >
           New Semester
         </button>
+        <Modal
+          title="New Semester"
+          openModal={newSemModal}
+          setOpenModal={setNewSemModal}
+          width="600px"
+        >
+          <NewSemester setState={setNewSemModal} />
+        </Modal>
         <button
           className={styleClass}
           style={{ backgroundColor: colorPurple }}
@@ -75,6 +99,57 @@ const ControlCenter = () => {
           <Admission />
         </Modal>
       </div>
+    </section>
+  );
+};
+
+const NewSemester = ({ setState }) => {
+  const [semester, setSemester] = useState("");
+  const [currentSemester, setCurrentSemester] = useState("");
+  const admin = new Admin();
+
+  useEffect(() => {
+    const url = `${serverAddress}/current-semester`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setCurrentSemester(res.currentSemester));
+  }, []);
+
+  const handleNewSem = async (e) => {
+    e.preventDefault();
+    const res = await admin.createNewSem(semester);
+    if (res.response) {
+      toast.success("New Semester Created", toastConfig);
+      setState(false);
+    } else {
+      toast.error("Something Went Wrong", toastConfig);
+    }
+  };
+
+  const styleClass = `btn rounded-md w-fit block mt-5 font-semibold buble hover:scale-110`;
+  return (
+    <section className="text-white pb-5 px-5 pt-3">
+      <form onSubmit={handleNewSem}>
+        <Option
+          title="Pick Semester"
+          values={["summer", "fall", "spring"]}
+          setState={setSemester}
+          except={currentSemester}
+          color={colorInput}
+        />
+        <div className="flex gap-5 ml-auto w-fit">
+          <p
+            className={`${styleClass} cursor-pointer`}
+            style={{ backgroundColor: colorRed }}
+            onClick={() => setState(false)}
+          >
+            Cancel
+          </p>
+          <button className={`${styleClass}`} style={{ backgroundColor: colorGreen }}>
+            Submit
+          </button>
+        </div>
+      </form>
     </section>
   );
 };

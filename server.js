@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const { async } = require("@firebase/util");
 
 require("dotenv").config();
 const app = express();
@@ -31,6 +32,74 @@ async function run() {
     const courseCollection = database.collection("allCourse");
     const deptCollection = database.collection("dept");
     const othersCollection = database.collection("others");
+
+    // current semester
+    app.get("/current-semester", async (req, res) => {
+      const otherInfo = await othersCollection.findOne({});
+      let currentSemester = otherInfo.currentSemester;
+      [currentSemester] = currentSemester.split(" ");
+      res.send({ currentSemester });
+    });
+
+    // create new semester
+    app.put("/new-semester/:semester", async (req, res) => {
+      const currentSemester = req.params.semester;
+      const otherInfo = await othersCollection.findOne({});
+      const previousSemester = otherInfo.currentSemester;
+      const deptInfo = await deptCollection.findOne({});
+      const cursor = userCollection.find({ role: "student" });
+      const studentList = await cursor.toArray();
+      const cse = deptInfo.cse;
+      const eee = deptInfo.eee;
+
+      let updateDoc = {
+        $set: {
+          currentSemester,
+          previousSemester,
+        },
+      };
+      let response = await othersCollection.updateOne({}, updateDoc);
+      if (response.acknowledged) {
+        Object.keys(cse.intake).forEach((intakeNo) => {
+          cse.intake[intakeNo].semester = cse.intake[intakeNo].semester + 1;
+        });
+        const lastIntakeOfCse = cse.lastIntake;
+        cse.intake[lastIntakeOfCse] = { semester: 1 };
+        cse.lastIntake = lastIntakeOfCse + 1;
+
+        Object.keys(eee.intake).forEach((intakeNo) => {
+          eee.intake[intakeNo].semester = eee.intake[intakeNo].semester + 1;
+        });
+        const lastIntakeOfEee = eee.lastIntake;
+        eee.intake[lastIntakeOfEee] = { semester: 1 };
+        eee.lastIntake = lastIntakeOfEee + 1;
+
+        updateDoc = {
+          $set: {
+            cse,
+            eee,
+          },
+        };
+
+        response = await deptCollection.updateOne({}, updateDoc);
+
+        if (response.acknowledged) {
+          studentList.forEach(async (std) => {
+            const id = std.id;
+            updateDoc = {
+              $set: {
+                registered: false,
+              },
+            };
+            await userCollection.updateOne({ id }, updateDoc);
+          });
+
+          res.send({ response: true });
+        } else {
+          res.send({ response: false });
+        }
+      }
+    });
 
     app.get("/get-admission-info", async (req, res) => {
       const deptInfo = await deptCollection.findOne({});
@@ -134,7 +203,7 @@ async function run() {
       if (dept && intake) {
         const intakeInfo = await deptCollection.findOne({});
         // the current semester to find the course of that semester
-        const semester = intakeInfo[dept]?.intake[intake].semester;
+        const semester = intakeInfo[dept]?.intake[intake]?.semester;
         const course = await courseCollection.findOne({});
 
         res.send(course?.[dept]?.[semester - 1]);
@@ -481,6 +550,7 @@ async function run() {
         };
         await userCollection.updateOne({ id: id }, updateDoc);
       });
+      res.send({ response: true });
     });
 
     // update waiver all
@@ -533,9 +603,9 @@ async function run() {
             waiver: waiverList,
           },
         };
-        const res = await userCollection.updateOne({ id: id }, updateDoc);
+        await userCollection.updateOne({ id }, updateDoc);
       });
-      res.send(true);
+      res.send({ response: true });
     });
 
     // update waiver for one std

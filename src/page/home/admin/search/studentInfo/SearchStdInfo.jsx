@@ -14,6 +14,8 @@ import CourseTable from "../../../student/courses/CourseTable";
 import Searchbox from "../Searchbox";
 import UpdateResultStd from "./UpdateResultStd";
 import { UpdateWaiverStd } from "./UpdateWaiverStd";
+import { bgImg } from "../../../../../components/styles/styles";
+import coverPhoto from "../../../../../img/bgAuth.png";
 
 const SearchStdInfo = () => {
   const { email } = useParams();
@@ -55,7 +57,7 @@ const SearchStdInfo = () => {
       <Searchbox />
       {/* student profile */}
       <div className="card backdrop-filter-blur bg-opacity-40 relative p-0 mt-5">
-        <div className="h-[200px] rounded-t-xl profileCover"></div>
+        <div className="h-[300px] rounded-t-xl" style={bgImg(coverPhoto)}></div>
         <div className="toUp">
           <DpMaker height="140px" fontSize={"90px"} color={"#654DEE"} name={user?.name} />
         </div>

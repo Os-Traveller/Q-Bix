@@ -62,6 +62,7 @@ const Courses = () => {
             <p className="mt-2">
               Nice to see you, <span className="text-xl font-bold font-mono">{userData?.name}</span>
             </p>
+            <p className="mt-2">To registration please click the butto below </p>
           </div>
           {regStatus ? (
             <h2
