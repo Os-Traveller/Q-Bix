@@ -13,6 +13,7 @@ import Fees from "./page/home/student/waiver/Fees";
 import DashBoard from "./page/home/Dashboard.jsx";
 import UpdateResult from "./page/home/admin/updateResult/UpdateResult";
 import SearchResult from "./page/home/admin/search/SearchResult";
+import SearchStdInfo from "./page/home/admin/search/studentInfo/SearchStdInfo";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route index element={<DashBoard />} />
         <Route path="courses" element={<Courses />} />
         <Route path="search-result/:keyWord" element={<SearchResult />} />
+        <Route path="student/:email" element={<SearchStdInfo />} />
         <Route path="online-payment" element={<OnlinePayment />} />
         <Route path="registration" element={<Registration />} />
         <Route path="update-result" element={<UpdateResult />} />

@@ -1,4 +1,3 @@
-// library
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MdOutlineEdit } from "react-icons/md";

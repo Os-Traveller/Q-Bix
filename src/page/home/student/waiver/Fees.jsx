@@ -1,13 +1,24 @@
 import React from "react";
+import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { colorGreen } from "../../../../components/styles/colors";
 import { bgImg } from "../../../../components/styles/styles";
+import auth from "../../../../firebase.init";
+import useGetUser from "../../../../hooks/useGetUser";
 import cardBG from "../../../../img/cardBG.png";
 import FeesDetail from "./FeesDetail";
 import FeesStat from "./FeesStat";
 
 const Fees = () => {
   const path = useNavigate();
+  const [userFirebase] = useAuthState(auth);
+  const { data: user, refetch } = useGetUser(userFirebase?.email);
+
+  useEffect(() => {
+    refetch();
+  }, [userFirebase, refetch]);
+
   return (
     <section>
       {/* top */}
@@ -19,7 +30,7 @@ const Fees = () => {
               Welcome Back!
             </p>
             <p className="my-3 capitalize">
-              It's Nice to see you, <strong className="text-xl uppercase">Faisal Ahmed</strong>{" "}
+              It's Nice to see you, <strong className="text-xl uppercase">{user?.name}</strong>{" "}
             </p>
             <p className="capitalize">For online payment click the button</p>
           </div>

@@ -31,6 +31,9 @@ const SearchResult = () => {
       <div className="card mt-8 w-fit mx-auto">
         <h1>
           Search Result For : <span className="font-semibold text-xl">{keyWord}</span>{" "}
+          {response.length === 0 && (
+            <p className="mt-4 font-semibold text-center"> Nothing Found </p>
+          )}
         </h1>
       </div>
       {response.length !== 0 && (
@@ -55,7 +58,6 @@ const SearchResult = () => {
           <div></div>
         </div>
       )}
-      {!response.length === 0 && <div>Not Found</div>}
     </section>
   );
 };

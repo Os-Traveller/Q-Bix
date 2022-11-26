@@ -1,9 +1,7 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-// images
 import cardBg from "../../../../img/cardBG.png";
-// components
 import { bgImg } from "../../../../components/styles/styles";
 import StatCard from "../../../../components/shared/StatCard";
 import auth from "../../../../firebase.init";
@@ -62,8 +60,7 @@ const Courses = () => {
           <div>
             <h1 className="text-2xl">Welcome Back!</h1>
             <p className="mt-2">
-              Nice to see you,{" "}
-              <span className="text-xl font-bold font-mono">{userFirebase?.displayName}</span>
+              Nice to see you, <span className="text-xl font-bold font-mono">{userData?.name}</span>
             </p>
           </div>
           {regStatus ? (

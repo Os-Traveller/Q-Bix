@@ -172,7 +172,7 @@ async function run() {
       } else {
         demand = fees;
       }
-      console.log(dept, feesPerCr, demand);
+
       const updateDoc = {
         $set: {
           subjects: subjects,
@@ -183,6 +183,46 @@ async function run() {
 
       const result = await userCollection.updateOne({ email: email }, updateDoc);
       res.send(result);
+    });
+
+    // modify Registration
+    app.put("/modify-reg/:id", async (req, res) => {
+      const id = req.params.id;
+      const userInfo = await userCollection.findOne({ id });
+      const othersInfo = await othersCollection.findOne({});
+      const currentSemester = othersInfo.currentSemester;
+      const dept = userInfo.dept;
+      const feesPerCr = othersInfo.feesPerCr?.[dept];
+      const subjects = userInfo.subjects;
+      let userDemand = userInfo.demand;
+      let demand = 0;
+
+      subjects[currentSemester].map((sub) => {
+        demand += sub.credit * feesPerCr;
+      });
+
+      if (userDemand) {
+        userDemand -= demand;
+      } else {
+        userDemand = 0;
+      }
+
+      delete subjects[currentSemester];
+
+      const updateDoc = {
+        $set: {
+          registered: false,
+          demand: userDemand,
+          subjects: subjects,
+        },
+      };
+
+      const response = await userCollection.updateOne({ id }, updateDoc);
+      if (response.acknowledged) {
+        res.send({ response: true });
+      } else {
+        res.send({ response: false });
+      }
     });
 
     // resgitration status
@@ -256,7 +296,7 @@ async function run() {
       const userInfo = await userCollection.findOne({ email: email });
       const waiverInfo = userInfo?.waiver;
 
-      let demand = userInfo.demand;
+      let demand = userInfo?.demand;
       if (!demand) {
         demand = 0;
       }
@@ -396,7 +436,11 @@ async function run() {
         },
       };
       const response = await userCollection.updateOne({ id: id }, updateDoc);
-      res.send(response);
+      if (response.acknowledged) {
+        res.send({ response: true });
+      } else {
+        res.send({ response: false });
+      }
     });
 
     app.get("/ratio-admin-dashboard", async (req, res) => {
@@ -406,8 +450,9 @@ async function run() {
       let demand = 0;
       let paid = 0;
       allStd.forEach((std) => {
-        demand += parseFloat(std.demand);
-        paid += parseFloat(std.paid);
+        if (std.demand) demand += parseFloat(std.demand);
+
+        if (std.paid) paid += parseFloat(std.paid);
       });
       res.send({ totalStd: allStd.length, registeredStd: registeredStd.length, demand, paid });
     });
@@ -422,7 +467,7 @@ async function run() {
         const id = std.id;
         let totalGradeCrPro = 0;
         let totalCredit = 0;
-        Object.values(subjects).forEach((semester) => {
+        Object.values(subjects || {}).forEach((semester) => {
           semester.forEach((sub) => {
             totalCredit += sub.credit;
             totalGradeCrPro += sub.credit * sub.gradePoint;
@@ -438,6 +483,7 @@ async function run() {
       });
     });
 
+    // update waiver all
     app.put("/update-waiver-all", async (req, res) => {
       const cursor = userCollection.find({ role: "student" });
       const students = await cursor.toArray();
@@ -490,6 +536,97 @@ async function run() {
         const res = await userCollection.updateOne({ id: id }, updateDoc);
       });
       res.send(true);
+    });
+
+    // update waiver for one std
+    app.put("/update-waiver/:id/:percentage", async (req, res) => {
+      const id = req.params.id;
+      const percentage = req.params.percentage;
+      const std = await userCollection.findOne({ id: id });
+      let waiverCollection = std.waiver;
+      const courses = std.subjects;
+      const otherInfo = await othersCollection.findOne({});
+      const currentSemester = otherInfo.currentSemester;
+      const feesPerCr = otherInfo.feesPerCr[std.dept];
+      let waiver = 0;
+      let demand = 0;
+
+      if (courses?.[currentSemester]) {
+        courses[currentSemester].forEach((sub) => {
+          demand += sub.credit * feesPerCr;
+        });
+      }
+      waiver = (percentage * demand) / 100;
+
+      if (waiverCollection) {
+        waiverCollection[currentSemester] = waiver;
+      } else {
+        waiverCollection = {};
+        waiverCollection[currentSemester] = waiver;
+      }
+
+      const updateDoc = {
+        $set: {
+          waiver: waiverCollection,
+        },
+      };
+
+      const respose = await userCollection.updateOne({ id }, updateDoc);
+      if (respose.acknowledged) {
+        res.send({ response: true });
+      } else {
+        res.send({ respose: false });
+      }
+    });
+
+    // update waiver based on cgpa
+    app.put("/update-waiver-auto/:id", async (req, res) => {
+      const id = req.params.id;
+      const std = await userCollection.findOne({ id: id });
+      let waiverCollection = std.waiver;
+      const courses = std.subjects;
+      const otherInfo = await othersCollection.findOne({});
+      const currentSemester = otherInfo.currentSemester;
+      const feesPerCr = otherInfo.feesPerCr[std.dept];
+      const cgpa = std.cgpa;
+      let waiver = 0;
+      let demand = 0;
+
+      const distributeWaiver = (cgpa) => {
+        if (cgpa === 4.0) return 1;
+        else if (cgpa >= 3.9) return 0.5;
+        else if (cgpa >= 3.75) return 0.25;
+        else if (cgpa >= 3.5) return 0.1;
+        else return 0;
+      };
+
+      if (courses?.[currentSemester]) {
+        courses[currentSemester].forEach((sub) => {
+          demand += sub.credit * feesPerCr;
+        });
+      }
+
+      waiver = demand * distributeWaiver(cgpa);
+
+      if (waiverCollection) {
+        waiverCollection[currentSemester] = waiver;
+      } else {
+        waiverCollection = {};
+        waiverCollection[currentSemester] = waiver;
+      }
+
+      const updateDoc = {
+        $set: {
+          waiver: waiverCollection,
+        },
+      };
+
+      const respose = await userCollection.updateOne({ id }, updateDoc);
+      if (respose.acknowledged) {
+        res.send({ response: true });
+      } else {
+        res.send({ respose: false });
+      }
     });
 
     // search

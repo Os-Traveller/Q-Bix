@@ -2,7 +2,13 @@ import React from "react";
 import { colorGreen } from "../../../../components/styles/colors";
 
 const CourseTable = ({ courses, semester }) => {
-  console.log(courses);
+  if (!courses) {
+    return (
+      <section>
+        <div></div>
+      </section>
+    );
+  }
   return (
     <section>
       <div className="card">
@@ -32,6 +38,8 @@ const CourseTable = ({ courses, semester }) => {
                 final={course?.final}
                 mid={course?.mid}
                 out30={course.out30}
+                total={course.total}
+                grade={course.grade}
               />
             ))}
           </tbody>

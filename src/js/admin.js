@@ -100,5 +100,23 @@ class Admin {
     const res = await fetch(url, requestOptions).then((res) => res.json());
     return res;
   }
+  // update waiver manually
+  async updateWaiverStdManually({ id, persentage }) {
+    const url = `${serverAddress}/update-waiver/${id}/${persentage}`;
+    const res = await fetch(url, { method: "PUT" }).then((res) => res.json());
+    return res;
+  }
+  // update waiver basen on cgpa
+  async updaWaiverOnCgpa(id) {
+    const url = `${serverAddress}/update-waiver-auto/${id}`;
+    const res = await fetch(url, { method: "PUT" }).then((res) => res.json());
+    return res;
+  }
+
+  async modifyReg(id) {
+    const url = `${serverAddress}/modify-reg/${id}`;
+    const res = await fetch(url, { method: "PUT" }).then((res) => res.json());
+    return res;
+  }
 }
 export default Admin;
