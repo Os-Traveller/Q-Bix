@@ -1,8 +1,8 @@
 import React from "react";
 import { colorGreen } from "../../../../components/styles/colors";
-import Student from "../../../../js/student";
 
 const CourseTable = ({ courses, semester }) => {
+  console.log(courses);
   return (
     <section>
       <div className="card">
@@ -41,10 +41,7 @@ const CourseTable = ({ courses, semester }) => {
   );
 };
 
-const Row = ({ title, code, credit, type, mid, out30, final }) => {
-  const total = parseFloat(mid) + parseFloat(out30) + parseFloat(final);
-  const std = new Student({});
-  const grade = std.calcGrade(total);
+const Row = ({ title, code, credit, type, mid, out30, final, grade, total }) => {
   return (
     <tr className="w-full border-t text-center">
       <td className="px-3 py-5">

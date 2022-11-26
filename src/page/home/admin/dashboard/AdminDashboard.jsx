@@ -1,5 +1,5 @@
 import React from "react";
-import Searchbox from "../../../../components/shared/search/Searchbox";
+import Searchbox from "../search/Searchbox";
 import ControlCenter from "./ControlCenter";
 import UniversityInfo from "./UniversityInfo";
 

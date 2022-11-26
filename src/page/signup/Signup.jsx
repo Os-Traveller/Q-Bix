@@ -1,91 +1,55 @@
-// library
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import auth from "../../firebase.init";
 import { toast } from "react-toastify";
-// hooks
-import useGetStudentList from "../../hooks/useGetStudentList";
-// styles
-// icons
 import { GrGoogle } from "react-icons/gr";
 import { BsFacebook, BsGithub } from "react-icons/bs";
-// images
 import bgAuth from "../../img/bgAuth.png";
-// utilities
-import { serverAddress } from "../../components/variables";
 import { toastConfig } from "../../toastConfig";
-// class
 import Student from "../../js/student";
-// components
 import { bgImg } from "../../components/styles/styles";
 import Logo from "../../components/shared/Logo";
 import Input from "../../components/shared/Input";
 import IconCover from "../../components/shared/IconCover";
-import Teacher from "../../js/teacher";
 import Loader from "../../components/shared/loader/Loader";
-import useGetTeacherList from "../../hooks/useGetTeacherList";
 
 const Signup = () => {
   const radious = "35px";
   const path = useNavigate();
-  const [createUserWithEmailAndPassword, , loading, error] =
+  const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-  const [updateProfile] = useUpdateProfile(auth);
-  const { data: students } = useGetStudentList();
-  const { data: teachers } = useGetTeacherList();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const email = e.target.elements.email.value.trim();
-    const name = e.target.elements.name.value.trim();
-    const password = e.target.elements.password.value.trim();
     const id = e.target.elements.id.value.trim();
-    const role = e.target.elements.role.value.trim();
+    const pin = e.target.elements.pin.value.trim();
+    const email = e.target.elements.email.value.trim();
+    const password = e.target.elements.password.value.trim();
 
-    let user;
-    let createAccount = false;
-    if (role === "student") {
-      [user] = students?.filter((std) => std.id === parseInt(id));
-      createAccount = !user.account;
-    } else if (role === "teacher") {
-      console.log(teachers);
-      [user] = teachers?.filter((teacher) => teacher.id === parseInt(id));
-      createAccount = !user.account;
-    }
-
-    if (createAccount) {
-      createUserWithEmailAndPassword(email, password).then(() => {
-        updateProfile({ displayName: name });
-        let accCreated = false;
-        if (role === "student") {
-          const newUser = new Student({ name, email, role, id });
-          accCreated = newUser.createUser();
-        } else if (role === "teacher") {
-          const newUser = new Teacher({ name, email, role, id });
-          accCreated = newUser.createUser();
-        }
-
-        // updating list so that no more account can be created with the same id
-        if (accCreated) {
-          const url = `${serverAddress}/acc-created/${user._id}/${role}`;
-          fetch(url)
-            .then((res) => res.json())
-            .then((res) => console.log(res));
-        }
-        // singing out the user
+    if (password.length >= 6) {
+      const std = new Student({});
+      const response = await std.createUser({ email, id, pin });
+      if (!response.response) {
+        toast.error(response.code, toastConfig);
+      } else if (response) {
+        createUserWithEmailAndPassword(email, password);
         signOut(auth);
-        path("/login");
-      });
-    }
-    if (!createAccount) {
-      toast.error("Invalid Id", toastConfig);
+        path("/");
+      }
+    } else {
+      e.target.elements.password.value = "";
+      toast.warning("Length of password needs to be 6 or more than 6", toastConfig);
     }
   };
 
+  if (user) {
+    toast.success("Account Created Successfully", toastConfig);
+  }
+
   if (error) {
-    toast(error.code, toastConfig);
+    toast.error(error.code, toastConfig);
   }
 
   return (
@@ -104,26 +68,9 @@ const Signup = () => {
           </div>
           <div className="mt-8 flex flex-col gap-4">
             <div className="flex gap-4">
-              <Input title="Name" placeholder="Your Name" name="name" type="text" />
               <Input title="ID" placeholder="Your Id" name="id" type="number" />
+              <Input title="Pin" placeholder="Input the pin" name="pin" type="number" />
             </div>
-            <div>
-              <h2>Your Role</h2>
-              <div
-                className="mt-3 py-2 px-5 bg-[#131536] rounded-xl shadow-md w-full"
-                style={{ border: "1px solid white" }}
-              >
-                <select
-                  name="role"
-                  className="bg-[#131536] w-full outline-none text-gray-400"
-                  required
-                >
-                  <option value="student">Student</option>
-                  <option value="teacher">Teacher</option>
-                </select>
-              </div>
-            </div>
-
             <Input title="Email" placeholder="Your email adress" name="email" type="email" />
             <Input title="Password" placeholder="Your password" name="password" type="password" />
 

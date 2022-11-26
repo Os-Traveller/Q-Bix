@@ -12,6 +12,7 @@ import Registration from "./page/home/student/courses/Registration";
 import Fees from "./page/home/student/waiver/Fees";
 import DashBoard from "./page/home/Dashboard.jsx";
 import UpdateResult from "./page/home/admin/updateResult/UpdateResult";
+import SearchResult from "./page/home/admin/search/SearchResult";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       >
         <Route index element={<DashBoard />} />
         <Route path="courses" element={<Courses />} />
+        <Route path="search-result/:keyWord" element={<SearchResult />} />
         <Route path="online-payment" element={<OnlinePayment />} />
         <Route path="registration" element={<Registration />} />
         <Route path="update-result" element={<UpdateResult />} />
@@ -38,6 +40,7 @@ function App() {
       </Route>
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+
       <Route path="*" element={"No Page Found"} />
     </Routes>
   );

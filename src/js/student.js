@@ -1,41 +1,19 @@
 import { serverAddress } from "../components/variables";
-import User from "./user";
 
-class Student extends User {
-  dept;
-  intake;
-  section;
-  registerd;
-  result = [];
-  constructor({ name, email, id, role, intake, dept, section }) {
-    super({ name, email, role, id });
-    this.intake = intake;
-    this.dept = dept;
-    this.section = section;
+class Student {
+  email;
+  constructor({ email }) {
+    this.email = email;
   }
 
-  calcGrade(total) {
-    if (total < 40) return "F";
-    else if (total < 45) return "D-";
-    else if (total < 50) return "D";
-    else if (total < 55) return "C-";
-    else if (total < 60) return "C";
-    else if (total < 65) return "B-";
-    else if (total < 70) return "B";
-    else if (total < 75) return "A-";
-    else if (total < 80) return "A";
-    else if (total >= 80) return "A+";
-  }
-
-  async createUser() {
+  async createUser({ email, id, pin }) {
     const url = `${serverAddress}/create-user`;
     const stdInfo = {
-      name: this.name,
-      email: this.email,
-      role: this.role,
-      id: this.id,
+      email,
+      id,
+      pin,
+      role: "student",
     };
-
     const requestOptions = {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -46,13 +24,13 @@ class Student extends User {
     return response;
   }
 
-  async updateProfileInfo({ intake, dept, location, phone }) {
+  async updateProfileInfo({ location, phone }) {
     const url = `${serverAddress}/update-profile`;
     console.log(url);
     const requestOptions = {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ intake, dept, location, phone, email: this.email }),
+      body: JSON.stringify({ location, phone, email: this.email }),
     };
     fetch(url, requestOptions).then((res) => res.json());
   }

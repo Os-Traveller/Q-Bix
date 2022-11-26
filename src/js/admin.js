@@ -83,10 +83,22 @@ class Admin {
     const response = await fetch(url, { method: "PUT" }).then((res) => res.json());
     return response;
   }
+
   async updaWaiverAll() {
     const url = `${serverAddress}/update-waiver-all`;
     const response = await fetch(url, { method: "PUT" }).then((res) => res.json);
     return response;
+  }
+
+  async admitStd(admissionInfo) {
+    const url = `${serverAddress}/admission`;
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(admissionInfo),
+    };
+    const res = await fetch(url, requestOptions).then((res) => res.json());
+    return res;
   }
 }
 export default Admin;

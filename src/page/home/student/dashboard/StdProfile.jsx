@@ -6,7 +6,7 @@ import Student from "../../../../js/student";
 import InputCredit from "../../../../components/shared/InputCredit";
 import Modal from "../../../../components/shared/Modal";
 import DpMaker from "../../../../components/shared/DpMaker";
-import { colorGray, colorGreen, colorRed } from "../../../../components/styles/colors";
+import { colorGreen, colorRed } from "../../../../components/styles/colors";
 import useGetUser from "../../../../hooks/useGetUser";
 import auth from "../../../../firebase.init";
 
@@ -17,22 +17,19 @@ const StdProfile = () => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setDept(user?.dept);
-    setIntake(user?.intake);
     setPhone(user?.phone);
     setLocation(user?.location);
   }, [user, userFirebase, userRefetch]);
 
   const std = new Student({ email: user?.email, name: user?.displayName });
-  const [dept, setDept] = useState(user?.dept);
-  const [intake, setIntake] = useState(user?.intake);
+
   const [phone, setPhone] = useState(user?.phone);
   const [location, setLocation] = useState(user?.location);
 
   // updating profile
   const updateProfile = (e) => {
     e.preventDefault();
-    std.updateProfileInfo({ dept, intake, phone, location });
+    std.updateProfileInfo({ phone, location });
     userRefetch();
     setOpenModal(false);
   };
@@ -62,34 +59,19 @@ const StdProfile = () => {
             width={"680px"}
           >
             <form className="text-white p-5 flex flex-col gap-3" onSubmit={updateProfile}>
-              <div
-                className="opacity-70 py-2 px-5 w-full border-[1px] border-gray-400 rounded-md"
-                style={{ backgroundColor: colorGray }}
-              >
-                <select
-                  name="dept"
-                  className="w-full outline-none"
-                  style={{ backgroundColor: colorGray }}
-                  onChange={(e) => setDept(e.target.value)}
-                  required
-                >
-                  <option value="dept">Choose Department</option>
-                  <option value="cse">CSE</option>
-                  <option value="eee">EEE</option>
-                  <option value="ce">CE</option>
-                  <option value="bba">BBA</option>
-                  <option value="law">LAW</option>
-                </select>
-              </div>
-
               <InputCredit
-                type={"number"}
-                title="Intake"
-                detail={"Enter Your Intake"}
-                id="intake"
-                state={intake}
-                setState={setIntake}
+                title="Department"
+                detail="Your Department"
                 width={width}
+                readOnly
+                state={(user?.dept || "").toUpperCase()}
+              />
+              <InputCredit
+                title="Intake"
+                detail={"Your Intake"}
+                state={user?.intake}
+                width={width}
+                readOnly
               />
               <InputCredit
                 type={"number"}

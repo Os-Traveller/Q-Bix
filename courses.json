@@ -1,1 +1,17 @@
-[{ "title": "Accounting Fundamental", "code": "ACT - 101", "type": "Theory", "credit": 2 }]
+{
+  "_id": { "$oid": "635beca327f397b518e5981a" },
+
+  "cse": {
+    "intake": {
+      "1": { "semester": { "$numberInt": "1" } }
+    },
+    "lastIntake": { "$numberInt": "2" },
+    "id": "01"
+  },
+
+  "eee": {
+    "intake": { "1": { "semester": { "$numberInt": "1" } } },
+    "lastIntake": { "$numberLong": "2" },
+    "id": "02"
+  }
+}

@@ -5,7 +5,6 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
-const ObjectId = require("mongodb").ObjectId;
 
 app.use(cors());
 app.use(express.json());
@@ -34,53 +33,84 @@ async function run() {
     const othersCollection = database.collection("others");
 
     app.get("/get-admission-info", async (req, res) => {
-      const otherInfo = await othersCollection.findOne({});
-      console.log(otherInfo);
-      res.send(otherInfo);
-    });
-
-    // geting all student information
-    app.get("/students", async (req, res) => {
-      const cursor = studentsCollection.find({});
+      const deptInfo = await deptCollection.findOne({});
+      delete deptInfo._id;
+      const cursor = userCollection.find({ role: "student" });
       const students = await cursor.toArray();
-      res.send(students);
+      const studentsCount = {};
+      Object.keys(deptInfo).forEach(async (dept) => {
+        const tempStdLength = students.filter((std) => std.dept === dept).length;
+        let length = tempStdLength.toString.length;
+        let strLen = "";
+        for (let i = 1; i <= 3 - length; i++) {
+          strLen += 0;
+        }
+        // newId for new std
+        strLen += tempStdLength + 1;
+        studentsCount[dept] = strLen;
+      });
+      res.send({ deptInfo, studentsCount });
     });
 
-    // if user created update list
-    app.get("/acc-created/:id/:role", async (req, res) => {
-      const _id = req.params.id;
-      const role = req.params.role;
-      const filter = { _id: ObjectId(_id) };
-      const updateDoc = {
-        $set: {
-          account: true,
-        },
-      };
-
-      if (role === "student") {
-        const result = await studentsCollection.updateOne(filter, updateDoc);
-        res.send(result);
-      }
+    app.post("/admission", async (req, res) => {
+      const stdInfo = req.body;
+      const response = studentsCollection.insertOne(stdInfo);
+      res.send(response);
     });
 
     // creating new user
     app.post("/create-user", async (req, res) => {
       const body = req.body;
-      const { name, email, id, role } = body;
-      const doc = { name, email, id, role };
-      const result = await userCollection.insertOne(doc);
-      res.send(result.insertedId);
+      const { email, id, role, pin } = body;
+      const student = await studentsCollection.findOne({ id });
+
+      if (student) {
+        // id found
+        if (student.pin === pin) {
+          // valid std
+          if (!student.account) {
+            // account not created yet
+            const doc = {
+              name: student.name,
+              id,
+              dept: student.dept,
+              intake: student.intake,
+              email,
+              role,
+            };
+            const response = await userCollection.insertOne(doc);
+            if (response.acknowledged) {
+              // account created in database
+              const updateDoc = {
+                $set: {
+                  account: true,
+                },
+              };
+              await studentsCollection.updateOne({ id: id }, updateDoc);
+              res.send({ response: true });
+            } else {
+              res.send({ response: false, code: "Could Not Add in Database" });
+            }
+          } else {
+            // account already created
+            res.send({ response: false, code: "Account Already Created" });
+          }
+        } else {
+          // pin does not match
+          res.send({ response: false, code: "Pin Doesn't Match" });
+        }
+      } else {
+        // id not found
+        res.send({ response: false, code: "Invalid Id" });
+      }
     });
 
     // update profileInfo
     app.post("/update-profile", async (req, res) => {
-      const { intake, dept, section, location, phone, email } = req.body;
+      const { location, phone, email } = req.body;
       const filter = { email: email };
       const updateDoc = {
         $set: {
-          intake,
-          dept,
-          section,
           location,
           phone,
         },
@@ -413,7 +443,6 @@ async function run() {
       const students = await cursor.toArray();
       const otherInfo = await othersCollection.findOne({});
       const currentSemester = otherInfo.currentSemester;
-      let totalUpdate = 0;
 
       const distributeWaiver = (cgpa) => {
         if (cgpa === 4.0) return 1;
@@ -430,7 +459,6 @@ async function run() {
         const cgpa = std.cgpa;
         let waiverList = std.waiver;
         const id = std.id;
-        console.log(id);
 
         let waiver = 0;
         let demand = 0;
@@ -460,11 +488,56 @@ async function run() {
           },
         };
         const res = await userCollection.updateOne({ id: id }, updateDoc);
-        if (res.acknowledged) {
-          totalUpdate++;
-        }
       });
       res.send(true);
+    });
+
+    // search
+    app.post("/search", async (req, res) => {
+      const keys = req.body;
+      const cursor = userCollection.find({ role: "student" });
+      const userList = await cursor.toArray();
+      const result = [];
+
+      // mapping throug all the user to find the list
+      if (userList) {
+        // if student exist
+        userList.forEach((user) => {
+          // for every user
+          for (const key of keys) {
+            //for each key
+            // match name
+            if (user.name.toLowerCase().includes(key.toLowerCase())) {
+              result.push(user);
+              break;
+            }
+            // match id
+            else if (user.id.includes(key)) {
+              result.push(user);
+              break;
+            }
+            // match dept
+            else if (user.dept.toLowerCase().includes(key.toLowerCase())) {
+              result.push(user);
+              break;
+            }
+            // match intake
+            else if (user.intake.includes(key)) {
+              result.push(user);
+              break;
+            }
+            // match email
+            else if (user.email.toLowerCase().includes(key.toLowerCase())) {
+              result.push(user);
+              break;
+            }
+          }
+        });
+        res.send(result);
+      } else {
+        // no students exist
+        res.send({});
+      }
     });
   } catch (err) {
     console.log(err);
