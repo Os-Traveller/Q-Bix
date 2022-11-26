@@ -8,6 +8,8 @@ import DpMaker from "../../../../components/shared/DpMaker";
 import { colorGreen, colorRed } from "../../../../components/styles/colors";
 import useGetUser from "../../../../hooks/useGetUser";
 import auth from "../../../../firebase.init";
+import coverPhoto from "../../../../img/bgAuth.png";
+import { bgImg } from "../../../../components/styles/styles";
 
 const StdProfile = () => {
   const width = "45%";
@@ -36,7 +38,7 @@ const StdProfile = () => {
   return (
     <>
       <div className="card backdrop-filter-blur bg-opacity-40 relative p-0">
-        <div className="h-[250px] rounded-t-xl profileCover"></div>
+        <div className="h-[350px] rounded-t-xl" style={bgImg(coverPhoto)}></div>
         <div className="toUp">
           <DpMaker height="140px" fontSize={"90px"} color={"#654DEE"} name={user?.name} />
         </div>
