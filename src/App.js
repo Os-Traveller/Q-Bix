@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import AuthProvider from "./authProvider/AuthProvider";
+import AuthProvider from "./authProvider/AuthProvider.jsx";
 import Home from "./page/home/Home";
 import Login from "./page/login/Login";
 import Signup from "./page/signup/Signup";
@@ -36,7 +36,6 @@ function App() {
         <Route path="result" element={<Result />}>
           <Route index element={<ResultSemester />} />
           <Route index path="all" element={<ResultAll />} />
-          <Route path="retake" element={"Retake"} />
         </Route>
         <Route path="fees" element={<Fees />} />
       </Route>

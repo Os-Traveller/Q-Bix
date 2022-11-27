@@ -1,7 +1,7 @@
 import React from "react";
 import { colorRed } from "../styles/colors";
 
-const DpMaker = ({ name, height, color, onClick, fontSize, img }) => {
+const DpMaker = ({ name, height, color, fontSize, img }) => {
   const styleImg = {
     height: height ? height : "45px",
     width: height ? height : "45px",

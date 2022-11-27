@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const { async } = require("@firebase/util");
 
 require("dotenv").config();
 const app = express();
@@ -43,7 +42,9 @@ async function run() {
 
     // create new semester
     app.put("/new-semester/:semester", async (req, res) => {
-      const currentSemester = req.params.semester;
+      let currentSemester = req.params.semester;
+      const date = new Date().getFullYear();
+      currentSemester = currentSemester + " : " + date;
       const otherInfo = await othersCollection.findOne({});
       const previousSemester = otherInfo.currentSemester;
       const deptInfo = await deptCollection.findOne({});

@@ -8,7 +8,6 @@ const Result = () => {
       <div className="flex gap-3 flex-wrap justify-end mb-10">
         <ActiveLinkResult to={"/result"}>Current Semester</ActiveLinkResult>
         <ActiveLinkResult to={"all"}>All</ActiveLinkResult>
-        <ActiveLinkResult to={"retake"}>Retake</ActiveLinkResult>
       </div>
       <Outlet />
     </>
