@@ -1,16 +1,13 @@
-// library
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-// styles
+import {
+  useSignInWithEmailAndPassword,
+  useSendPasswordResetEmail,
+} from "react-firebase-hooks/auth";
 import { bgImg } from "../../components/styles/styles";
-// incons
 import { GrGoogle } from "react-icons/gr";
 import { BsFacebook, BsGithub } from "react-icons/bs";
-// utilities
 import auth from "../../firebase.init";
-// hooks
-// components
 import bgAuth from "../../img/bgAuth.png";
 import Logo from "../../components/shared/Logo";
 import IconCover from "../../components/shared/IconCover";
@@ -18,10 +15,15 @@ import Input from "../../components/shared/Input";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../toastConfig";
 import Loader from "../../components/shared/loader/Loader";
+import { useState } from "react";
+import Modal from "../../components/shared/Modal";
+import { colorGreen } from "../../components/styles/colors";
 
 const Login = () => {
   const path = useNavigate();
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+  const [openModal, setOpenModal] = useState(false);
   const radious = "35px";
 
   if (user) {
@@ -34,9 +36,18 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const email = e.target.elements.email.value;
+    const email = e.target.elements.email.value.trim();
     const password = e.target.elements.password.value;
     signInWithEmailAndPassword(email, password);
+  };
+
+  const handleForgetPassword = async (e) => {
+    e.preventDefault();
+    console.log("Clicked");
+    const email = e.target.elements.email.value.trim();
+    await sendPasswordResetEmail(email);
+    toast.success("Password reset email has been sent to your email", toastConfig);
+    setOpenModal(false);
   };
 
   return (
@@ -56,7 +67,13 @@ const Login = () => {
           <div className="mt-8 flex flex-col gap-5">
             <Input title="Email" placeholder="Your email adress" name="email" type="email" />
             <Input title="Password" placeholder="Your password" name="password" type="password" />
-            <p className="text-white font-semibold underline">Forgot password?</p>
+            <p
+              className="text-white font-semibold underline cursor-pointer"
+              onClick={() => setOpenModal(true)}
+            >
+              Forgot password?
+            </p>
+
             <button className="btn bg-[#542DE1] rounded-xl uppercase">
               {loading ? <Loader /> : "Login"}
             </button>
@@ -72,6 +89,34 @@ const Login = () => {
             </p>
           </div>
         </form>
+        {/* forget password */}
+        <Modal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          width={"500px"}
+          title="Reset Your Password"
+        >
+          <form onSubmit={handleForgetPassword} className="text-white px-5">
+            <Input title="Email" placeholder="Your email adress" name="email" type="email" />
+            {sending && (
+              <p
+                className="btn w-fit mx-auto block mt-5 rounded-md"
+                style={{ backgroundColor: colorGreen }}
+              >
+                <Loader />
+              </p>
+            )}
+
+            {!sending && (
+              <button
+                className="btn w-fit mx-auto block mt-5 rounded-md"
+                style={{ backgroundColor: colorGreen }}
+              >
+                Submit
+              </button>
+            )}
+          </form>
+        </Modal>
       </div>
     </section>
   );
