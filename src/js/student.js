@@ -7,20 +7,21 @@ class Student {
   }
 
   async createUser({ email, id, pin }) {
-    const url = `${serverAddress}/create-user`;
+    const url = `${serverAddress}/create-user`; // api link
     const stdInfo = {
       email,
       id,
       pin,
       role: "student",
     };
+
     const requestOptions = {
-      method: "POST",
+      method: "POST", // post requset
       headers: { "content-type": "application/json" },
       body: JSON.stringify(stdInfo),
     };
 
-    const response = await fetch(url, requestOptions).then((res) => res.json());
+    const response = await fetch(url, requestOptions).then((res) => res.json()); // fetch is used to communicate with server
     return response;
   }
 

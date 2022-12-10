@@ -23,6 +23,8 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    //getting all necessary information to signin from user
     const id = e.target.elements.id.value.trim();
     const pin = e.target.elements.pin.value.trim();
     const email = e.target.elements.email.value.trim();
@@ -30,15 +32,19 @@ const Signup = () => {
 
     if (password.length >= 6) {
       const std = new Student({});
-      const response = await std.createUser({ email, id, pin });
+      const response = await std.createUser({ email, id, pin }); // creating account in database for a std
+
       if (!response.response) {
+        // account is not created
         toast.error(response.code, toastConfig);
       } else if (response) {
-        createUserWithEmailAndPassword(email, password);
+        // account created
+        createUserWithEmailAndPassword(email, password); // creating an user in firebase
         signOut(auth);
-        path("/");
+        path("/"); // sending user into home page
       }
     } else {
+      // when pass is less than 6 character
       e.target.elements.password.value = "";
       toast.warning("Length of password needs to be 6 or more than 6", toastConfig);
     }
