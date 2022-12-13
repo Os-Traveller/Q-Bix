@@ -15,7 +15,6 @@ const OnlinePayment = () => {
   const [userFirebase] = useAuthState(auth);
   const { data: userData, refetch } = useGetUser(userFirebase?.email);
   const style = { backgroundColor: colorGray, padding: "10px 8px", borderRadius: "5px" };
-
   const [stdId, setStdId] = useState("");
   const [amount, setAmount] = useState("");
   const [payType, setPayType] = useState("");
@@ -26,15 +25,15 @@ const OnlinePayment = () => {
   }, [refetch, userData]);
 
   const payFees = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // preventing the page being refreshed when form submitted
     const std = new Student({ email: userData?.email });
     if (parseFloat(amount) < 499 || parseFloat(amount) > 50000) {
       setAmount("");
-      toast("Amount Should be more than 500 and less than 50,000", toastConfig);
+      toast.error("Amount Should be more than 500 and less than 50,000", toastConfig);
     } else {
       await std.payFees({ amount, payType: payType ? payType : "tuition" });
       setAmount("");
-      toast("Payment Completed", toastConfig);
+      toast.success("Payment Completed", toastConfig);
       path("/fees");
     }
   };
@@ -61,7 +60,6 @@ const OnlinePayment = () => {
               className="opacity-70 py-2 px-5 w-full border-[1px] border-gray-400 rounded-md"
               style={{ backgroundColor: colorGray }}
             >
-              {/* <SiSuperuser /> */}
               <select
                 name="paymentType"
                 className="w-full outline-none"
@@ -69,6 +67,7 @@ const OnlinePayment = () => {
                 onBlur={(e) => setPayType(e.target.value)}
                 required
               >
+                <option value={null}>Choose Type of Fees</option>
                 <option value="tuition">Tuition Fee</option>
                 <option value="admission">Admission Fee</option>
                 <option value="other">Other Fee</option>
@@ -132,7 +131,7 @@ const OnlinePayment = () => {
             </p>
             <p className="flex justify-between items-center text-lg">
               <span className="text-gray-400 upp">VAT</span>{" "}
-              <strong className="uppercase"> {amount ? amount * 0.02 : "****"}</strong>
+              <strong className="uppercase"> {amount ? (amount * 0.02).toFixed(2) : "****"}</strong>
             </p>
           </div>
           <p className="mt-5 flex justify-between items-end text-lg">

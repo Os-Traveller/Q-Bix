@@ -12,10 +12,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import DpMaker from "../shared/DpMaker";
 import Logo from "../shared/Logo";
 import { colorRed } from "../styles/colors";
+import { useNavigate } from "react-router-dom";
 
 const SideNavStd = () => {
   const [userFirebase] = useAuthState(auth);
   const { data: user } = useGetUser(userFirebase?.email);
+  const path = useNavigate();
   return (
     <section className="card sideNav backdrop-filter-blur">
       {/* app name */}
@@ -77,7 +79,10 @@ const SideNavStd = () => {
         className="text-white rounded-lg flex gap-3 justify-center items-center py-3 px-5 font-semibold 
         mx-auto"
         style={{ background: colorRed }}
-        onClick={() => signOut(auth)}
+        onClick={() => {
+          signOut(auth);
+          path("/login");
+        }}
       >
         <CgLogOut />
         Log Out

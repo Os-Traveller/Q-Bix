@@ -23,8 +23,6 @@ const ControlCenter = () => {
   const admin = new Admin();
   const [addmissionModal, setAdmissionModal] = useState(false);
   const [newSemModal, setNewSemModal] = useState(false);
-  const [updateCgModal, setUpdateCgModal] = useState(false);
-  const [updateWaiverModal, setUpdateWaiverModal] = useState(false);
 
   const updateCgpa = async () => {
     const update = window.confirm("Are you sure to update cgpa?");

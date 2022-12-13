@@ -9,7 +9,7 @@ const Input = ({ id, title, placeholder, type, name, readOnly, value }) => {
       </label>
       {readOnly ? (
         <input
-          className="py-2 px-5 rounded-md shadow-md w-full"
+          className="py-2 px-5 rounded-md shadow-md w-full outline-[#fff]"
           type={type}
           id={id}
           name={name}
@@ -21,7 +21,7 @@ const Input = ({ id, title, placeholder, type, name, readOnly, value }) => {
         />
       ) : (
         <input
-          className="py-2 px-5 rounded-md shadow-md w-full"
+          className="py-2 px-5 rounded-md shadow-md w-full outline-[#fff]"
           type={type}
           id={id}
           name={name}

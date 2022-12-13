@@ -10,7 +10,7 @@ const InputCredit = ({ id, type, title, state, setState, detail, width, readOnly
       </label>
       {readOnly ? (
         <input
-          className="opacity-70 py-2 px-5 w-full border-[1px] border-gray-400 rounded-md cursor-not-allowed"
+          className="opacity-70 py-2 px-5 w-full border-[1px] border-gray-400 rounded-md cursor-not-allowed outline-[#fff]"
           style={{ backgroundColor: colorGray }}
           id={id}
           type={type}
@@ -21,7 +21,7 @@ const InputCredit = ({ id, type, title, state, setState, detail, width, readOnly
         />
       ) : (
         <input
-          className="opacity-70 py-2 px-5 w-full border-[1px] border-gray-400 rounded-md"
+          className="opacity-70 py-2 px-5 w-full border-[1px] border-gray-400 rounded-md outline-[#fff]"
           style={{ backgroundColor: colorGray }}
           id={id}
           type={type}

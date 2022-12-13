@@ -14,6 +14,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
+//  creating database configuration
 const url = `mongodb+srv://${process.env.user_name}:${process.env.pass}@ost-cluster.i42fc.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(url, {
   useNewUrlParser: true,
@@ -42,9 +43,9 @@ async function run() {
 
     // create new semester
     app.put("/new-semester/:semester", async (req, res) => {
-      let currentSemester = req.params.semester;
-      const date = new Date().getFullYear();
-      currentSemester = currentSemester + " : " + date;
+      let currentSemester = req.params.semester; // collecting semester name from client side
+      const year = new Date().getFullYear();
+      currentSemester = currentSemester + " : " + year;
       const otherInfo = await othersCollection.findOne({});
       const previousSemester = otherInfo.currentSemester;
       const deptInfo = await deptCollection.findOne({});
@@ -71,6 +72,7 @@ async function run() {
         Object.keys(eee.intake).forEach((intakeNo) => {
           eee.intake[intakeNo].semester = eee.intake[intakeNo].semester + 1;
         });
+
         const lastIntakeOfEee = eee.lastIntake;
         eee.intake[lastIntakeOfEee] = { semester: 1 };
         eee.lastIntake = lastIntakeOfEee + 1;

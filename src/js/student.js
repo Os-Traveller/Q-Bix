@@ -38,7 +38,6 @@ class Student {
 
   async courseRegister(courseList) {
     const url = `${serverAddress}/registration/${this.email}`;
-    console.log(url);
     const requestOptions = {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -46,7 +45,6 @@ class Student {
     };
 
     const response = await fetch(url, requestOptions);
-    console.log(response);
     return response;
   }
 
