@@ -87,8 +87,8 @@ const Registration = () => {
           <button
             className="btn w-fit rounded-md buble block hover:scale-110 mt-8 ml-auto"
             style={{ background: colorGreen }}
-            onClick={() => {
-              stdUser.courseRegister(selectedCourse);
+            onClick={async () => {
+              await stdUser.courseRegister(selectedCourse);
               path("/courses");
             }}
           >

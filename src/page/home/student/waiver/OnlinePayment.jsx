@@ -35,7 +35,7 @@ const OnlinePayment = () => {
       await std.payFees({ amount, payType: payType ? payType : "tuition" });
       setAmount("");
       toast("Payment Completed", toastConfig);
-      path("/");
+      path("/fees");
     }
   };
 

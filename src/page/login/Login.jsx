@@ -27,7 +27,7 @@ const Login = () => {
   const radious = "35px";
 
   if (user) {
-    path("/");
+    path("/"); // sending to home page
   }
 
   if (error) {
@@ -35,7 +35,8 @@ const Login = () => {
   }
 
   const handleLogin = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // preventing default behavior
+    // collecting user's email and password
     const email = e.target.elements.email.value.trim();
     const password = e.target.elements.password.value;
     signInWithEmailAndPassword(email, password);
@@ -43,7 +44,6 @@ const Login = () => {
 
   const handleForgetPassword = async (e) => {
     e.preventDefault();
-    console.log("Clicked");
     const email = e.target.elements.email.value.trim();
     await sendPasswordResetEmail(email);
     toast.success("Password reset email has been sent to your email", toastConfig);

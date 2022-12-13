@@ -14,8 +14,8 @@ import { bgImg } from "../../../../components/styles/styles";
 const StdProfile = () => {
   const width = "45%";
   const [userFirebase] = useAuthState(auth);
-  const { data: user, refetch: userRefetch } = useGetUser(userFirebase?.email);
-  const [openModal, setOpenModal] = useState(false);
+  const { data: user, refetch: userRefetch } = useGetUser(userFirebase?.email); // geting user data from server
+  const [openModal, setOpenModal] = useState(false); // state to control modal
 
   useEffect(() => {
     setPhone(user?.phone);
@@ -31,8 +31,8 @@ const StdProfile = () => {
   const updateProfile = (e) => {
     e.preventDefault();
     std.updateProfileInfo({ phone, location });
-    userRefetch();
     setOpenModal(false);
+    window.location.reload();
   };
 
   return (

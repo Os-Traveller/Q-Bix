@@ -78,6 +78,11 @@ const UpdateResult = () => {
                 setState={setSelectedId}
               />
             </div>
+            {subjects.length === 0 && (
+              <p className="mt-5 text-center font-semibold">
+                Please select the student's Id who is registered
+              </p>
+            )}
             {subjects.length !== 0 && (
               <>
                 <div className="mt-10 card flex flex-col gap-3">

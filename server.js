@@ -539,10 +539,13 @@ async function run() {
         let totalCredit = 0;
         Object.values(subjects || {}).forEach((semester) => {
           semester.forEach((sub) => {
-            totalCredit += sub.credit;
-            totalGradeCrPro += sub.credit * sub.gradePoint;
+            if (sub.credit && sub.gradePoint) {
+              totalCredit += sub.credit;
+              totalGradeCrPro += sub.credit * sub.gradePoint;
+            }
           });
         });
+
         const cgpa = totalGradeCrPro / totalCredit;
         const updateDoc = {
           $set: {

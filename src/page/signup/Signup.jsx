@@ -41,7 +41,7 @@ const Signup = () => {
         // account created
         createUserWithEmailAndPassword(email, password); // creating an user in firebase
         signOut(auth);
-        path("/"); // sending user into home page
+        path("/login"); // sending user into login page
       }
     } else {
       // when pass is less than 6 character
